@@ -1,4 +1,4 @@
-<view class="page-container">
+<view class="page__container">
   <button wx:if="{{canIUse && !hasUser}}" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" type="primary">Login</button>
   <button type="warn" wx:if="{{hasUser}}" bindtap="userLogout">Logout</button>
     <view wx:if="{{!canIUse}}">Please upgrade your WeChat version.</view>

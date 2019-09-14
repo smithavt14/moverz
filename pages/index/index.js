@@ -50,5 +50,8 @@ Page({
   onLoad: function () {
     this.checkStorage()
   }
-
 })
+
+// Next Steps:
+// 1. Create information collection page link
+// 2. 

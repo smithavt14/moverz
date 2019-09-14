@@ -1,0 +1,28 @@
+<view class="page__container">
+  <!-- Form Start -->
+  <form bindsubmit="formSubmit" bindreset="formReset" class="page__form">
+    
+    <!-- Personal Information -->
+    <view class="section__container">
+      <input name="姓名" placeholder="姓名" id="nameInput" />
+      <input name="电话" type="number" placeholder="电话" />
+    </view>
+
+    <!-- Address Information -->
+    <view class="section__container">
+      <button wx:if="{{!address}}" id="search-btn" bindtap="searchAddress" >搜索地址</button>
+      <view wx:else>{{address.address}}</view>
+      <image wx:if="{{address}}" class="icon" src="/assets/icons/location.svg" bindtap="searchAddress"></image>
+    </view>
+    
+    <!-- Company Information -->
+    <view class="section__container">
+      <input name="公司名称" placeholder="公司名称（选填）" />
+    </view>
+    
+    <!-- Button Area -->
+    <view class="btn-area">
+      <button type="primary" formType="submit">确认</button>
+    </view>
+  </form>
+</view>

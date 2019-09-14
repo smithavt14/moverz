@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/collectInfo/collectInfo",
+    "pages/map/map"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,6 +14,11 @@
     "sdkPlugin": {
       "version": "2.3.0",
       "provider": "wxc6b86e382a1e3294"
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
   "sitemapLocation": "sitemap.json"
