@@ -1,6 +1,26 @@
 <view class="page__container">
   <button wx:if="{{canIUse && !hasUser}}" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" type="primary">Login</button>
-  <button type="warn" wx:if="{{hasUser}}" bindtap="userLogout">Logout</button>
     <view wx:if="{{!canIUse}}">Please upgrade your WeChat version.</view>
+</view>
+<view class="page__container">
+  <!-- Sender Information -->
+  <view class="info_container">
+    <image class="icon" src="/assets/icons/location.svg"></image>
+    <view class="left_box" bindtap="createAgent" data-agent="sender">
+      <view class="top_value">寄件人信息</view>
+      <view class="bottom_value">点击填写寄件地址</view>
+    </view>
+    <view class="right_box" bindtap="chooseAgent">地址薄</view>
+  </view>
+
+  <!-- Receiver Information -->
+  <view class="info_container">
+    <image class="icon" src="/assets/icons/location.svg"></image>
+    <view class="left_box" bindtap="createAgent" data-agent="receiver">
+      <view class="top_value">收件人信息</view>
+      <view class="bottom_value">点击填写收件地址</view>
+    </view>
+    <view class="right_box" bindtap="chooseAgent">地址薄</view>
+  </view>
 </view>
 

@@ -4,8 +4,8 @@
     
     <!-- Personal Information -->
     <view class="section__container">
-      <input name="姓名" placeholder="姓名" id="nameInput" />
-      <input name="电话" type="number" placeholder="电话" />
+      <input name="name" placeholder="姓名" id="nameInput" />
+      <input name="phone" type="number" placeholder="电话" />
     </view>
 
     <!-- Address Information -->
@@ -17,7 +17,7 @@
     
     <!-- Company Information -->
     <view class="section__container">
-      <input name="公司名称" placeholder="公司名称（选填）" />
+      <input name="company_name" placeholder="公司名称（选填）" />
     </view>
     
     <!-- Button Area -->

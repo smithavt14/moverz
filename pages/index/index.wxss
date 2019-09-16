@@ -6,3 +6,39 @@
   height: 100vh;
   width: 100vw;
 }
+
+.info_container {
+  display: flex;
+  height: 200rpx;
+  width: 100%;
+  align-items: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.info_container .icon {
+  padding: 20rpx;
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.info_container .left_box {
+  flex-grow: 1;
+  height: 80%;
+  border-right: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.info_container .right_box {
+  width: 175rpx;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info_container:last-child {
+  border-bottom: 5px solid rgba(0,0,0,0.1);
+}

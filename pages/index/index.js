@@ -2,7 +2,10 @@ const app = getApp()
 Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    hasUser: false
+    hasUser: false,
+    sender_agent: undefined,
+    receiver_agent: undefined,
+    order: undefined
   },
 
   // ----- Custom Functions -----
@@ -21,6 +24,13 @@ Page({
           })
         }
       }
+    })
+  },
+
+  createAgent: function (e) {
+    let agent = e.currentTarget.dataset.agent
+    wx.navigateTo({
+      url: `/pages/collectInfo/collectInfo?agent=${agent}`,
     })
   },
 

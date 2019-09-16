@@ -1,15 +1,22 @@
 Page({
   data: {
-    address: undefined
+    agent: {
+      name: undefined, 
+      phone: undefined, 
+      company_name: undefined, 
+      address: undefined,
+      address_lat: undefined, 
+      address_long: undefined
+    },
+    agent_role: undefined
   },
 
   formSubmit: function (e) {
-    console.log(e);
-  },
-
-  storeValue: function (e) {
+    let data = e.detail.value
     this.setData({
-      addressInput: e.detail.value
+      'agent.name': data.name,
+      'agent.phone': data.phone,
+      'agent.company_name': data.company_name
     })
   },
 
@@ -17,14 +24,10 @@ Page({
     let self = this
     wx.chooseLocation({
       success: (res) => {
-        console.log(res)
         self.setData({
-          address: {
-            address: res.address,
-            latitude: res.latitude,
-            longitude: res.longitude,
-            name: res.name
-          }
+          'agent.address': res.address,
+          'agent.address_long': res.longitude,
+          'agent.address_lat': res.latitude
         })
       },
       fail: (err) => {
@@ -33,5 +36,7 @@ Page({
     })
   },
 
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    console.log(options)
+  },
 })
