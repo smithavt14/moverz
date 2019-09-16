@@ -30,7 +30,7 @@ Page({
   createAgent: function (e) {
     let agent = e.currentTarget.dataset.agent
     wx.navigateTo({
-      url: `/pages/collectInfo/collectInfo?agent=${agent}`,
+      url: `/pages/createAgent/createAgent?agent=${agent}`,
     })
   },
 

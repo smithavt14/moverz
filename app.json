@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/collectInfo/collectInfo",
+    "pages/createAgent/createAgent",
     "pages/map/map"
   ],
   "window": {
