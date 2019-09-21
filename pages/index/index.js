@@ -3,9 +3,10 @@ Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUser: false,
-    sender_agent: undefined,
-    receiver_agent: undefined,
-    order: undefined
+    order: {
+      receiver_agent: undefined,
+      sender_agent: undefined
+    }
   },
 
   // ----- Custom Functions -----
@@ -30,7 +31,21 @@ Page({
   createAgent: function (e) {
     let agent = e.currentTarget.dataset.agent
     wx.navigateTo({
-      url: `/pages/createAgent/createAgent?agent=${agent}`,
+      url: `/pages/createAgent/createAgent?agent=${agent}`
+    })
+  },
+
+  getAgent: function (agentId, agentRole) {
+    let recordID = agentId
+    let Agent = new wx.BaaS.TableObject('agent')
+
+    Agent.get(recordID).then(res => {
+      let dataAgent = `order.${agentRole}`
+      this.setData({
+        [dataAgent]: res.data
+      })
+    }, err => {
+      console.log(err)
     })
   },
 
@@ -57,11 +72,9 @@ Page({
 
   // ----- Lifecycle Functions -----
   
-  onLoad: function () {
-    this.checkStorage()
+  onLoad: function (options) {
+    if (options.role && options.agent) {
+      this.getAgent(options.agent, options.role)
+    }
   }
 })
-
-// Next Steps:
-// 1. Create information collection page link
-// 2. 

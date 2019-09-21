@@ -10,9 +10,9 @@
 
     <!-- Address Information -->
     <view class="section__container">
-      <button wx:if="{{!address}}" id="search-btn" bindtap="searchAddress" >搜索地址</button>
-      <view wx:else>{{address.address}}</view>
-      <image wx:if="{{address}}" class="icon" src="/assets/icons/location.svg" bindtap="searchAddress"></image>
+      <button wx:if="{{!agent.address}}" id="search-btn" bindtap="searchAddress" >搜索地址</button>
+      <view wx:else>{{agent.address}}</view>
+      <image wx:if="{{agent.address}}" class="icon" src="/assets/icons/location.svg" bindtap="searchAddress"></image>
     </view>
     
     <!-- Company Information -->
