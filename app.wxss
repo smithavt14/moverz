@@ -3,4 +3,8 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  background: url("https://cloud-minapp-30339.cloud.ifanrusercontent.com/1iESuuX19zGyFEC3.png");
+  background-size: cover;
 }

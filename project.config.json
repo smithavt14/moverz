@@ -40,15 +40,8 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
-				{
-					"id": -1,
-					"name": "collection",
-					"pathName": "pages/collectInfo/collectInfo",
-					"query": "",
-					"scene": null
-				},
 				{
 					"id": -1,
 					"name": "map",
@@ -61,6 +54,20 @@
 					"name": "index w/ sender_agent options",
 					"pathName": "pages/index/index",
 					"query": "agent=5d86335e21ae7a497ec20b51&role=sender_agent",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "createParcel",
+					"pathName": "pages/createParsel/createParsel",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "index w/ parcel",
+					"pathName": "pages/index/index",
+					"query": "parcel=5d908bff5e6a2705fe84f933",
 					"scene": null
 				}
 			]

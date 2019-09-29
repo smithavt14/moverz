@@ -28,17 +28,80 @@
     
     <!-- if no existing agent -->
     <view wx:if="{{!order.receiver_agent}}" class="left_box" bindtap="createAgent" data-agent="receiver_agent">
-      <view class="top_value">收件人信息</view>
-      <view class="bottom_value">点击填写收件地址</view>
+      <view class="top_value">
+        <text>收件人信息</text>
+      </view>
+      <view class="bottom_value">
+        <text>点击填写收件地址</text>
+      </view>
     </view>
 
     <!-- if existing agent -->
     <view wx:else class="left_box" bindtap="createAgent" data-agent="receiver_agent">
-      <view class="top_value">{{order.receiver_agent.name}}</view>
-      <view class="bottom_value">{{order.receiver_agent.address}}</view>
+      <view class="top_value">
+        <text>{{order.receiver_agent.name}}</text>
+      </view>
+      <view class="bottom_value">
+        <text>{{order.receiver_agent.address}}</text>
+      </view>
     </view>
 
-    <view class="right_box" bindtap="chooseAgent">地址薄</view>
+    <view class="right_box" bindtap="chooseAgent">
+      <text>地址薄</text> 
+    </view>
+  </view>
+
+  <!-- Delivery Time -->
+  <view style="width: 100vw; background: white;">
+    <view class="order_container">
+      <view class="left_box">
+        上门时间
+      </view>
+      <view class="right_box">
+        <picker mode="time" value="{{order.pickup_time}}" start="{{pickupTime.min}}" end="{{pickupTime.max}}" bindchange="bindTimeChange">
+          <view wx:if="{{order.pickup_time === pickupTime.min}}" style="display: flex; align-items: center;">
+            <view>一小时内</view>
+            <image src="/assets/icons/arrow.png" class="icon"></image>
+          </view>
+          <view wx:else id="light-content">
+            {{order.pickup_time}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- Delivery Date -->
+    <view class="order_container">
+      <view class="left_box">
+        上门日期
+      </view>
+      <view class="right_box">
+        <picker mode="date" value="{{order.pickup_time}}" start="{{pickupTime.date}}" bindchange="bindDateChange">
+          <view wx:if="{{order.pickup_date === pickupTime.date}}" style="display: flex; align-items: center;">
+            <view>今天</view>
+            <image src="/assets/icons/arrow.png" class="icon"></image>
+          </view>
+          <view wx:else id="light-content">
+            {{order.pickup_date}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="order_container">
+      <view class="left_box">
+        物品信息
+      </view>
+      <view wx:if="{{!parcel}}" class="right_box" id="light-content">
+        <view>请填写</view>
+        <image src="/assets/icons/arrow.png" class="icon"></image>
+      </view>
+
+      <view wx:else class="right_box">
+        <view>{{parcel.category}} {{parcel.weight}} 公斤</view>
+        <image src="/assets/icons/arrow.png" class="icon"></image>
+      </view>
+    </view>
   </view>
 </view>
 

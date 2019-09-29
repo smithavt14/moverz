@@ -1,0 +1,45 @@
+<view class="page__container">
+  <!-- Categories -->
+  <view class="section_container">
+    <view class="title">包裹类型</view>
+    <view class="category_container">
+      <view 
+      wx:for="{{categories}}" 
+      wx:key="{{item}}" 
+      bindtap="chooseCategory" 
+      class=" item {{ parcel.category == item ? 'active': ''}}"
+      data-category="{{item}}"
+      >{{item}}</view>
+    </view>
+  </view>
+
+  <!-- Weight -->
+  <view class="section_container">
+    <view class="title">预估重量</view>
+    <view class="subtitle">注：实际重量以收派员确定为准</view>
+    <view class="weight_picker">
+      <view 
+      class="left-box {{parcel.weight === 1 ? 'disabled': ''}}"
+      data-number="0" 
+      bindtap="changeWeight">-</view>
+      <view class="middle-box">
+        <view>{{parcel.weight}}</view>
+        <view>公斤</view>
+      </view>
+      <view class="right-box" data-number="1" bindtap="changeWeight">+</view>
+    </view>
+  </view>
+
+  <!-- Image -->
+  <view class="section_container">
+    <view class="title">物品照片于捎话</view>
+    <view wx:if="{{!parcel.image}}" class="upload_box" bindtap="uploadImage">
+      <image class="upload_icon" src="/assets/icons/upload.svg"></image>
+    </view>
+    <image wx:else style="height: 100px; width: 100px; margin: 20rpx 0" src="{{parcel.image}}"></image>
+    
+    <!-- Comments -->
+    <input class="comment_box" placeholder="给小哥捎句话吧 ..." bindinput="changeComment"></input>
+  </view>
+  <button bindtap="createParcel" class="confirm_button">确定</button>
+</view>
