@@ -8,15 +8,15 @@
     <image class="icon" src="/assets/icons/location.svg"></image>
     
     <!-- if no existing agent -->
-    <view wx:if="{{!order.sender_agent}}" class="left_box" bindtap="createAgent" data-agent="sender_agent">
+    <view wx:if="{{!sender_agent}}" class="left_box" bindtap="createAgent" data-agent="sender">
       <view class="top_value">寄件人信息</view>
       <view class="bottom_value">点击填写寄件地址</view>
     </view>
 
     <!-- if existing agent -->
-    <view wx:else class="left_box" bindtap="createAgent" data-agent="sender_agent">
-      <view class="top_value">{{order.sender_agent.name}}</view>
-      <view class="bottom_value">{{order.sender_agent.address}}</view>
+    <view wx:else class="left_box" bindtap="createAgent" data-agent="sender">
+      <view class="top_value">{{sender_agent.name}}</view>
+      <view class="bottom_value">{{sender_agent.address}}</view>
     </view>
 
     <view class="right_box" bindtap="chooseAgent">地址薄</view>
@@ -27,7 +27,7 @@
     <image class="icon" src="/assets/icons/location.svg"></image>
     
     <!-- if no existing agent -->
-    <view wx:if="{{!order.receiver_agent}}" class="left_box" bindtap="createAgent" data-agent="receiver_agent">
+    <view wx:if="{{!receiver_agent}}" class="left_box" bindtap="createAgent" data-agent="receiver">
       <view class="top_value">
         <text>收件人信息</text>
       </view>
@@ -37,12 +37,12 @@
     </view>
 
     <!-- if existing agent -->
-    <view wx:else class="left_box" bindtap="createAgent" data-agent="receiver_agent">
+    <view wx:else class="left_box" bindtap="createAgent" data-agent="receiver">
       <view class="top_value">
-        <text>{{order.receiver_agent.name}}</text>
+        <text>{{receiver_agent.name}}</text>
       </view>
       <view class="bottom_value">
-        <text>{{order.receiver_agent.address}}</text>
+        <text>{{receiver_agent.address}}</text>
       </view>
     </view>
 
@@ -58,13 +58,13 @@
         上门时间
       </view>
       <view class="right_box">
-        <picker mode="time" value="{{order.pickup_time}}" start="{{pickupTime.min}}" end="{{pickupTime.max}}" bindchange="bindTimeChange">
-          <view wx:if="{{order.pickup_time === pickupTime.min}}" style="display: flex; align-items: center;">
+        <picker mode="time" value="{{pickup.time}}" start="{{pickup.min}}" bindchange="bindTimeChange">
+          <view wx:if="{{pickup.time === pickup.min}}" style="display: flex; align-items: center;">
             <view>一小时内</view>
             <image src="/assets/icons/arrow.png" class="icon"></image>
           </view>
           <view wx:else id="light-content">
-            {{order.pickup_time}}
+            {{pickup.time}}
           </view>
         </picker>
       </view>
@@ -76,19 +76,20 @@
         上门日期
       </view>
       <view class="right_box">
-        <picker mode="date" value="{{order.pickup_time}}" start="{{pickupTime.date}}" bindchange="bindDateChange">
-          <view wx:if="{{order.pickup_date === pickupTime.date}}" style="display: flex; align-items: center;">
+        <picker mode="date" value="{{pickup.date}}" start="{{pickup.date}}" bindchange="bindDateChange">
+          <view wx:if="{{pickup.date === today}}" style="display: flex; align-items: center;">
             <view>今天</view>
             <image src="/assets/icons/arrow.png" class="icon"></image>
           </view>
           <view wx:else id="light-content">
-            {{order.pickup_date}}
+            {{pickup.date}}
           </view>
         </picker>
       </view>
     </view>
 
-    <view class="order_container">
+    <!-- Parcel Information -->
+    <view class="order_container" bindtap="createParcel">
       <view class="left_box">
         物品信息
       </view>
@@ -104,4 +105,3 @@
     </view>
   </view>
 </view>
-

@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/createAgent/createAgent",
-    "pages/createParsel/createParsel",
+    "pages/createParcel/createParcel",
     "pages/map/map"
   ],
   "window": {

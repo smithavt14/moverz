@@ -58,14 +58,18 @@ Page({
   },
 
   createParcel: function (e) {
+    const eventChannel = this.getOpenerEventChannel()
+
+    let self = this
     let Parcel = new wx.BaaS.TableObject('parcel')
     let parcel = Parcel.create()
     let newParcel = this.data.parcel
 
     if (newParcel.category && newParcel.weight && newParcel.image) {
       parcel.set(newParcel).save().then(res => {
-        wx.reLaunch({
-          url: `/pages/index/index?parcel=${res.data.id}`
+        eventChannel.emit('getParcelInformation', {data: res.data})
+        wx.navigateBack({
+          url: '/pages/index/index'
         })
       }, err => {
         console.log(err)
@@ -78,6 +82,5 @@ Page({
     }
   },
   
-  onLoad: function (options) {
-  },
+  onLoad: function (options) {},
 })

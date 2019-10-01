@@ -12,16 +12,23 @@ Page({
   },
 
   createAgent: function (e) {
+    const eventChannel = this.getOpenerEventChannel()
+
     let self = this
+    let agent_role = self.data.agent_role
     let Agent = new wx.BaaS.TableObject('agent')
     let agent = Agent.create()
 
     agent.set(self.data.agent).save().then(res => {
-      console.log(res.data.id, 'A new agent was created.')
+      console.log('A new agent was created.', res.data.id)
+      eventChannel.emit('getAgentInformation', { 
+        agent: res.data,
+        agent_role
+        })
 
       wx.hideLoading()
-      wx.reLaunch({
-        url: `/pages/index/index?agent=${res.data.id}&role=${self.data.agent_role}`
+      wx.navigateBack({
+        url: '/pages/index/index'
       })
     }, err => {
       console.log(err)
@@ -76,5 +83,5 @@ Page({
     this.setData({
       agent_role: options.agent
     })
-  },
+  }
 })
