@@ -1,38 +1,52 @@
+const _auth = require('../../utils/auth.js')
+const _agent = require('../../utils/agent.js')
+
 Page({
   data: {
-    agent: {
-      name: undefined, 
-      phone: undefined, 
-      company_name: undefined, 
-      address: undefined,
-      address_lat: undefined, 
-      address_long: undefined
-    },
-    agent_role: undefined
+    agent: undefined,
+    role: undefined
   },
 
-  createAgent: function (e) {
+  /* ----- Custom Functions ----- */
+
+  confirmAgent: function () {
+    let agent = this.data.agent
+    agent.id ? this.updateAgent(agent) : this.createAgent(agent)
+  },
+
+  createAgent: async function (agent) {
+    let res = await _agent.create(agent)
+    this.navigateBack(res)
+  },
+
+  fetchAgent: async function (id) {
+    let agent = await _agent.fetch(id)
+    this.setData({ agent })
+  },
+
+  updateAgent: async function (agent) {
+    let res = await _agent.update(agent)
+    this.navigateBack(res.data)
+  },
+
+  navigateBack: function (agent) {
     const eventChannel = this.getOpenerEventChannel()
 
-    let self = this
-    let agent_role = self.data.agent_role
-    let Agent = new wx.BaaS.TableObject('agent')
-    let agent = Agent.create()
+    let role = this.data.role
+    let id = agent.id
 
-    agent.set(self.data.agent).save().then(res => {
-      console.log('A new agent was created.', res.data.id)
-      eventChannel.emit('getAgentInformation', { 
-        agent: res.data,
-        agent_role
-        })
-
-      wx.hideLoading()
-      wx.navigateBack({
-        url: '/pages/index/index'
-      })
-    }, err => {
-      console.log(err)
+    eventChannel.emit('receiveAgentInformation', { id, role })
+    
+    wx.navigateBack({
+      url: '/pages/index/index'
     })
+  },
+
+  editValue: function(e) {
+    let key = `agent.${e.currentTarget.dataset.value}`
+    let value = e.detail.value
+    
+    this.setData({ [key]: value })
   },
 
   formSubmit: function (e) {
@@ -44,11 +58,11 @@ Page({
       title: '加载中'
     })
 
-    if (data.name && data.phone && data.company_name && agent.address && agent.address_lat && agent.address_long) {
+    if (data.name && data.phone && data.company && agent.address && agent.address_lat && agent.address_long) {
       this.setData({
         'agent.name': data.name,
         'agent.phone': data.phone,
-        'agent.company_name': data.company_name
+        'agent.company': data.company
       })
       self.createAgent()
     } else {
@@ -59,8 +73,19 @@ Page({
     }
   },
 
-  getPhoneNumber: function (e) {
-    console.log(e)
+  userLogin: async function (e) {
+    let user = await _auth.login()
+    this.setData({ hasUser: !!user })
+  },
+
+  userLogout: async function () {
+    let user = await _auth.logout()
+    this.setData({ hasUser: !!user })
+  },
+
+  getCurrentUser: async function () {
+    let user = await _auth.getCurrentUser()
+    this.setData({ hasUser: !!user })
   },
 
   searchAddress: function (e) {
@@ -79,9 +104,20 @@ Page({
     })
   },
 
+  /* -----  Lifecycle Functions ----- */
+
   onLoad: function (options) {
-    this.setData({
-      agent_role: options.agent
+    const eventChannel = this.getOpenerEventChannel()
+
+    eventChannel.on('sendAgentInformation', (data) => {
+      let role = data.role
+      let agent = data.agent
+      
+      this.setData({ role })
+
+      if (agent) this.fetchAgent(agent.id)
     })
+
+    this.getCurrentUser()
   }
 })

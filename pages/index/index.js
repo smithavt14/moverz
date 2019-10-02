@@ -1,17 +1,18 @@
-const app = getApp()
+const auth = require('../../utils/auth.js')
+
 Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    hasUser: false,
+    hasUser: undefined,
+    parcel: undefined,
     pickup: {
       min: undefined,
       time: undefined,
       date: undefined
     },
-    today: undefined,
     receiver_agent: undefined,
     sender_agent: undefined,
-    parcel: undefined
+    today: undefined,
   },
 
   // ----- Custom Functions -----
@@ -30,39 +31,23 @@ Page({
     })
   },
 
-  checkStorage: function () {
-    let self = this
-    wx.getStorageInfo({
-      success(res) {
-        if (res.keys.includes('user')) {
-          self.setData({
-            hasUser: true
-          })
-        } else {
-          self.setData({
-            hasUser: false
-          })
-        }
-      }
-    })
-  },
-
   createAgent: function (e) {
     let self = this
-    let agent = e.currentTarget.dataset.agent
+    let role = e.currentTarget.dataset.role
     
     wx.navigateTo({
-      url: `/pages/createAgent/createAgent?agent=${agent}`,
+      url: `/pages/createAgent/createAgent`,
       events: {
-        getAgentInformation: function (data) {
-          console.log(data)
-          let agent = data.agent
-          let role = data.agent_role
-          let key = `${role}_agent`
-          self.setData({
-            [key]: agent
-          })
+        receiveAgentInformation: function (data) {
+          let id = data.id
+          let role = data.role
+          self.getAgentInformation(id, role)
         }
+      }, 
+      success: function (res) {
+        let key = `${role}_agent`
+        let agent = self.data[key]
+        res.eventChannel.emit('sendAgentInformation', {role, agent})
       }
     })
   },
@@ -74,10 +59,26 @@ Page({
       events: {
         getParcelInformation: function (res) {
           let parcel = res.data
-          self.setData({parcel})
+          self.setData({ parcel })
         }
       }
     })
+  },
+
+  getAgentInformation: function (id, role) {
+    let Agent = new wx.BaaS.TableObject('agent')
+    
+    Agent.get(id).then(res => {
+      let key = `${role}_agent`
+      this.setData({ [key]: res.data })
+    }, err => {
+      console.log(err)
+    })
+  },
+
+  getCurrentUser: async function () {
+    let user = await auth.getCurrentUser()
+    this.setData({ hasUser: !!user })
   },
 
   setPickupTime: function (e) {
@@ -98,36 +99,10 @@ Page({
     })
   },
 
-  userLogout: function () {
-    let self = this
-    wx.clearStorage()
-    self.checkStorage()
-  },
-
-  userInfoHandler: function (data) {
-    let self = this
-    wx.BaaS.auth.loginWithWechat(data).then(user => {
-      wx.setStorage({
-        key: 'user',
-        data: user,
-        success: function () {
-          self.checkStorage()
-        }
-      })
-    }, err => {
-      console.log(err)
-    })
-  },
-
   // ----- Lifecycle Functions -----
   
   onLoad: function (options) {
-    if (options.role && options.agent) {
-      this.getAgent(options.agent, options.role)
-    }
-    if (options.parcel) {
-      this.getParcel(options.parcel)
-    }
     this.setPickupTime()
+    this.getCurrentUser()
   }
 })

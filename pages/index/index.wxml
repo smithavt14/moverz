@@ -8,13 +8,13 @@
     <image class="icon" src="/assets/icons/location.svg"></image>
     
     <!-- if no existing agent -->
-    <view wx:if="{{!sender_agent}}" class="left_box" bindtap="createAgent" data-agent="sender">
+    <view wx:if="{{!sender_agent}}" class="left_box" bindtap="createAgent" data-role="sender">
       <view class="top_value">寄件人信息</view>
       <view class="bottom_value">点击填写寄件地址</view>
     </view>
 
     <!-- if existing agent -->
-    <view wx:else class="left_box" bindtap="createAgent" data-agent="sender">
+    <view wx:else class="left_box" bindtap="createAgent" data-role="sender">
       <view class="top_value">{{sender_agent.name}}</view>
       <view class="bottom_value">{{sender_agent.address}}</view>
     </view>
@@ -27,7 +27,7 @@
     <image class="icon" src="/assets/icons/location.svg"></image>
     
     <!-- if no existing agent -->
-    <view wx:if="{{!receiver_agent}}" class="left_box" bindtap="createAgent" data-agent="receiver">
+    <view wx:if="{{!receiver_agent}}" class="left_box" bindtap="createAgent" data-role="receiver">
       <view class="top_value">
         <text>收件人信息</text>
       </view>
@@ -37,7 +37,7 @@
     </view>
 
     <!-- if existing agent -->
-    <view wx:else class="left_box" bindtap="createAgent" data-agent="receiver">
+    <view wx:else class="left_box" bindtap="createAgent" data-role="receiver">
       <view class="top_value">
         <text>{{receiver_agent.name}}</text>
       </view>
@@ -63,8 +63,9 @@
             <view>一小时内</view>
             <image src="/assets/icons/arrow.png" class="icon"></image>
           </view>
-          <view wx:else id="light-content">
-            {{pickup.time}}
+          <view wx:else id="light-content" style="display: flex; align-items: center;">
+            <view>{{pickup.time}}</view>
+            <image src="/assets/icons/arrow.png" class="icon"></image>
           </view>
         </picker>
       </view>
@@ -81,8 +82,9 @@
             <view>今天</view>
             <image src="/assets/icons/arrow.png" class="icon"></image>
           </view>
-          <view wx:else id="light-content">
-            {{pickup.date}}
+          <view wx:else id="light-content" style="display: flex; align-items: center">
+            <view>{{pickup.date}}</view>
+            <image src="/assets/icons/arrow.png" class="icon"></image>
           </view>
         </picker>
       </view>
