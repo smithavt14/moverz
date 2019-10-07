@@ -65,7 +65,7 @@
   flex-shrink: 0;
 }
 
-.info_container:nth-last-child(2) {
+.info_container:nth-last-child(3) {
   border-bottom: 5px solid rgba(0,0,0,0.1);
 }
 

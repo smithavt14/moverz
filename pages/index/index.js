@@ -49,7 +49,9 @@ Page({
       'pickup.min': `${hours + 1}:${minutes}`,
       'pickup.time': `${hours + 1}:${minutes}`,
       'pickup.date': `${year}-${month}-${day}`,
-      today: `${year}-${month}-${day}`
+      today: `${year}-${month}-${day}`, 
+      'order.pickup_time': `${hours + 1}:${minutes}`,
+      'order.pickup_date': `${year}-${month}-${day}`
     })
   },
 
@@ -117,6 +119,7 @@ Page({
   /* ----- Fetch Data Functions ----- */
 
   getAgentInformation: async function (id, role) {
+    let self = this
     let agent = await _agent.fetch(id)
     let agentId = agent.id
     let orderKey = `order.${role}`
@@ -125,6 +128,8 @@ Page({
       [role]: agent,
       [orderKey]: agentId
     })
+
+    self.setPrice()
   },
 
   getParcelInformation: async function (id) {
@@ -135,6 +140,8 @@ Page({
       parcel,
       'order.parcel': parcelId
     })
+
+    this.setPrice()
   },
 
   /* ----- Auth Functions ----- */
@@ -157,8 +164,21 @@ Page({
   /* ----- Order Functions ----- */
 
   createOrder: async function () {
-    let order = await _order.create()
-    console.log(order)
+    let order = this.data.order
+    if (order && order.sender && order.receiver && order.parcel) {
+      let result = await _order.create(order)
+      console.log(result)
+      wx.showToast({title: 'Order Created!'})
+    } else { console.log(order) }
+  },
+
+  setPrice: async function () {
+    let order = this.data.order
+    
+    if (order && order.sender && order.receiver && order.parcel) {
+      let price = await _order.setPrice(order)
+      this.setData({ 'order.price': price })
+    }
   },
 
   // ----- Lifecycle Functions -----
