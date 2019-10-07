@@ -21,6 +21,7 @@
   padding: 20rpx;
   height: 50rpx;
   width: 50rpx;
+  flex-shrink: 0;
 }
 
 .info_container .left_box {
@@ -30,7 +31,29 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: white;
+  font-size: 35rpx;
+}
 
+.info_container .left_button {
+  height: 80%;
+  background: white;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  color: black;
+  padding: 0;
+  font-size: 35rpx;
+}
+
+.info_container .left_button::after {
+  border: none;
+  border-right: 1px solid rgba(0,0,0,0.1);
+  border-radius: 0;
+  color: black;
+  text-align: left;
 }
 
 .info_container .right_box {
@@ -83,4 +106,53 @@
 
 .order_container:last-child {
   border-bottom: none;
+}
+
+.btn_area {
+  width: 100vw;
+  height: 200rpx;
+  position: absolute;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+}
+
+.btn_area .container {
+  width: 95%;
+  height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 75rpx;
+  background: #1490B5;
+  color: white;
+  display: flex;
+  overflow: hidden;
+}
+
+.btn_area .container .left {
+  width: 55%;
+  height: 100%;
+  background: #20324E;
+  display: flex;
+  align-items: center;
+  padding: 0 50rpx;
+  box-sizing: border-box;
+  font-size: 35rpx;
+}
+
+.btn_area .container .triangle {
+  width: 0;
+  height: 0;
+  border-right: 75rpx solid transparent;
+  border-top: 125rpx solid #20324E;
+}
+
+.btn_area .container .right {
+  display: flex;
+  align-items: center;
+  font-size: 35rpx;
+  justify-content: center;
+  flex-grow: 1;
+  padding-right: 50rpx;
 }

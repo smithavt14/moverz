@@ -1,32 +1,42 @@
+const _auth = require('../../utils/auth.js')
+const _parcel = require('../../utils/parcel.js')
+
 Page({
   data: {
     categories: ['日用品', '食品', '文件', '数码产品', '衣物', '其他'],
+    hasUser: undefined,
     imagePath: undefined,
     parcel: {
-      category: undefined,
-      weight: 1,
-      image: undefined,
-      comment: undefined,
-    },
+      weight: 1
+    }
   },
 
-  chooseCategory: function (e) {
-    let category = e.currentTarget.dataset.category
-    this.setData({
-      'parcel.category': category
-    })
-  },
+  /* ----- Event Functions ----- */
 
   changeWeight: function (e) {
     let number = e.currentTarget.dataset.number
     let weight = this.data.parcel.weight
     weight = Number.parseInt(weight)
-    let update = number > 0 ? weight + 1 : weight - 1
-    if (update > 0) {
+    weight = number > 0 ? weight + 1 : weight - 1
+    if (weight > 0) {
       this.setData({
-        'parcel.weight': update
+        'parcel.weight': weight
       })
     }
+  },
+
+  changeComment: function (e) {
+    let value = e.detail.value
+    this.setData({
+      'parcel.comment': value
+    })
+  },
+  
+  chooseCategory: function (e) {
+    let category = e.currentTarget.dataset.category
+    this.setData({
+      'parcel.category': category
+    })
   },
 
   uploadImage: function () {
@@ -39,48 +49,78 @@ Page({
 
         MyFile.upload(fileParams, metaData).then(res => {
           let image = res.data.file.path
-          console.log(res.data.file)
           self.setData({
             'parcel.image': image
           })
         }, err => {
           console.log(err)
+          wx.showModal({title: '用户未登录'})
         })
       }
     })
   },
 
-  changeComment: function (e) {
-    let value = e.detail.value
-    this.setData({
-      'parcel.comment': value
+  /* ----- Parcel Functions ----- */
+
+  createParcel: async function () {
+    if (this.data.hasUser) {
+      let parcel = this.data.parcel
+      parcel = await _parcel.create(parcel)
+
+      this.navigateBack(parcel)
+    } else {
+      wx.showModal({ title: '用户未登录' })
+    }
+  },
+
+  fetchParcel: async function (id) {
+    let parcel = await _parcel.fetch(id)
+    this.setData({ parcel })
+  },
+
+  updateParcel: async function () {
+    let parcel = this.data.parcel
+    parcel = _parcel.update(parcel)
+
+    this.navigateBack(parcel)
+  },
+
+  /* ----- Auth Functions ----- */
+
+  getCurrentUser: async function () {
+    let user = await _auth.getCurrentUser()
+    this.setData({ hasUser: !!user })
+  },
+
+  login: async function () {
+    let user = await _auth.login()
+    this.setData({ hasUser: !!user })
+  },
+
+  logout: function () {
+    _auth.logout()
+  },
+
+  /* ----- Custom Functions ----- */
+
+  navigateBack: function (parcel) {
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.emit('getParcelInformation', { parcel })
+    wx.navigateBack({
+      url: 'pages/index/index'
     })
   },
 
-  createParcel: function (e) {
+  /* ----- Lifecycle Functions ----- */
+  
+  onLoad: function () {
     const eventChannel = this.getOpenerEventChannel()
 
-    let self = this
-    let Parcel = new wx.BaaS.TableObject('parcel')
-    let parcel = Parcel.create()
-    let newParcel = this.data.parcel
+    eventChannel.on('sendParcelInformation', (data) => {
+      let parcel = data.parcel
+      if (parcel) this.fetchParcel(parcel.id)
+    })
 
-    if (newParcel.category && newParcel.weight && newParcel.image) {
-      parcel.set(newParcel).save().then(res => {
-        eventChannel.emit('getParcelInformation', {data: res.data})
-        wx.navigateBack({
-          url: '/pages/index/index'
-        })
-      }, err => {
-        console.log(err)
-      })
-    } else {
-      wx.showToast({
-        title: '有错误',
-        icon: 'none'
-      })
-    }
+    this.getCurrentUser()
   },
-  
-  onLoad: function (options) {},
 })

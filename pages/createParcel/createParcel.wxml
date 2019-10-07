@@ -39,7 +39,10 @@
     <image wx:else style="height: 100px; width: 100px; margin: 20rpx 0" src="{{parcel.image}}"></image>
     
     <!-- Comments -->
-    <input class="comment_box" placeholder="给小哥捎句话吧 ..." bindinput="changeComment"></input>
+    <input class="comment_box" value="{{parcel.comment}}" placeholder="给小哥捎句话吧 ..." bindinput="changeComment"></input>
   </view>
-  <button bindtap="createParcel" class="confirm_button">确定</button>
+
+  <!-- Button Area -->
+  <button wx:if="{{hasUser}}" bindtap="createParcel" class="confirm_button">确定</button>
+  <button wx:else open-type="getUserInfo" bindgetuserinfo="login" class="confirm_button">登陆</button>
 </view>

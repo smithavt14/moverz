@@ -48,7 +48,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -76,6 +76,13 @@
 					"name": "index w/ parcel",
 					"pathName": "pages/index/index",
 					"query": "parcel=5d908bff5e6a2705fe84f933",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "User Agents",
+					"pathName": "pages/userAgents/userAgents",
+					"query": "",
 					"scene": null
 				}
 			]

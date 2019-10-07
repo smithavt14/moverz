@@ -4,88 +4,22 @@ const _agent = require('../../utils/agent.js')
 Page({
   data: {
     agent: undefined,
-    role: undefined
+    role: undefined,
+    position: undefined
   },
 
-  /* ----- Custom Functions ----- */
+  /* ---- Event Functions ----- */
 
   confirmAgent: function () {
     let agent = this.data.agent
     agent.id ? this.updateAgent(agent) : this.createAgent(agent)
   },
 
-  createAgent: async function (agent) {
-    let res = await _agent.create(agent)
-    this.navigateBack(res)
-  },
-
-  fetchAgent: async function (id) {
-    let agent = await _agent.fetch(id)
-    this.setData({ agent })
-  },
-
-  updateAgent: async function (agent) {
-    let res = await _agent.update(agent)
-    this.navigateBack(res.data)
-  },
-
-  navigateBack: function (agent) {
-    const eventChannel = this.getOpenerEventChannel()
-
-    let role = this.data.role
-    let id = agent.id
-
-    eventChannel.emit('receiveAgentInformation', { id, role })
-    
-    wx.navigateBack({
-      url: '/pages/index/index'
-    })
-  },
-
-  editValue: function(e) {
+  editValue: function (e) {
     let key = `agent.${e.currentTarget.dataset.value}`
     let value = e.detail.value
-    
+
     this.setData({ [key]: value })
-  },
-
-  formSubmit: function (e) {
-    let self = this
-    let data = e.detail.value
-    let agent = self.data.agent
-
-    wx.showLoading({
-      title: '加载中'
-    })
-
-    if (data.name && data.phone && data.company && agent.address && agent.address_lat && agent.address_long) {
-      this.setData({
-        'agent.name': data.name,
-        'agent.phone': data.phone,
-        'agent.company': data.company
-      })
-      self.createAgent()
-    } else {
-      wx.showToast({
-        title: '有错误',
-        icon: 'none'
-      })
-    }
-  },
-
-  userLogin: async function (e) {
-    let user = await _auth.login()
-    this.setData({ hasUser: !!user })
-  },
-
-  userLogout: async function () {
-    let user = await _auth.logout()
-    this.setData({ hasUser: !!user })
-  },
-
-  getCurrentUser: async function () {
-    let user = await _auth.getCurrentUser()
-    this.setData({ hasUser: !!user })
   },
 
   searchAddress: function (e) {
@@ -104,6 +38,58 @@ Page({
     })
   },
 
+  /* ----- Agent Functions ----- */
+
+  createAgent: async function (agent) {
+    let res = await _agent.create(agent)
+    this.navigateBack(res)
+  },
+
+  fetchAgent: async function (id) {
+    let agent = await _agent.fetch(id)
+    this.setData({ agent })
+  },
+
+  updateAgent: async function (agent) {
+    agent = await _agent.update(agent)
+    this.navigateBack(agent)
+  },
+
+  /* ----- Auth Functions ----- */
+
+  userLogin: async function (e) {
+    let user = await _auth.login()
+    this.setData({ hasUser: !!user })
+  },
+
+  userLogout: async function () {
+    let user = await _auth.logout()
+    this.setData({ hasUser: !!user })
+  },
+
+  getCurrentUser: async function () {
+    let user = await _auth.getCurrentUser()
+    this.setData({ hasUser: !!user })
+  },
+
+  /* ----- Custom Functions ----- */
+
+  navigateBack: function (agent) {
+    const eventChannel = this.getOpenerEventChannel()
+    let role = this.data.role
+    let id = agent.id
+    let position = this.data.position
+
+    eventChannel.emit('receiveAgentInformation', { id, role })
+    
+    if (position === 'userAgents') {
+      wx.navigateBack({ url: '/pages/userAgents/userAgents'})
+    }
+    if (position === 'index') {
+      wx.navigateBack({ url: '/pages/index/index' }) 
+    }
+  },
+
   /* -----  Lifecycle Functions ----- */
 
   onLoad: function (options) {
@@ -111,13 +97,13 @@ Page({
 
     eventChannel.on('sendAgentInformation', (data) => {
       let role = data.role
-      let agent = data.agent
+      let id = data.id
+      let position = data.position
       
-      this.setData({ role })
+      this.setData({ role, position })
 
-      if (agent) this.fetchAgent(agent.id)
+      if (id) this.fetchAgent(id)
     })
-
     this.getCurrentUser()
   }
 })

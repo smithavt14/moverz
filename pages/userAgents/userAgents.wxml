@@ -1,0 +1,40 @@
+<view class="page__container">
+
+  <button wx:if="{{!user}}" open-type="getUserInfo" bindgetuserinfo="login" type="primary">登陆</button>
+
+  <!-- User Container -->
+  <block wx:else>
+    <view 
+    wx:for="{{agents}}" 
+    class="agent_container" 
+    bindtap="navigateToIndex"
+    data-id="{{item.id}}">
+      <view class="top_box">
+        <text>{{item.name}} </text><text> {{item.phone}}</text>
+      </view>
+      <view class="middle_box">
+        <text>{{item.address}}</text>
+      </view>
+      <view class="bottom_box">
+        <!-- Edit Agent -->
+        <view 
+        class="flex" 
+        catchtap="editAgent"
+        data-id="{{item.id}}">
+          <image 
+          src="../../assets/icons/edit.svg" 
+          class="icon"></image>
+          <text>编辑</text>
+        </view>
+        <!-- Delete Agent -->
+        <view 
+        class="flex" 
+        catchtap="destroyAgent" 
+        data-id="{{item.id}}">
+          <image src="../../assets/icons/delete.svg" class="icon"></image>
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

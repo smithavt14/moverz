@@ -1,0 +1,44 @@
+.agent_container {
+  height: 250rpx;
+  width: 95%;
+  background: white;
+  padding: 30rpx;
+  box-sizing: border-box;
+  margin: 10rpx;
+  border-radius: 15rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.agent_container .top_box {
+  font-size: 35rpx;
+  font-weight: 600;
+}
+
+.agent_container .middle_box {
+  color: rgba(0,0,0,0.8);
+  margin: 15rpx 0;
+}
+
+.agent_container .bottom_box {
+  border-top: 1px solid rgba(0,0,0,.1);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-grow: 1;
+  color: rgba(0,0,0,0.5);
+}
+
+.bottom_box .flex {
+  display: flex;
+  align-items: center;
+  margin: 0 20rpx;
+}
+
+.agent_container .bottom_box .icon {
+  height: 30rpx;
+  width: 30rpx;
+  margin: 0 10rpx;
+}

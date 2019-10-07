@@ -10,6 +10,19 @@ const fetch = id => {
   })
 }
 
+const fetchUserAgents = id => {
+  return new Promise(resolve => {
+    let query = new wx.BaaS.Query()
+    query.compare('created_by', '=', id)
+
+    AgentTable.setQuery(query).orderBy('-created_at').find().then(res => {
+      resolve(res.data.objects)
+    }, err => {
+      resolve(err)
+    })
+  })
+}
+
 const create = data => {
   return new Promise(resolve => {
     let agent = AgentTable.create()
@@ -36,7 +49,7 @@ const update = agent => {
     })
 
     agentToUpdate.update().then(res => {
-      resolve(res)
+      resolve(res.data)
     }, err => {
       console.log(err)
       resolve(err)
@@ -54,4 +67,4 @@ const destroy = id => {
   })
 }
 
-module.exports = { fetch, create, update, destroy }
+module.exports = { fetch, fetchUserAgents, create, update, destroy }

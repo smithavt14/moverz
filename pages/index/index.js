@@ -1,84 +1,38 @@
-const auth = require('../../utils/auth.js')
+const _auth = require('../../utils/auth.js')
+const _agent = require('../../utils/agent.js')
+const _parcel = require('../../utils/parcel.js')
+const _order = require('../../utils/order.js')
 
 Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUser: undefined,
+    order: undefined,
     parcel: undefined,
     pickup: {
       min: undefined,
       time: undefined,
       date: undefined
     },
-    receiver_agent: undefined,
-    sender_agent: undefined,
+    receiver: undefined,
+    sender: undefined,
     today: undefined,
   },
 
-  // ----- Custom Functions -----
+  /* ----- Time Functions ----- */
 
   bindTimeChange: function (e) {
     let time = e.detail.value
     this.setData({
-      'pickup.time': time
+      'order.pickup_time': time
     })
   },
 
   bindDateChange: function (e) {
     let date = e.detail.value
     this.setData({
-      'pickup.date': date
+      'order.pickup_date': date
     })
-  },
-
-  createAgent: function (e) {
-    let self = this
-    let role = e.currentTarget.dataset.role
-    
-    wx.navigateTo({
-      url: `/pages/createAgent/createAgent`,
-      events: {
-        receiveAgentInformation: function (data) {
-          let id = data.id
-          let role = data.role
-          self.getAgentInformation(id, role)
-        }
-      }, 
-      success: function (res) {
-        let key = `${role}_agent`
-        let agent = self.data[key]
-        res.eventChannel.emit('sendAgentInformation', {role, agent})
-      }
-    })
-  },
-
-  createParcel: function () {
-    let self = this
-    wx.navigateTo({
-      url: '/pages/createParcel/createParcel',
-      events: {
-        getParcelInformation: function (res) {
-          let parcel = res.data
-          self.setData({ parcel })
-        }
-      }
-    })
-  },
-
-  getAgentInformation: function (id, role) {
-    let Agent = new wx.BaaS.TableObject('agent')
-    
-    Agent.get(id).then(res => {
-      let key = `${role}_agent`
-      this.setData({ [key]: res.data })
-    }, err => {
-      console.log(err)
-    })
-  },
-
-  getCurrentUser: async function () {
-    let user = await auth.getCurrentUser()
-    this.setData({ hasUser: !!user })
   },
 
   setPickupTime: function (e) {
@@ -99,10 +53,121 @@ Page({
     })
   },
 
+  /* ----- Navigation Functions ----- */
+
+  navigateToCreateAgent: function (e) {
+    let self = this
+    let position = 'index'
+    let role = e.currentTarget.dataset.role
+    let agent = this.data[role]
+
+    let id = agent ? agent.id : undefined
+
+    wx.navigateTo({
+      url: `/pages/createAgent/createAgent`,
+      events: {
+        receiveAgentInformation: function (data) {
+          let id = data.id
+          let role = data.role
+          self.getAgentInformation(id, role)
+        }
+      }, 
+      success: function (res) {
+        res.eventChannel.emit('sendAgentInformation', {role, id, position})
+      }
+    })
+  },
+
+  createParcel: function () {
+    let self = this
+    wx.navigateTo({
+      url: '/pages/createParcel/createParcel',
+      events: {
+        getParcelInformation: function (data) {
+          let parcel = data.parcel
+          self.getParcelInformation(parcel.id)
+        }
+      },
+      success: function (res) {
+        let parcel = self.data.parcel
+        res.eventChannel.emit('sendParcelInformation', { parcel })
+      }
+    })
+  },
+
+  navigateToUserAgents: function (e) {
+    let role = e.currentTarget.dataset.role
+    let self = this
+    wx.navigateTo({
+      url: '/pages/userAgents/userAgents',
+      events: { 
+        receiveAgentInformation: function (data) {
+          console.log(data)
+          let id = data.id
+          let role = data.role
+          self.getAgentInformation(id, role)
+        }
+      },
+      success: function (res) {
+        res.eventChannel.emit('sendAgentInformation', { role })
+      }
+    })
+  },
+
+  /* ----- Fetch Data Functions ----- */
+
+  getAgentInformation: async function (id, role) {
+    let agent = await _agent.fetch(id)
+    let agentId = agent.id
+    let orderKey = `order.${role}`
+    
+    this.setData({ 
+      [role]: agent,
+      [orderKey]: agentId
+    })
+  },
+
+  getParcelInformation: async function (id) {
+    let parcel = await _parcel.fetch(id)
+    let parcelId = parcel.id
+    
+    this.setData({ 
+      parcel,
+      'order.parcel': parcelId
+    })
+  },
+
+  /* ----- Auth Functions ----- */
+
+  getCurrentUser: async function () {
+    let user = await _auth.getCurrentUser()
+    this.setData({ hasUser: !!user })
+  },
+
+  logout: function () {
+    _auth.logout()
+    this.setData({hasUser: false})
+  },
+
+  userInfoHandler: async function (data) {
+    let user = await _auth.login(data)
+    if (user) this.navigateToCreateAgent(data)
+  },
+
+  /* ----- Order Functions ----- */
+
+  createOrder: async function () {
+    let order = await _order.create()
+    console.log(order)
+  },
+
   // ----- Lifecycle Functions -----
   
   onLoad: function (options) {
     this.setPickupTime()
+  },
+
+  onShow: function (options) {
     this.getCurrentUser()
-  }
+  },
 })

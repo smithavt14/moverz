@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/createAgent/createAgent",
     "pages/createParcel/createParcel",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/userAgents/userAgents"
   ],
   "window": {
     "backgroundTextStyle": "light",

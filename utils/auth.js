@@ -1,6 +1,6 @@
-const login = e => {
+const login = data => {
   return new Promise(resolve => {
-    wx.BaaS.auth.loginWithWechat().then(user => {
+    wx.BaaS.auth.loginWithWechat(data).then(user => {
       console.log('login', user)
       wx.setStorage({
         key: 'user',
@@ -30,23 +30,27 @@ const logout = e => {
 
 const getCurrentUser = e => {
   return new Promise(resolve => {
-    wx.BaaS.auth.getCurrentUser().then(user => {
-      console.log('already logged in', user)
-      wx.setStorage({
-        key: 'user',
-        data: user,
-        success: () => resolve(user)
-      })
-    }).catch(err => {
-      if (err.code === 604) {
-        console.log('not logged in')
+    let user = wx.getStorageSync('user')
+
+    if (!user) {
+      wx.BaaS.auth.getCurrentUser().then(user => {
+        console.log('already logged in', user)
         wx.setStorage({
           key: 'user',
-          data: undefined,
-          success: () => resolve(undefined)
+          data: user,
+          success: () => resolve(user)
         })
-      }
-    })
+      }).catch(err => {
+        if (err.code === 604) {
+          console.log('not logged in')
+          wx.setStorage({
+            key: 'user',
+            data: undefined,
+            success: () => resolve(undefined)
+          })
+        }
+      })
+    } else resolve(user)
   })
 }
 
