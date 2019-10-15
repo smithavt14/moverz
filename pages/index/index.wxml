@@ -1,130 +1,134 @@
 <view class="page__container">
+  <!-- Logo Container -->
+  <view class="logo__container">LOGO</view>
   <!-- Sender Information -->
-  <view class="info_container">
-    <image class="icon" src="/assets/icons/location.svg"></image>
-    
-    <!-- if no user & no existing agent -->
-    <button 
-    wx:if="{{!sender && !hasUser}}" 
-    open-type="getUserInfo" 
-    bindgetuserinfo="userInfoHandler" 
-    class="left_button" 
-    data-role="sender">
+  <view class="flex_container">
+    <view class="info_container">
+      <image class="icon" src="/assets/icons/shipping.png"></image>
+      
+      <!-- if no user & no existing agent -->
+      <button 
+      wx:if="{{!sender && !hasUser}}" 
+      open-type="getUserInfo" 
+      bindgetuserinfo="userInfoHandler" 
+      class="left_button" 
+      data-role="sender">
+        <view 
+        class="top_value" 
+        style="height: 55rpx">寄件人信息</view>
+        <view 
+        class="bottom_value">点击填写寄件地址</view>
+      </button>
+
+      <!-- if user & no existing agent -->
       <view 
-      class="top_value" 
-      style="height: 55rpx">寄件人信息</view>
-      <view 
-      class="bottom_value">点击填写寄件地址</view>
-    </button>
-
-    <!-- if user & no existing agent -->
-    <view 
-    wx:if="{{!sender && hasUser}}" 
-    class="left_box" 
-    bindtap="navigateToCreateAgent"
-    data-role="sender">
-      <view class="top_value">寄件人信息</view>
-      <view class="bottom_value">点击填写寄件地址</view>
-    </view>
-
-    <!-- if existing agent -->
-    <view 
-    wx:if="{{ sender && hasUser }}"
-    class="left_box" 
-    bindtap="navigateToCreateAgent" 
-    data-role="sender">
-      <view class="top_value">{{sender.name}}</view>
-      <view class="bottom_value">{{sender.address}}</view>
-    </view>
-
-    <view 
-    class="right_box" 
-    data-role="sender"
-    bindtap="navigateToUserAgents">地址薄</view>
-  </view>
-
-  <!-- Receiver Information -->
-  <view class="info_container">
-    <image class="icon" src="/assets/icons/location.svg"></image>
-    
-    <!-- if no user & no existing agent -->
-    <button 
-    wx:if="{{!receiver && !hasUser}}" 
-    open-type="getUserInfo" 
-    bindgetuserinfo="userInfoHandler" 
-    class="left_button" 
-    data-role="receiver">
-      <view 
-      class="top_value"
-      style="height: 55rpx">
-        <text>收件人信息</text>
+      wx:if="{{!sender && hasUser}}" 
+      class="left_box" 
+      bindtap="navigateToCreateAgent"
+      data-role="sender">
+        <view class="top_value">寄件人信息</view>
+        <view class="bottom_value">点击填写寄件地址</view>
       </view>
-      <view class="bottom_value">
-        <text>点击填写收件地址</text>
+
+      <!-- if existing agent -->
+      <view 
+      wx:if="{{ sender && hasUser }}"
+      class="left_box" 
+      bindtap="navigateToCreateAgent" 
+      data-role="sender">
+        <view class="top_value">{{sender.name}}</view>
+        <view class="bottom_value">{{sender.address}}</view>
       </view>
-    </button>
 
-    <!-- if user & no existing agent -->
-    <view 
-    wx:if="{{!receiver && hasUser}}" 
-    class="left_box" 
-    bindtap="navigateToCreateAgent"
-    data-role="receiver">
-      <view class="top_value">收件人信息</view>
-      <view class="bottom_value">点击填写收件地址</view>
+      <view 
+      class="right_box" 
+      data-role="sender"
+      bindtap="navigateToUserAgents">地址薄</view>
     </view>
 
-    <!-- if existing agent -->
-    <view 
-    wx:if="{{ receiver && hasUser }}"
-    class="left_box" 
-    bindtap="navigateToCreateAgent" 
-    data-role="receiver">
-      <view class="top_value">{{receiver.name}}</view>
-      <view class="bottom_value">{{receiver.address}}</view>
+    <!-- Receiver Information -->
+    <view class="info_container">
+      <image class="icon" src="/assets/icons/bullseye.png"></image>
+      
+      <!-- if no user & no existing agent -->
+      <button 
+      wx:if="{{!receiver && !hasUser}}" 
+      open-type="getUserInfo" 
+      bindgetuserinfo="userInfoHandler" 
+      class="left_button" 
+      data-role="receiver">
+        <view 
+        class="top_value"
+        style="height: 55rpx">
+          <text>收件人信息</text>
+        </view>
+        <view class="bottom_value">
+          <text>点击填写收件地址</text>
+        </view>
+      </button>
+
+      <!-- if user & no existing agent -->
+      <view 
+      wx:if="{{!receiver && hasUser}}" 
+      class="left_box" 
+      bindtap="navigateToCreateAgent"
+      data-role="receiver">
+        <view class="top_value">收件人信息</view>
+        <view class="bottom_value">点击填写收件地址</view>
+      </view>
+
+      <!-- if existing agent -->
+      <view 
+      wx:if="{{ receiver && hasUser }}"
+      class="left_box" 
+      bindtap="navigateToCreateAgent" 
+      data-role="receiver">
+        <view class="top_value">{{receiver.name}}</view>
+        <view class="bottom_value">{{receiver.address}}</view>
+      </view>
+
+      <view class="right_box" 
+      bindtap="navigateToUserAgents"
+      data-role="receiver">
+        <text>地址薄</text> 
+      </view>
     </view>
 
-    <view class="right_box" 
-    bindtap="navigateToUserAgents"
-    data-role="receiver">
-      <text>地址薄</text> 
-    </view>
-  </view>
-
-  <!-- Delivery Time -->
-  <view style="width: 100vw; background: white;">
+    <!-- Delivery Time -->
     <view class="order_container">
+      <image class="icon" src="/assets/icons/clock.png"></image>
       <view class="left_box">
         上门时间
       </view>
       <view class="right_box">
-        <picker mode="time" value="{{pickup.time}}" start="{{pickup.min}}" bindchange="bindTimeChange">
-          <view wx:if="{{pickup.time === pickup.min}}" style="display: flex; align-items: center;">
+        <picker mode="time" value="{{order.pickup_time}}" start="{{pickup.min}}" bindchange="bindTimeChange">
+          <view wx:if="{{order.pickup_time === pickup.min}}" style="display: flex; align-items: center;" id="light-content">
             <view>一小时内</view>
-            <image src="/assets/icons/arrow.png" class="icon"></image>
+            <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
-          <view wx:else id="light-content" style="display: flex; align-items: center;">
+          <view wx:else style="display: flex; align-items: center;">
             <view>{{pickup.time}}</view>
-            <image src="/assets/icons/arrow.png" class="icon"></image>
+            <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
       </view>
     </view>
 
-    <!-- Delivery Date -->
+      <!-- Delivery Date -->
     <view class="order_container">
+      <image class="icon" src="/assets/icons/calendar.png"></image>
       <view class="left_box">
         上门日期
       </view>
       <view class="right_box">
-        <picker mode="date" value="{{pickup.date}}" start="{{pickup.date}}" bindchange="bindDateChange">
-          <view wx:if="{{pickup.date === today}}" style="display: flex; align-items: center;">
+        <picker mode="date" value="{{order.pickup_date}}" start="{{pickup.date}}" bindchange="bindDateChange">
+          <view wx:if="{{order.pickup_date === today}}" style="display: flex; align-items: center;" id="light-content">
             <view>今天</view>
-            <image src="/assets/icons/arrow.png" class="icon"></image>
+            <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
-          <view wx:else id="light-content" style="display: flex; align-items: center">
+          <view wx:else style="display: flex; align-items: center">
             <view>{{pickup.date}}</view>
-            <image src="/assets/icons/arrow.png" class="icon"></image>
+            <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
       </view>
@@ -132,18 +136,39 @@
 
     <!-- Parcel Information -->
     <view class="order_container" bindtap="createParcel">
+      <image class="icon" src="/assets/icons/box.png"></image>
       <view class="left_box">
         物品信息
       </view>
       <view wx:if="{{!parcel}}" class="right_box" id="light-content">
         <view>请填写</view>
-        <image src="/assets/icons/arrow.png" class="icon"></image>
+        <image src="/assets/icons/arrow.png" class="arrow"></image>
       </view>
 
       <view wx:else class="right_box">
         <view>{{parcel.category}} {{parcel.weight}} 公斤</view>
-        <image src="/assets/icons/arrow.png" class="icon"></image>
+        <image src="/assets/icons/arrow.png" class="arrow"></image>
       </view>
+    </view>
+  </view>
+
+  <!-- Weather Container -->
+  <view class="weather__container">
+    <view class="top_box">
+      <view class="box">image</view>
+      <view class="box">
+        <view class="top">{{weather.current.pollution.aqius}}</view>
+        <view class="bottom">US AQI</view>
+      </view>
+      <view class="box">{{weather.city}}</view>
+    </view>
+    <view class="bottom_box">
+      <view class="box">
+        <image class="icon" src="https://airvisual.com/images/{{weather.current.weather.ic}}.png"></image>
+        <view>{{weather.current.weather.tp}}°</view>
+      </view>
+      <view class="box"></view>
+      <view class="box"></view>
     </view>
   </view>
 

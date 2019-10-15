@@ -2,6 +2,7 @@ const _auth = require('../../utils/auth.js')
 const _agent = require('../../utils/agent.js')
 const _parcel = require('../../utils/parcel.js')
 const _order = require('../../utils/order.js')
+const _aqi = require('../../utils/aqi.js')
 
 Page({
   data: {
@@ -17,6 +18,7 @@ Page({
     receiver: undefined,
     sender: undefined,
     today: undefined,
+    weather: undefined
   },
 
   /* ----- Time Functions ----- */
@@ -104,7 +106,6 @@ Page({
       url: '/pages/userAgents/userAgents',
       events: { 
         receiveAgentInformation: function (data) {
-          console.log(data)
           let id = data.id
           let role = data.role
           self.getAgentInformation(id, role)
@@ -169,7 +170,7 @@ Page({
       let result = await _order.create(order)
       console.log(result)
       wx.showToast({title: 'Order Created!'})
-    } else { console.log(order) }
+    } 
   },
 
   setPrice: async function () {
@@ -190,4 +191,9 @@ Page({
   onShow: function (options) {
     this.getCurrentUser()
   },
+
+  onReady: async function () {
+    let weather = await _aqi.fetch()
+    this.setData({ weather })
+  }
 })

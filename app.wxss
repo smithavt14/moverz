@@ -5,6 +5,7 @@
   position: relative;
   width: 100vw;
   min-height: 100vh;
-  background: url("https://cloud-minapp-30339.cloud.ifanrusercontent.com/1iESuuX19zGyFEC3.png");
+  /* background: url("https://cloud-minapp-30339.cloud.ifanrusercontent.com/1iESuuX19zGyFEC3.png"); */
+  background-color: #F3F3F3;
   background-size: cover;
 }
