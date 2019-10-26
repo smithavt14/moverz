@@ -107,7 +107,7 @@
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center;">
-            <view>{{pickup.time}}</view>
+            <view>{{order.pickup_time}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
@@ -127,7 +127,7 @@
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center">
-            <view>{{pickup.date}}</view>
+            <view>{{order.pickup_date}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
@@ -160,7 +160,7 @@
       </view>
       <view class="box">
         <view class="top">{{air.quality.aqi}}</view>
-        <view class="bottom">China AQI</view>
+        <view class="bottom">中国 AQI</view>
       </view>
       <view class="box" style="font-size: 50rpx">{{air.location}}</view>
     </view>
