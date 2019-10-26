@@ -3,9 +3,11 @@ const key = '227fdcb7a5f24d2d87e3fa9fa0e0f320'
 
 /* --- https://dev.heweather.com/docs/api/air --- */
 
+/* If user is not logged in, first display information for Hangzhou. If user is logged in, then display information for their local area. */
+
 const fetchAQI = async () => {
   let user = await _auth.getCurrentUser()
-
+  if (!user) user = {city: 'Hangzhou'}
   return new Promise (resolve => {
     
     let url = `https://free-api.heweather.net/s6/air/now?location=${user.city}&key=${key}`
@@ -66,11 +68,11 @@ const darkenColor = (hex) => {
 }
 
 const fetchWeather = async () => {
-  
   let user = await _auth.getCurrentUser()
+  if (!user) user = { city: 'Hangzhou' }
 
   return new Promise(resolve => {
-
+    
     let url = `https://free-api.heweather.net/s6/weather/now?location=${user.city}&key=${key}`
 
     wx.request({

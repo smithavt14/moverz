@@ -145,6 +145,16 @@ Page({
     this.setPrice()
   },
 
+  getWeather: async function () {
+    let aqi = await _weather.fetchAQI()
+    let weather = await _weather.fetchWeather()
+    this.setData({
+      ['air.location']: aqi.location,
+      ['air.quality']: aqi.air,
+      ['air.weather']: weather
+    })
+  },
+
   /* ----- Auth Functions ----- */
 
   getCurrentUser: async function () {
@@ -188,17 +198,10 @@ Page({
     this.setPickupTime()
   },
 
-  onShow: function (options) {
-    this.getCurrentUser()
+  onShow: async function (options) {
+    let user = this.getCurrentUser()
+    this.getWeather()
   },
 
-  onReady: async function () {
-    let aqi = await _weather.fetchAQI()
-    let weather = await _weather.fetchWeather()
-    this.setData({
-      ['air.location']: aqi.location,
-      ['air.quality']: aqi.air,
-      ['air.weather']: weather
-    })
-  }
+  onReady: function () {}
 })
