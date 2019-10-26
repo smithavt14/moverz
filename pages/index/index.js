@@ -2,7 +2,7 @@ const _auth = require('../../utils/auth.js')
 const _agent = require('../../utils/agent.js')
 const _parcel = require('../../utils/parcel.js')
 const _order = require('../../utils/order.js')
-const _aqi = require('../../utils/aqi.js')
+const _weather = require('../../utils/weather.js')
 
 Page({
   data: {
@@ -18,7 +18,7 @@ Page({
     receiver: undefined,
     sender: undefined,
     today: undefined,
-    weather: undefined
+    air: undefined
   },
 
   /* ----- Time Functions ----- */
@@ -193,7 +193,12 @@ Page({
   },
 
   onReady: async function () {
-    let weather = await _aqi.fetch()
-    this.setData({ weather })
+    let aqi = await _weather.fetchAQI()
+    let weather = await _weather.fetchWeather()
+    this.setData({
+      ['air.location']: aqi.location,
+      ['air.quality']: aqi.air,
+      ['air.weather']: weather
+    })
   }
 })

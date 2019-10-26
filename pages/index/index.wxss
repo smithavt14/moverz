@@ -206,8 +206,7 @@
 }
 
 .weather__container .top_box {
-  height: 50%;
-  background: #FFBC79;
+  height: 60%;
   border-radius: 10rpx 10rpx 0 0;
   display: flex;
 }
@@ -219,6 +218,12 @@
   justify-content: center;
   align-items: center;
   opacity: .75;
+  border-radius: 10rpx;
+}
+
+.weather__container .top_box .box image {
+  height: 100rpx;
+  width: 100rpx;
 }
 
 .weather__container .top_box .box .top {
@@ -232,10 +237,11 @@
 } 
 
 .weather__container .bottom_box {
-  height: 50%;
+  height: 40%;
   display: flex;
   border-radius: 0 0 10rpx 10rpx;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .weather__container .bottom_box .box {
@@ -245,7 +251,8 @@
   border-right: 1px solid rgba(0,0,0,0.1);
   justify-content: center;
   align-items: center;
-  font-size: 35rpx;
+  font-size: 30rpx;
+  color: #20324E;
 }
 
 .weather__container .bottom_box .box:last-child {
@@ -253,7 +260,13 @@
 }
 
 .bottom_box .box .icon {
-  height: 80rpx;
-  width: 80rpx;
-  margin: 0 20rpx;
+  height: 60rpx;
+  width: 60rpx;
+  margin-right: 15rpx;
+}
+
+.bottom_box .box .small_icon {
+  height: 40rpx;
+  width: 40rpx;
+  margin-right: 20rpx;
 }

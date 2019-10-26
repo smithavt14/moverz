@@ -153,22 +153,30 @@
   </view>
 
   <!-- Weather Container -->
-  <view class="weather__container">
-    <view class="top_box">
-      <view class="box">image</view>
-      <view class="box">
-        <view class="top">{{weather.current.pollution.aqius}}</view>
-        <view class="bottom">US AQI</view>
+  <view wx:if="{{ hasUser }}" class="weather__container">
+    <view class="top_box" style="background: {{air.quality.hex}}">
+      <view class="box" style="background: {{ air.quality.darkHex}}">
+        <image class = ""src="../../assets/icons/air_quality.svg"></image>
       </view>
-      <view class="box">{{weather.city}}</view>
+      <view class="box">
+        <view class="top">{{air.quality.aqi}}</view>
+        <view class="bottom">China AQI</view>
+      </view>
+      <view class="box" style="font-size: 50rpx">{{air.location}}</view>
     </view>
     <view class="bottom_box">
       <view class="box">
-        <image class="icon" src="https://airvisual.com/images/{{weather.current.weather.ic}}.png"></image>
-        <view>{{weather.current.weather.tp}}°</view>
+        <image class="icon" src="../../assets/icons/weather/{{ air.weather.cond_code }}.png"></image>
+        <view>{{air.weather.tmp}}°</view>
       </view>
-      <view class="box"></view>
-      <view class="box"></view>
+      <view class="box">
+        <image class="small_icon" src="../../assets/icons/humidity.svg"></image>
+        <view>{{air.weather.hum}}%</view>
+      </view>
+      <view class="box">
+        <image class="small_icon" src="../../assets/icons/wind_direction.svg" style="transform: rotate({{ air.weather.wind_deg }}deg)"></image>
+        <view>{{ air.weather.wind_spd }} km/s</view>
+      </view>
     </view>
   </view>
 
