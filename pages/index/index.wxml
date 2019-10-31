@@ -164,7 +164,7 @@
       </view>
       <view class="box" style="font-size: 50rpx">{{air.location}}</view>
     </view>
-    <view class="bottom_box">
+    <!-- <view class="bottom_box">
       <view class="box">
         <image class="icon" src="../../assets/icons/weather/{{ air.weather.cond_code }}.png"></image>
         <view>{{air.weather.tmp}}°</view>
@@ -176,8 +176,8 @@
       <view class="box">
         <image class="small_icon" src="../../assets/icons/wind_direction.svg" style="transform: rotate({{ air.weather.wind_deg }}deg)"></image>
         <view>{{ air.weather.wind_spd }} km/s</view>
-      </view>
-    </view>
+      </view> 
+    </view> -->
   </view>
 
   <!-- Button Area -->

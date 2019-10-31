@@ -165,7 +165,7 @@
   height: 125rpx;
   position: absolute;
   bottom: 50rpx;
-  border-radius: 75rpx;
+  border-radius: 25rpx;
   background: #1490B5;
   color: white;
   display: flex;
@@ -200,7 +200,7 @@
 }
 
 .weather__container {
-  height: 250rpx;
+  height: 150rpx;
   width: 90%;
   margin: 30rpx 0 230rpx 0;
   background: white;
@@ -211,9 +211,9 @@
 }
 
 .weather__container .top_box {
-  height: 60%;
-  border-radius: 10rpx 10rpx 0 0;
+  height: 100%;
   display: flex;
+  border-radius: 10rpx;
 }
 
 .weather__container .top_box .box {
@@ -239,12 +239,11 @@
 
 .weather__container .top_box .box .bottom {
   font-size: 25rpx;
-} 
+}
 
 .weather__container .bottom_box {
   height: 40%;
   display: flex;
-  border-radius: 0 0 10rpx 10rpx;
   align-items: center;
   box-sizing: border-box;
 }

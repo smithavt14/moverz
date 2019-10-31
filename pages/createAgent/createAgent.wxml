@@ -1,28 +1,41 @@
 <view class="page__container">    
-  <!-- Personal Information -->
-  <view class="section__container">
-    <input data-value="name" placeholder="姓名" id="nameInput" value="{{agent.name}}" bindinput="editValue"/>
-    <input data-value="phone" type="number" placeholder="电话" value="{{agent.phone}}" bindinput="editValue"/>
-  </view>
-
-  <!-- Address Information -->
-  <view class="section__container">
-    <button wx:if="{{!agent.address}}" id="search-btn" bindtap="searchAddress">搜索地址</button>
-    <view wx:else>{{agent.address}}</view>
-    <image wx:if="{{agent.address}}" class="icon" src="/assets/icons/location.svg" bindtap="searchAddress"></image>
-  </view>
-  <view class="section__container">
-    <input data-value="address_2" placeholder="详细地址（确到门牌号）" value="{{agent.address_2}}" bindinput="editValue"/>
-  </view>
-
-  <!-- Company Information -->
-  <view class="section__container">
-    <input data-value="company" placeholder="公司名称（选填）" value="{{agent.company}}" bindinput="editValue"/>
-  </view>
   
-  <!-- Button Area -->
-  <view class="btn-area">
-    <button wx:if="{{hasUser}}" type="primary" bindtap="confirmAgent">确认</button>
-    <button wx:else open-type="getUserInfo" bindgetuserinfo="userLogin" type="primary">登陆</button>
+  <view class="flex__container">
+    <!-- Personal Information -->
+    <view class="section__container">
+      <input 
+      data-value="name" 
+      placeholder="姓名" 
+      id="nameInput" 
+      value="{{agent.name}}" 
+      bindinput="editValue"/>
+      <input 
+      data-value="phone" 
+      type="number" 
+      placeholder="电话" 
+      value="{{agent.phone}}"
+      style="margin-left: 15px;"
+      bindinput="editValue"/>
+    </view>
+
+    <!-- Address Information -->
+    <view class="section__container">
+      <button wx:if="{{!agent.address}}" id="search-btn" bindtap="searchAddress">搜索地址</button>
+      <view wx:else>{{agent.address}}</view>
+      <image wx:if="{{agent.address}}" class="icon" src="/assets/icons/location.svg" bindtap="searchAddress"></image>
+    </view>
+    <view class="section__container">
+      <input data-value="address_2" placeholder="详细地址（确到门牌号）" value="{{agent.address_2}}" bindinput="editValue"/>
+    </view>
+
+    <!-- Company Information -->
+    <view class="section__container">
+      <input data-value="company" placeholder="公司名称（选填）" value="{{agent.company}}" bindinput="editValue"/>
+    </view>
+    
+    <!-- Button Area -->
+    <view class="btn-area">
+      <view wx:if="{{hasUser}}" class="btn" type="primary" bindtap="confirmAgent">确认</view>
+    </view>
   </view>
 </view>
