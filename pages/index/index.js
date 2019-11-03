@@ -8,6 +8,7 @@ Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUser: undefined,
+    loginAnimation: false,
     order: undefined,
     parcel: undefined,
     pickup: {
@@ -67,34 +68,55 @@ Page({
 
     let id = agent ? agent.id : undefined
 
-    wx.navigateTo({
-      url: `/pages/createAgent/createAgent`,
-      events: {
-        receiveAgentInformation: function (data) {
-          let id = data.id
-          let role = data.role
-          self.getAgentInformation(id, role)
+    if (this.data.hasUser) {
+      wx.navigateTo({
+        url: `/pages/createAgent/createAgent`,
+        events: {
+          receiveAgentInformation: function (data) {
+            let id = data.id
+            let role = data.role
+            self.getAgentInformation(id, role)
+          }
+        },
+        success: function (res) {
+          res.eventChannel.emit('sendAgentInformation', { role, id, position })
         }
-      }, 
-      success: function (res) {
-        res.eventChannel.emit('sendAgentInformation', {role, id, position})
-      }
-    })
+      })
+    } else { this.loginNotice() }
   },
 
   createParcel: function () {
     let self = this
-    wx.navigateTo({
-      url: '/pages/createParcel/createParcel',
-      events: {
-        getParcelInformation: function (data) {
-          let parcel = data.parcel
-          self.getParcelInformation(parcel.id)
+
+    if (this.data.hasUser) {
+      wx.navigateTo({
+        url: '/pages/createParcel/createParcel',
+        events: {
+          getParcelInformation: function (data) {
+            let parcel = data.parcel
+            self.getParcelInformation(parcel.id)
+          }
+        },
+        success: function (res) {
+          let parcel = self.data.parcel
+          res.eventChannel.emit('sendParcelInformation', { parcel })
         }
-      },
-      success: function (res) {
-        let parcel = self.data.parcel
-        res.eventChannel.emit('sendParcelInformation', { parcel })
+      })
+    } else { this.loginNotice() }
+  },
+
+  loginNotice: function () {
+    self = this
+    
+    wx.showToast({
+      title: '请登录', 
+      icon: 'none',
+      duration: 1500,
+      success: function () {
+        self.setData({ loginAnimation: true })
+        setTimeout(function () { 
+          self.setData({ loginAnimation: false }) 
+          }, 1500)
       }
     })
   },
@@ -102,19 +124,24 @@ Page({
   navigateToUserAgents: function (e) {
     let role = e.currentTarget.dataset.role
     let self = this
-    wx.navigateTo({
-      url: '/pages/userAgents/userAgents',
-      events: { 
-        receiveAgentInformation: function (data) {
-          let id = data.id
-          let role = data.role
-          self.getAgentInformation(id, role)
+
+    if (this.data.hasUser) {
+      wx.navigateTo({
+        url: '/pages/userAgents/userAgents',
+        events: {
+          receiveAgentInformation: function (data) {
+            let id = data.id
+            let role = data.role
+            self.getAgentInformation(id, role)
+          }
+        },
+        success: function (res) {
+          res.eventChannel.emit('sendAgentInformation', { role })
         }
-      },
-      success: function (res) {
-        res.eventChannel.emit('sendAgentInformation', { role })
-      }
-    })
+      })
+    } else {
+      this.loginNotice()
+    }
   },
 
   /* ----- Fetch Data Functions ----- */
@@ -169,7 +196,7 @@ Page({
 
   userInfoHandler: async function (data) {
     let user = await _auth.login(data)
-    if (user) this.navigateToCreateAgent(data)
+    this.setData({ hasUser: !!user })
   },
 
   /* ----- Order Functions ----- */

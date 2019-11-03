@@ -1,3 +1,5 @@
+@import "../../styles/keyframes.wxss";
+
 .page-container {
   display: flex;
   flex-direction: column;
@@ -30,7 +32,7 @@
 
 .info_container {
   display: flex;
-  height: 150rpx;
+  height: 120rpx;
   width: 95%;
   align-items: center;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -99,7 +101,7 @@
 
 .order_container {
   display: flex;
-  height: 150rpx;
+  height: 120rpx;
   width: 95%;
   align-items: center;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -202,7 +204,7 @@
 .weather__container {
   height: 150rpx;
   width: 90%;
-  margin: 30rpx 0 230rpx 0;
+  margin-top: 30rpx;
   background: white;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   border-radius: 10rpx;
@@ -273,4 +275,26 @@
   height: 40rpx;
   width: 40rpx;
   margin-right: 20rpx;
+}
+
+.login-btn {
+  width: 95%;
+  height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 25rpx;
+  background: #20324E;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bounce {
+  animation: bounce .75s ease-in-out infinite;
+}
+
+.dim {
+  animation: dim .75s ease-in-out infinite;
 }

@@ -33,7 +33,7 @@
 .section__container view {
   height: 70%;
   display: flex;
-  padding-left: 15px;
+  /* padding-left: 15px; */
   flex-grow: 1;
   align-items: center;
 }

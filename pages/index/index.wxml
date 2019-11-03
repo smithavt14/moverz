@@ -5,24 +5,9 @@
   <view class="flex_container">
     <view class="info_container">
       <image class="icon" src="/assets/icons/shipping.png"></image>
-      
-      <!-- if no user & no existing agent -->
-      <button 
-      wx:if="{{!sender && !hasUser}}" 
-      open-type="getUserInfo" 
-      bindgetuserinfo="userInfoHandler" 
-      class="left_button" 
-      data-role="sender">
-        <view 
-        class="top_value" 
-        style="height: 55rpx">寄件人信息</view>
-        <view 
-        class="bottom_value">点击填写寄件地址</view>
-      </button>
-
-      <!-- if user & no existing agent -->
-      <view 
-      wx:if="{{!sender && hasUser}}" 
+      <!-- if no existing agent -->
+      <view
+      wx:if="{{ !sender }}" 
       class="left_box" 
       bindtap="navigateToCreateAgent"
       data-role="sender">
@@ -32,7 +17,7 @@
 
       <!-- if existing agent -->
       <view 
-      wx:if="{{ sender && hasUser }}"
+      wx:if="{{ sender }}"
       class="left_box" 
       bindtap="navigateToCreateAgent" 
       data-role="sender">
@@ -50,26 +35,9 @@
     <view class="info_container">
       <image class="icon" src="/assets/icons/bullseye.png"></image>
       
-      <!-- if no user & no existing agent -->
-      <button 
-      wx:if="{{!receiver && !hasUser}}" 
-      open-type="getUserInfo" 
-      bindgetuserinfo="userInfoHandler" 
-      class="left_button" 
-      data-role="receiver">
-        <view 
-        class="top_value"
-        style="height: 55rpx">
-          <text>收件人信息</text>
-        </view>
-        <view class="bottom_value">
-          <text>点击填写收件地址</text>
-        </view>
-      </button>
-
-      <!-- if user & no existing agent -->
+      <!-- if no existing agent -->
       <view 
-      wx:if="{{!receiver && hasUser}}" 
+      wx:if="{{!receiver }}" 
       class="left_box" 
       bindtap="navigateToCreateAgent"
       data-role="receiver">
@@ -164,25 +132,13 @@
       </view>
       <view class="box" style="font-size: 50rpx">{{air.location}}</view>
     </view>
-    <!-- <view class="bottom_box">
-      <view class="box">
-        <image class="icon" src="../../assets/icons/weather/{{ air.weather.cond_code }}.png"></image>
-        <view>{{air.weather.tmp}}°</view>
-      </view>
-      <view class="box">
-        <image class="small_icon" src="../../assets/icons/humidity.svg"></image>
-        <view>{{air.weather.hum}}%</view>
-      </view>
-      <view class="box">
-        <image class="small_icon" src="../../assets/icons/wind_direction.svg" style="transform: rotate({{ air.weather.wind_deg }}deg)"></image>
-        <view>{{ air.weather.wind_spd }} km/s</view>
-      </view> 
-    </view> -->
   </view>
+
+  <view style="height: 300rpx; width: 100vw; background: white; margin-top: 30rpx;"></view>
 
   <!-- Button Area -->
   <view class="btn_area">
-    <view class="container">
+    <view wx:if="{{ hasUser }}" class="container">
       <view class="left">
         <view> 
           <text style="color: rgba(255,255,255,0.7)">费用 </text>
@@ -198,5 +154,12 @@
         立即下单
       </view>
     </view>
+
+    <!-- Login Button -->
+    <button 
+    wx:else
+    open-type="getUserInfo" 
+    bindgetuserinfo="userInfoHandler"
+    class="login-btn {{ loginAnimation ? 'bounce dim' : '' }}">登陆</button>
   </view>
 </view>

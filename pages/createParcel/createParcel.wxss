@@ -124,3 +124,27 @@
   position: absolute;
   bottom: 50rpx;
 }
+
+.btn-area {
+  width: 100vw;
+  height: 200rpx;
+  position: fixed;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+  width: 95%;
+  height: 125rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 50rpx;
+  background: #20324E;
+  color: white;
+  border-radius: 25rpx;
+}

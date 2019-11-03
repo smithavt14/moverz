@@ -43,6 +43,9 @@
   </view>
 
   <!-- Button Area -->
-  <button wx:if="{{hasUser}}" bindtap="createParcel" class="confirm_button">确定</button>
-  <button wx:else open-type="getUserInfo" bindgetuserinfo="login" class="confirm_button">登陆</button>
+  <view class="btn-area">
+    <button wx:if="{{hasUser}}" bindtap="createParcel" class="confirm_button">确定</button>
+    <button wx:else open-type="getUserInfo" bindgetuserinfo="login" class="confirm_button">登陆</button>
+  </view>
+  
 </view>
