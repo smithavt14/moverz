@@ -64,9 +64,9 @@ Page({
 
   createParcel: async function () {
     if (!this.data.hasUser) {
-      wx.showModal({ title: '用户未登录' })
+      wx.showModal({ title: '用户未登录', showCancel: false })
     } else if (!this.data.parcel.category) {
-      wx.showModal({ title: '请选择类型'})
+      wx.showModal({ title: '请选择类型', showCancel: false })
     } else {
       let parcel = this.data.parcel
       parcel = await _parcel.create(parcel)

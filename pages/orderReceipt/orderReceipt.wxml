@@ -1,0 +1,70 @@
+<view class="page__container">
+  <view class="receipt_container">
+
+    <!-- Top of the Ticket -->
+    <view class="top">
+      <view class="check">
+        <image class="icon" src="../../assets/icons/check.svg"></image>
+      </view>
+      <view class="header">谢谢您!</view>
+      <view class="subheader">您的订单已提交</view>
+    </view>
+
+    <!-- Bottom of the Ticket -->
+    <view class="bottom">
+      <view class="info_container">
+        <view class="left">
+          <view class="title">{{order.sender.name}}</view>
+          <view class="info">{{order.sender.address}}</view>
+        </view>
+        <view class="right">
+          <image class="icon" src="../../assets/icons/shipping.png"></image>
+        </view>
+      </view>
+      <view class="info_container">
+        <view class="left">
+          <view class="title">{{order.receiver.name}}</view>
+          <view class="info">{{order.receiver.address}}</view>
+        </view>
+        <view class="right">
+          <image class="icon" src="../../assets/icons/bullseye.png"></image> 
+        </view>
+      </view>
+      <view class="info_container">
+        <view class="left">
+          <view class="title">上门时间</view>
+          <view class="info">{{order.pickup_time}}</view>
+        </view>
+        <view class="right">
+          <image class="icon" src="../../assets/icons/clock.png"></image>
+        </view>
+      </view>
+      <view class="info_container">
+        <view class="left">
+          <view class="title">上门日期</view>
+          <view class="info">{{order.pickup_date}}</view>
+        </view>
+        <view class="right">
+          <image class="icon" src="../../assets/icons/calendar.png"></image>
+        </view>
+      </view>
+      <view class="info_container">
+        <view class="left">
+          <view class="title">费用</view>
+          <view class="info">{{order.price / 100}}</view>
+        </view>
+        <view class="right">
+          <image class="icon" src="../../assets/icons/wechatpay.svg"></image>
+        </view>
+      </view>
+      <view class="info_container">
+        <view class="status_box {{ order.status }}">{{order.status}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Button Area -->
+  <view class="btn_area">
+    <view class="btn">回首页</view>
+  </view>
+</view>

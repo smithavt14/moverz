@@ -1,0 +1,178 @@
+.receipt_container {
+  width: 95vw;
+  height: 1000rpx;
+  margin-top: 100rpx;
+  position: relative;
+  border-radius: 10rpx;
+}
+
+.receipt_container .check {
+  height: 125rpx;
+  width: 125rpx;
+  background: #178E46;
+  border-radius: 50%;
+  position: absolute;
+  top: -62rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.receipt_container .check .icon {
+  height: 85rpx;
+  width: 85rpx;
+}
+
+.receipt_container .top {
+  height: 25%;
+  width: 100%;
+  background: white;
+  border-bottom: 2px dashed rgba(0,0,0,0.1);
+  position: relative;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 30rpx;
+}
+
+.top::after {
+  content: "";
+  position: absolute;
+  z-index: 100;
+  bottom: -25rpx;
+  left: -25rpx;
+  height: 50rpx;
+  width: 50rpx;
+  border-radius: 50%;
+  background: #F3F3F3;
+}
+
+.top::before {
+  content: "";
+  position: absolute;
+  z-index: 100;
+  bottom: -25rpx;
+  right: -25rpx;
+  height: 50rpx;
+  width: 50rpx;
+  border-radius: 50%;
+  background: #F3F3F3;
+}
+
+.receipt_container .top .header {
+  font-size: 40rpx;
+  font-weight: 800;
+  margin-bottom: 15rpx;
+}
+
+.receipt_container .top .subheader {
+  font-size: 35rpx;
+  color: rgba(0,0,0,0.5);
+}
+
+.receipt_container .bottom {
+  height: 75%;
+  width: 100%;
+  background: white;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.receipt_container .bottom .info_container {
+  height: 125rpx;
+  width: 95%;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.receipt_container .bottom .info_container:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.receipt_container .bottom .info_container .left {
+  width: 80%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 20rpx;
+}
+
+.receipt_container .bottom .info_container .left .title {
+  font-size: 35rpx;
+  color: #20324E;
+}
+
+.receipt_container .bottom .info_container .left .info {
+  font-size: 30rpx;
+  color: rgba(0,0,0,0.5);
+}
+
+.receipt_container .bottom .info_container .right {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.receipt_container .bottom .info_container .right .icon {
+  height: 50rpx;
+  width: 50rpx;
+}
+
+.receipt_container .bottom .info_container .status_box {
+  height: 75%;
+  width: 95%;
+  border-radius: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.pending {
+  background: #FFBC79;
+}
+
+enroute {
+  background: #74B3D6;
+}
+
+.received {
+  background: #178E46;
+}
+
+
+.btn_area {
+  width: 100vw;
+  height: 200rpx;
+  position: fixed;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn {
+  width: 95%;
+  height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 25rpx;
+  background: #20324E;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}

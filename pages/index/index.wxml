@@ -148,11 +148,7 @@
         </view>
       </view>
       <view class="triangle"></view>
-      <view 
-      class="right"
-      bindtap="createOrder">
-        立即下单
-      </view>
+      <view class="right" bindtap="testNavigateToOrder">立即下单</view>
     </view>
 
     <!-- Login Button -->

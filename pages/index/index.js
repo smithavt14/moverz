@@ -9,7 +9,9 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUser: undefined,
     loginAnimation: false,
-    order: undefined,
+    order: {
+      status: 'pending'
+    },
     parcel: undefined,
     pickup: {
       min: undefined,
@@ -201,13 +203,44 @@ Page({
 
   /* ----- Order Functions ----- */
 
+  testNavigateToOrder: function () {
+    wx.navigateTo({
+      url: '/pages/orderReceipt/orderReceipt',
+      success: function (res) {
+        // ------------  [TEST DATA] -------------------
+        let result = {
+          created_at: 1572864077,
+          created_by: 108341605769922,
+          id: "5dc0004db90ab42933604dd9",
+          pickup_date: "2019-11-4",
+          pickup_time: "2019-11-05T03:40:00+08:00",
+          price: 2279,
+          status: 'pending',
+          read_perm: ["user:*"],
+          receiver: { _table: "agent", id: "5dbe48c527176c0d53d0e1cf" },
+          sender: { _table: "agent", id: "5dbe48d8022b16203067678f" },
+          updated_at: 1572864077,
+          write_perm: ["user:*"],
+          _id: "5dc0004db90ab42933604dd9"
+        }
+        // --------------------------------
+        res.eventChannel.emit('passOrderInfo', { result })
+      }
+    })
+  },
+
   createOrder: async function () {
     let order = this.data.order
     if (order && order.sender && order.receiver && order.parcel) {
       let result = await _order.create(order)
       console.log(result)
-      wx.showToast({title: 'Order Created!'})
-    } 
+      wx.navigateTo({
+        url: '/pages/orderReceipt/orderReceipt',
+        success: function(res) {
+          res.eventChannel.emit('passOrderInfo', { result })
+        }
+      })
+    }
   },
 
   setPrice: async function () {
