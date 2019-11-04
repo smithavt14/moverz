@@ -48,7 +48,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
@@ -65,9 +65,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "createParcel",
-					"pathName": "pages/createParsel/createParsel",
+					"id": 2,
+					"name": "pages/createParcel/createParcel",
+					"pathName": "pages/createParcel/createParcel",
 					"query": "",
 					"scene": null
 				},

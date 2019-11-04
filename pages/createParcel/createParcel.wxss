@@ -2,7 +2,7 @@
   width: 100%;
   padding: 30rpx;
   background: white;
-  border-bottom: 5px solid rgba(0,0,0,0.1);
+  margin-top: 20rpx;
   box-sizing: border-box;
   font-size: 28rpx;
 }
@@ -30,7 +30,6 @@
 .section_container .category_container .item {
   height: 80rpx;
   width: 150rpx;
-  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 10rpx;
   display: flex;
   justify-content: center;
@@ -38,12 +37,13 @@
   box-sizing: border-box;
   margin: 20rpx 15rpx;
   flex-grow: 1;
-
   font-size: 30rpx;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 }
 
 .section_container .category_container .active {
-  background: rgba(0,0,0,0.1);
+  background: #20324E;
+  color: white;
 }
 
 .section_container .weight_picker {
@@ -55,6 +55,7 @@
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 10rpx;
   position: relative;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25); 
 }
 
 .weight_picker .left-box {
@@ -93,9 +94,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.1);
+  background: white;
   margin: 20rpx 0;
   border-radius: 20rpx;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25); 
 }
 
 .section_container .upload_icon {
@@ -110,6 +112,7 @@
   padding: 20rpx;
   box-sizing: border-box;
   font-size: 30rpx;
+  border-radius: 10rpx;
 }
 
 .confirm_button {
@@ -139,12 +142,13 @@
 .btn {
   width: 95%;
   height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 25rpx;
+  background: #20324E;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 50rpx;
-  background: #20324E;
-  color: white;
-  border-radius: 25rpx;
+  overflow: hidden;
 }

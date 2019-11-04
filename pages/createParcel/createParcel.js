@@ -63,13 +63,14 @@ Page({
   /* ----- Parcel Functions ----- */
 
   createParcel: async function () {
-    if (this.data.hasUser) {
+    if (!this.data.hasUser) {
+      wx.showModal({ title: '用户未登录' })
+    } else if (!this.data.parcel.category) {
+      wx.showModal({ title: '请选择类型'})
+    } else {
       let parcel = this.data.parcel
       parcel = await _parcel.create(parcel)
-
       this.navigateBack(parcel)
-    } else {
-      wx.showModal({ title: '用户未登录' })
     }
   },
 
