@@ -65,6 +65,6 @@
 
   <!-- Button Area -->
   <view class="btn_area">
-    <view class="btn">回首页</view>
+    <view class="btn" bindtap="navigateBack">回首页</view>
   </view>
 </view>

@@ -23,6 +23,10 @@ Page({
     this.setData({ order })
   },
 
+  navigateBack: function () {
+    wx.navigateBack({url: '/pages/index/index'})
+  },
+
   onLoad: function (options) {
     this.setOrderInfo()
   }
