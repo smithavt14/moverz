@@ -209,19 +209,19 @@ Page({
       success: function (res) {
         // ------------  [TEST DATA] -------------------
         let result = {
-          created_at: 1572864077,
-          created_by: 108341605769922,
-          id: "5dc0004db90ab42933604dd9",
-          pickup_date: "2019-11-4",
-          pickup_time: "2019-11-05T03:40:00+08:00",
-          price: 2279,
-          status: 'pending',
+          created_at: 1572945298,
+          created_by: 109134564360312,
+          id: "5dc13d920546e07cc92ed75d",
+          pickup_date: "2019-11-5",
+          pickup_time: "2:13",
+          price: 10844,
           read_perm: ["user:*"],
-          receiver: { _table: "agent", id: "5dbe48c527176c0d53d0e1cf" },
-          sender: { _table: "agent", id: "5dbe48d8022b16203067678f" },
-          updated_at: 1572864077,
+          receiver: { id: "5dc13d6c0546e076352ed5a7" },
+          sender: { id: "5dc13d4e74d7b471cde9eb25" },
+          status: "pending",
+          updated_at: 1572945298,
           write_perm: ["user:*"],
-          _id: "5dc0004db90ab42933604dd9"
+          _id: "5dc13d920546e07cc92ed75d"
         }
         // --------------------------------
         res.eventChannel.emit('passOrderInfo', { result })
@@ -233,7 +233,7 @@ Page({
     let order = this.data.order
     if (order && order.sender && order.receiver && order.parcel) {
       let result = await _order.create(order)
-      console.log(result)
+      console.log(result, '<-- This is the result')
       wx.navigateTo({
         url: '/pages/orderReceipt/orderReceipt',
         success: function(res) {

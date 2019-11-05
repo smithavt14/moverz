@@ -6,21 +6,21 @@ Page({
     order: undefined
   },
 
-  setOrderInfo: async function () {
+  setOrderInfo: function () {
     const self = this
     const eventChannel = this.getOpenerEventChannel()
     let order, date
 
-    eventChannel.on('passOrderInfo', function (data) {
+    eventChannel.on('passOrderInfo', async (data) =>  {
       order = data.result
-    })
 
-    order.sender = await _agent.fetch(order.sender.id)
-    order.receiver = await _agent.fetch(order.receiver.id)
-    date = new Date(order.pickup_time)
-    order.pickup_time = `${date.getHours()}:${date.getMinutes()}`
-    
-    this.setData({ order })
+      order["sender"] = await _agent.fetch(order.sender.id)
+      order["receiver"] = await _agent.fetch(order.receiver.id)
+      date = new Date(order['pickup_time'])
+      order['pickup_time'] = `${date.getHours()}:${date.getMinutes()}`
+      
+      this.setData({ order })
+    })
   },
 
   navigateBack: function () {
