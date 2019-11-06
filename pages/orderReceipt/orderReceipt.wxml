@@ -33,7 +33,7 @@
       <view class="info_container">
         <view class="left">
           <view class="title">上门时间</view>
-          <view class="info">{{order.pickup_time}}</view>
+          <view class="info">{{order.display.time}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/clock.png"></image>
@@ -42,7 +42,7 @@
       <view class="info_container">
         <view class="left">
           <view class="title">上门日期</view>
-          <view class="info">{{order.pickup_date}}</view>
+          <view class="info">{{order.display.date}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/calendar.png"></image>

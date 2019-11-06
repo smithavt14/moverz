@@ -65,11 +65,8 @@ const destroy = id => {
   })
 }
 
-const setPrice = async order => {
-  let price
-  let hour = new Date(order.pickup_time)
-
-  console.log(order, hour)
+const fetchData = async order => {
+  let hour = new Date(order.pickup_time).getHours()
 
   return new Promise(resolve => {
     let sender = _agent.fetch(order.sender)
@@ -77,22 +74,40 @@ const setPrice = async order => {
     let parcel = _parcel.fetch(order.parcel)
 
     Promise.all([sender, receiver, parcel]).then(async values => {
-      let sender = values[0]
-      let receiver = values[1]
-      let parcel = values[2]
+      sender = values[0]
+      receiver = values[1]
+      parcel = values[2]
 
-      let result = await _map.calculateDistance(sender, receiver)
-      
-      console.log(result)
+      let route = await _map.calculateDistance(sender, receiver)
 
-      let price = 2000 + (Math.floor((result.distance - 2000) * 0.5))
-      resolve(price)
-      
-      /* Set minimum price at 20 RMB. Then for each km over 2km, 
-      add 5 RMB. Price is in cents (i.e. 100 = 1 RMB) */
-      
+      resolve({parcel, route, hour})
     })
   })
+}
+
+const setPrice = order => {
+  return new Promise(async resolve => {
+    await fetchData(order).then(res => {
+      let weight = res.parcel.weight
+      let distance = res.route.distance
+      
+      let price = 0
+      
+      price += weight > 6 ? Math.ceil((weight - 6) * 2) : 0
+
+      if (res.hour < 6 || res.hour >= 23) {
+        price += 18
+        price += distance > 5000 ? Math.ceil((distance - 5000) * .002) : 0
+      } else {
+        price += 16
+        price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
+      }
+
+      price = price > 200 ? 200 : price
+      
+      resolve(price)
+    })
+  }) 
 }
 
 module.exports = { fetch, fetchUserOrders, create, update, destroy, setPrice }

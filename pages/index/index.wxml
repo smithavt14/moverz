@@ -143,7 +143,7 @@
         <view> 
           <text style="color: rgba(255,255,255,0.7)">费用 </text>
           <text wx:if="{{!order.price}}"> - - </text>
-          <text wx:else>{{order.price / 100 }}</text>
+          <text wx:else>{{order.price}}</text>
           <text> 元</text>  
         </view>
       </view>
