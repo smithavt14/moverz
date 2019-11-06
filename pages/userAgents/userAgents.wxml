@@ -22,7 +22,7 @@
         catchtap="editAgent"
         data-id="{{item.id}}">
           <image 
-          src="../../assets/icons/edit.svg" 
+          src="../../assets/icons/edit.png" 
           class="icon"></image>
           <text>编辑</text>
         </view>
@@ -31,7 +31,7 @@
         class="flex" 
         catchtap="destroyAgent" 
         data-id="{{item.id}}">
-          <image src="../../assets/icons/delete.svg" class="icon"></image>
+          <image src="../../assets/icons/garbage.png" class="icon"></image>
           <text>删除</text>
         </view>
       </view>

@@ -20,13 +20,13 @@ const fetchAQI = async () => {
         'content-type': 'application/json' // 默认值
       },
       success(res) {
-        console.log(res)
         let air = res.data.HeWeather6[0].air_now_city
         let hex = setColor(air.qlty)
-        let darkHex = darkenColor(hex)
+        // let darkHex = darkenColor(hex)
         let location = res.data.HeWeather6[0].basic.location
+        
         air['hex'] = hex
-        air['darkHex'] = darkHex
+        // air['darkHex'] = darkHex
         resolve({ air, location })
       },
       fail(err) {
@@ -37,12 +37,12 @@ const fetchAQI = async () => {
 }
 
 const setColor = (qlty) => {
-  if (qlty === '优') return '#A3E160'
-  if (qlty === '良') return '#FFD74E'
-  if (qlty === '轻度污染') return '#FF9859'
-  if (qlty === '中度污染') return '#FF6469'
-  if (qlty === '重度污染') return '#A977BA'
-  if (qlty === '严重污染') return '#A97182'
+  if (qlty === '优') return '#6ACF4B'
+  if (qlty === '良') return '#FFDA3B'
+  if (qlty === '轻度污染') return '#FF722E'
+  if (qlty === '中度污染') return '#EF0024'
+  if (qlty === '重度污染') return '#AD3A83'
+  if (qlty === '严重污染') return '#933D40'
 }
 
 const darkenColor = (hex) => {

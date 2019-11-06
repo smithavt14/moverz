@@ -87,7 +87,7 @@
   border-radius: 10rpx;
 }
 .receipt_container .bottom .info_container {
-  height: 125rpx;
+  height: 150rpx;
   width: 95%;
   border-bottom: 1px solid rgba(0,0,0,0.1);
   display: flex;

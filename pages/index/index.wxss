@@ -33,7 +33,7 @@
 
 .info_container {
   display: flex;
-  height: 120rpx;
+  height: 150rpx;
   width: 95%;
   align-items: center;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -102,7 +102,7 @@
 
 .order_container {
   display: flex;
-  height: 120rpx;
+  height: 150rpx;
   width: 95%;
   align-items: center;
   border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -230,8 +230,8 @@
 }
 
 .weather__container .top_box .box image {
-  height: 100rpx;
-  width: 100rpx;
+  height: 125rpx;
+  width: 125rpx;
 }
 
 .weather__container .top_box .box .top {

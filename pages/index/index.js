@@ -3,6 +3,7 @@ const _agent = require('../../utils/agent.js')
 const _parcel = require('../../utils/parcel.js')
 const _order = require('../../utils/order.js')
 const _weather = require('../../utils/weather.js')
+const _time = require('../../utils/time.js')
 
 Page({
   data: {
@@ -13,50 +14,46 @@ Page({
       status: 'pending'
     },
     parcel: undefined,
-    pickup: {
-      min: undefined,
+    display: {
+      minTime: undefined,
       time: undefined,
       date: undefined
     },
     receiver: undefined,
     sender: undefined,
-    today: undefined,
     air: undefined
   },
 
   /* ----- Time Functions ----- */
 
-  bindTimeChange: function (e) {
-    let time = e.detail.value
-    this.setData({
-      'order.pickup_time': time
-    })
-  },
+  bindDateChange: async function (event) {
+    let display = this.data.display
+    let type = event.currentTarget.dataset.type
+    let value = event.detail.value
+    
+    display[type] = value
 
-  bindDateChange: function (e) {
-    let date = e.detail.value
+    let pickupTime = new Date(`${display.date} ${display.time}`)
+    let result = _time.getLocalString(pickupTime)
+    
     this.setData({
-      'order.pickup_date': date
+      'display.time': result.time,
+      'display.date': result.date,
+      'order.pickup_time': result.localString
     })
   },
 
   setPickupTime: function (e) {
-    let now = new Date()
-
-    let year = now.getFullYear()
-    let month = now.getMonth() + 1
-    let day = now.getDate()
-
-    let hours = now.getHours()
-    let minutes = now.getMinutes()
+    let dateNow = new Date()
+    dateNow = new Date(dateNow.setHours(dateNow.getHours() + 1))
+    
+    let result = _time.getLocalString(dateNow)
 
     this.setData({
-      'pickup.min': `${hours + 1}:${minutes}`,
-      'pickup.time': `${hours + 1}:${minutes}`,
-      'pickup.date': `${year}-${month}-${day}`,
-      today: `${year}-${month}-${day}`, 
-      'order.pickup_time': `${hours + 1}:${minutes}`,
-      'order.pickup_date': `${year}-${month}-${day}`
+      'display.minTime': result.time,
+      'display.time': result.time,
+      'display.date': result.date,
+      'order.pickup_time': result.localString
     })
   },
 
@@ -118,7 +115,7 @@ Page({
         self.setData({ loginAnimation: true })
         setTimeout(function () { 
           self.setData({ loginAnimation: false }) 
-          }, 1500)
+        }, 1500)
       }
     })
   },
@@ -233,13 +230,14 @@ Page({
     let order = this.data.order
     if (order && order.sender && order.receiver && order.parcel) {
       let result = await _order.create(order)
-      console.log(result, '<-- This is the result')
       wx.navigateTo({
         url: '/pages/orderReceipt/orderReceipt',
         success: function(res) {
           res.eventChannel.emit('passOrderInfo', { result })
         }
       })
+    } else {
+      wx.showToast({title: '没有填写', icon: 'none'})
     }
   },
 

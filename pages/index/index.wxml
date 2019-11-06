@@ -69,13 +69,13 @@
         上门时间
       </view>
       <view class="right_box">
-        <picker mode="time" value="{{order.pickup_time}}" start="{{pickup.min}}" bindchange="bindTimeChange">
-          <view wx:if="{{order.pickup_time === pickup.min}}" style="display: flex; align-items: center;" id="light-content">
+        <picker mode="time" value="{{display.time}}" bindchange="bindDateChange" data-type="time">
+          <view wx:if="{{ !order.pickup_time }}" style="display: flex; align-items: center;" id="light-content">
             <view>一小时内</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center;">
-            <view>{{order.pickup_time}}</view>
+            <view>{{display.time}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
@@ -89,13 +89,13 @@
         上门日期
       </view>
       <view class="right_box">
-        <picker mode="date" value="{{order.pickup_date}}" start="{{pickup.date}}" bindchange="bindDateChange">
-          <view wx:if="{{order.pickup_date === today}}" style="display: flex; align-items: center;" id="light-content">
+        <picker mode="date" value="{{display.date}}" start="{{display.date}}" bindchange="bindDateChange" data-type="date">
+          <view wx:if="{{ !order.pickup_time }}" style="display: flex; align-items: center;" id="light-content">
             <view>今天</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center">
-            <view>{{order.pickup_date}}</view>
+            <view>{{display.date}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
@@ -123,8 +123,8 @@
   <!-- Weather Container -->
   <view class="weather__container">
     <view class="top_box" style="background: {{air.quality.hex}}">
-      <view class="box" style="background: {{ air.quality.darkHex}}">
-        <image class = ""src="../../assets/icons/air_quality.svg"></image>
+      <view class="box">
+        <image class="image" src="../../assets/icons/masks/{{ air.quality.qlty }}.png"></image>
       </view>
       <view class="box">
         <view class="top">{{air.quality.aqi}}</view>

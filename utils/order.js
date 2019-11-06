@@ -27,7 +27,6 @@ const fetchUserOrders = id => {
 }
 
 const create = data => {
-  console.log(data)
   return new Promise(resolve => {
     let order = OrderTable.create()
     order.set(data).save().then(res => {
@@ -67,6 +66,11 @@ const destroy = id => {
 }
 
 const setPrice = async order => {
+  let price
+  let hour = new Date(order.pickup_time)
+
+  console.log(order, hour)
+
   return new Promise(resolve => {
     let sender = _agent.fetch(order.sender)
     let receiver = _agent.fetch(order.receiver)
@@ -78,6 +82,9 @@ const setPrice = async order => {
       let parcel = values[2]
 
       let result = await _map.calculateDistance(sender, receiver)
+      
+      console.log(result)
+
       let price = 2000 + (Math.floor((result.distance - 2000) * 0.5))
       resolve(price)
       

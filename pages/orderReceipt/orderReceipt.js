@@ -1,4 +1,5 @@
 const _agent = require('../../utils/agent.js')
+const _time = require('../../utils/time.js')
 
 Page({
 
@@ -6,19 +7,21 @@ Page({
     order: undefined
   },
 
+  getLocalString(date) {
+    new Date(date).toLocaleString('')
+  },
+
   setOrderInfo: function () {
     const self = this
     const eventChannel = this.getOpenerEventChannel()
-    let order, date
 
     eventChannel.on('passOrderInfo', async (data) =>  {
-      order = data.result
+      let order = data.result
 
       order["sender"] = await _agent.fetch(order.sender.id)
       order["receiver"] = await _agent.fetch(order.receiver.id)
-      date = new Date(order['pickup_time'])
-      order['pickup_time'] = `${date.getHours()}:${date.getMinutes()}`
-      
+      order["display"] = await _time.getLocalString(new Date(order.pickup_time))
+
       this.setData({ order })
     })
   },
