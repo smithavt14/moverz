@@ -1,4 +1,4 @@
-<view class="page__container">
+<view class="page__container" style="margin-bottom: 200rpx">
   <view class="receipt_container">
 
     <!-- Top of the Ticket -->

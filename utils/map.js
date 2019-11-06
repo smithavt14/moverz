@@ -17,7 +17,7 @@ const calculateDistance = (sender, receiver) => {
         resolve(res.result.elements[0])
       },
       'fail': function (err) {
-        console.log('fail')
+        console.log(err, 'fail')
         resolve(err)
       }
     })

@@ -4,6 +4,7 @@ const _parcel = require('../../utils/parcel.js')
 const _order = require('../../utils/order.js')
 const _weather = require('../../utils/weather.js')
 const _time = require('../../utils/time.js')
+const _map = require('../../utils/map.js')
 
 Page({
   data: {
@@ -104,22 +105,6 @@ Page({
     } else { this.loginNotice() }
   },
 
-  loginNotice: function () {
-    self = this
-    
-    wx.showToast({
-      title: '请登录', 
-      icon: 'none',
-      duration: 1500,
-      success: function () {
-        self.setData({ loginAnimation: true })
-        setTimeout(function () { 
-          self.setData({ loginAnimation: false }) 
-        }, 1500)
-      }
-    })
-  },
-
   navigateToUserAgents: function (e) {
     let role = e.currentTarget.dataset.role
     let self = this
@@ -146,7 +131,6 @@ Page({
   /* ----- Fetch Data Functions ----- */
 
   getAgentInformation: async function (id, role) {
-    let self = this
     let agent = await _agent.fetch(id)
     let agentId = agent.id
     let orderKey = `order.${role}`
@@ -156,7 +140,10 @@ Page({
       [orderKey]: agentId
     })
 
-    self.setPrice()
+    let sender = this.data.sender
+    let receiver = this.data.receiver
+
+    this.setPrice()
   },
 
   getParcelInformation: async function (id) {
@@ -198,37 +185,35 @@ Page({
     this.setData({ hasUser: !!user })
   },
 
+  loginNotice: function () {
+    self = this
+
+    wx.showToast({
+      title: '请登录',
+      icon: 'none',
+      duration: 1500,
+      success: function () {
+        self.setData({ loginAnimation: true })
+        setTimeout(function () {
+          self.setData({ loginAnimation: false })
+        }, 1500)
+      }
+    })
+  },
+
   /* ----- Order Functions ----- */
 
-  testNavigateToOrder: function () {
-    wx.navigateTo({
-      url: '/pages/orderReceipt/orderReceipt',
-      success: function (res) {
-        // ------------  [TEST DATA] -------------------
-        let result = {
-          created_at: 1572945298,
-          created_by: 109134564360312,
-          id: "5dc13d920546e07cc92ed75d",
-          pickup_date: "2019-11-5",
-          pickup_time: "2:13",
-          price: 10844,
-          read_perm: ["user:*"],
-          receiver: { id: "5dc13d6c0546e076352ed5a7" },
-          sender: { id: "5dc13d4e74d7b471cde9eb25" },
-          status: "pending",
-          updated_at: 1572945298,
-          write_perm: ["user:*"],
-          _id: "5dc13d920546e07cc92ed75d"
-        }
-        // --------------------------------
-        res.eventChannel.emit('passOrderInfo', { result })
-      }
+  validateOrder: function() {
+    new Promise(async resolve => {
+      resolve(await _order.validate(this.data.sender, this.data.receiver, this.data.parcel))
     })
   },
 
   createOrder: async function () {
     let order = this.data.order
-    if (order && order.sender && order.receiver && order.parcel) {
+    let valid = await this.validateOrder()
+
+    if (valid) {
       let result = await _order.create(order)
       wx.navigateTo({
         url: '/pages/orderReceipt/orderReceipt',
@@ -236,8 +221,6 @@ Page({
           res.eventChannel.emit('passOrderInfo', { result })
         }
       })
-    } else {
-      wx.showToast({title: '没有填写', icon: 'none'})
     }
   },
 

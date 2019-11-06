@@ -1,6 +1,5 @@
 .receipt_container {
   width: 95vw;
-  /* height: 1000rpx; */
   margin-top: 100rpx;
   position: relative;
   border-radius: 10rpx;

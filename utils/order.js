@@ -98,16 +98,34 @@ const setPrice = order => {
       if (res.hour < 6 || res.hour >= 23) {
         price += 18
         price += distance > 5000 ? Math.ceil((distance - 5000) * .002) : 0
+        price = price > 250 ? 250 : price
       } else {
         price += 16
         price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
+        price = price > 200 ? 200 : price
       }
-
-      price = price > 200 ? 200 : price
-      
       resolve(price)
     })
   }) 
 }
 
-module.exports = { fetch, fetchUserOrders, create, update, destroy, setPrice }
+const validate = (sender, receiver, parcel) => {
+  return new Promise(async resolve => {
+    if (sender && receiver && parcel) {
+      await _map.calculateDistance(sender, receiver).then(res => {
+        let distance = res
+        if (distance > 60000) {
+          wx.showModal({ title: '距离太远，限制在60公里' })
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
+    } else {
+      wx.showToast({title: '还有空白的', icon: 'none'})
+      resolve(false)
+    }
+  })
+}
+
+module.exports = { fetch, fetchUserOrders, create, update, destroy, setPrice, validate }
