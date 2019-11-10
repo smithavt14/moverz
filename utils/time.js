@@ -1,14 +1,16 @@
 const getLocalString = (date) => {
-  date = new Date(date)
-  
-  let options = { hour12: false, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
+  return new Promise(resolve => {
+    date = new Date(date)
 
-  let localString = new Date(date).toLocaleString('zh-Hans-CN', options)
+    let options = { hour12: false, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }
 
-  date = localString.split(' ')[0]
-  let time = localString.split(' ')[1]
+    let localString = new Date(date).toLocaleString('zh-Hans-CN', options)
 
-  return {localString, date, time}
+    date = localString.split(' ')[0]
+    let time = localString.split(' ')[1]
+
+    resolve({ localString, date, time })
+  })
 }
 
 module.exports = { getLocalString }

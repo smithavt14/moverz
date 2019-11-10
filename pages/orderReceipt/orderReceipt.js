@@ -1,5 +1,6 @@
 const _agent = require('../../utils/agent.js')
 const _time = require('../../utils/time.js')
+const _order = require('../../utils/order.js')
 
 Page({
 
@@ -7,30 +8,23 @@ Page({
     order: undefined
   },
 
-  getLocalString(date) {
-    new Date(date).toLocaleString('')
-  },
-
-  setOrderInfo: function () {
-    const self = this
-    const eventChannel = this.getOpenerEventChannel()
-
-    eventChannel.on('passOrderInfo', async (data) =>  {
-      let order = data.result
-
-      order["sender"] = await _agent.fetch(order.sender.id)
-      order["receiver"] = await _agent.fetch(order.receiver.id)
-      order["display"] = await _time.getLocalString(new Date(order.pickup_time))
-
-      this.setData({ order })
+  setOrderInfo: async function (id) {
+    await _order.fetch(id).then(async order => {
+      await _order.fetchData(order).then(async order => {
+        await _time.getLocalString(order.pickup_time).then(res => {
+          order['display'] = res
+          this.setData({ order })
+        })        
+      })
     })
   },
-
-  navigateBack: function () {
-    wx.navigateBack({url: '/pages/index/index'})
+ 
+  navigateToHome: function () {
+    wx.navigateTo({url: '/pages/index/index'})
   },
 
   onLoad: function (options) {
-    this.setOrderInfo()
+    console.log(options, 'orderReceipt options')
+    this.setOrderInfo(options.id)
   }
 })

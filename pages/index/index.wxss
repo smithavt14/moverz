@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.logo__container {
+.logo_container {
   height: 150rpx;
   width: 90%;
   background: white;
@@ -29,6 +29,11 @@
   align-items: center;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   border-radius: 10rpx;
+  position: relative;
+}
+
+.logo {
+  height: 125%;
 }
 
 .info_container {
@@ -284,7 +289,7 @@
   position: absolute;
   bottom: 50rpx;
   border-radius: 25rpx;
-  background: #20324E;
+  background: linear-gradient(153.82deg, #A1BED8 10.95%, #8FABC5 22.73%, #617892 46.95%, #21334D 76.4%), #FFFFFF;
   color: white;
   display: flex;
   justify-content: center;

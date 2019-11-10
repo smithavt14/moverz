@@ -49,7 +49,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -84,6 +84,13 @@
 					"name": "User Agents",
 					"pathName": "pages/userAgents/userAgents",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "pages/orderReceipt/orderReceipt",
+					"pathName": "pages/orderReceipt/orderReceipt",
+					"query": "id=5dc7eff72b8f703c040a5210",
 					"scene": null
 				}
 			]

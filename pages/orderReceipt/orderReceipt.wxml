@@ -3,8 +3,8 @@
 
     <!-- Top of the Ticket -->
     <view class="top">
-      <view class="check">
-        <image class="icon" src="../../assets/icons/check.svg"></image>
+      <view class="check {{ order.status }}">
+        <image class="icon" mode="aspectFit" src="../../assets/logos/logo-white.png"></image>
       </view>
       <view class="header">谢谢您!</view>
       <view class="subheader">您的订单已提交</view>
@@ -51,7 +51,7 @@
       <view class="info_container">
         <view class="left">
           <view class="title">费用</view>
-          <view class="info">{{order.price / 100}}</view>
+          <view class="info">{{order.price}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/wechatpay.svg"></image>
@@ -65,6 +65,6 @@
 
   <!-- Button Area -->
   <view class="btn_area">
-    <view class="btn" bindtap="navigateBack">回首页</view>
+    <view class="btn" bindtap="navigateHome">回首页</view>
   </view>
 </view>

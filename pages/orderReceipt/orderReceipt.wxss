@@ -8,7 +8,7 @@
 .receipt_container .check {
   height: 125rpx;
   width: 125rpx;
-  background: #178E46;
+  /* background: #178E46; */
   border-radius: 50%;
   position: absolute;
   top: -62rpx;
@@ -21,8 +21,7 @@
 }
 
 .receipt_container .check .icon {
-  height: 85rpx;
-  width: 85rpx;
+  height: 35%;
 }
 
 .receipt_container .top {
@@ -139,17 +138,35 @@
   color: white;
 }
 
-.pending {
+.awaiting_payment {
   background: #FFBC79;
 }
 
-enroute {
+.awaiting_pickup {
   background: #74B3D6;
 }
 
-.received {
+.partially_shipped {
   background: #178E46;
 }
+
+.completed {
+  background: #178E46;
+}
+
+.cancelled {
+  background: #E15E5E;
+}
+
+.declined {
+  background: #E15E5E;
+}
+
+.refuneded {
+  background: #E15E5E;
+}
+
+/* Order Statuses: Awaiting Payment, Awaiting Pickup, Partially Shipped, Completed, Cancelled, Declined, Refunded, Disputed */
 
 
 .btn_area {

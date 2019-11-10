@@ -14,7 +14,7 @@ const calculateDistance = (sender, receiver) => {
         longitude: receiver.address_long
       }],
       'success': function (res) {
-        resolve(res.result.elements[0])
+        resolve(res.result.elements[0].distance)
       },
       'fail': function (err) {
         console.log(err, 'fail')

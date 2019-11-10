@@ -12,7 +12,7 @@ Page({
     hasUser: undefined,
     loginAnimation: false,
     order: {
-      status: 'pending'
+      status: 'awaiting_payment'
     },
     parcel: undefined,
     display: {
@@ -28,27 +28,40 @@ Page({
   /* ----- Time Functions ----- */
 
   bindDateChange: async function (event) {
-    let display = this.data.display
     let type = event.currentTarget.dataset.type
+    let display = this.data.display
     let value = event.detail.value
+    let y, m, d
     
-    display[type] = value
-
-    let pickupTime = new Date(`${display.date} ${display.time}`)
-    let result = _time.getLocalString(pickupTime)
-    
-    this.setData({
-      'display.time': result.time,
-      'display.date': result.date,
-      'order.pickup_time': result.localString
-    })
+    if (type === 'date') {
+      value = value.split("-")
+      y = value[0]
+      m = value[1]
+      d = value[2]
+      let pickupTime = new Date(`${y}/${m}/${d} ${display.time}`)
+      let result = await _time.getLocalString(pickupTime)
+      this.setData({
+        'display.time': result.time,
+        'display.date': result.date,
+        'order.pickup_time': result.localString
+      })
+    } else {
+      display[type] = value
+      let pickupTime = new Date(`${display.date} ${display.time}`)
+      let result = await _time.getLocalString(pickupTime)
+      this.setData({
+        'display.time': result.time,
+        'display.date': result.date,
+        'order.pickup_time': result.localString
+      })
+    }
   },
 
-  setPickupTime: function (e) {
+  setPickupTime: async function (e) {
     let dateNow = new Date()
     dateNow = new Date(dateNow.setHours(dateNow.getHours() + 1))
     
-    let result = _time.getLocalString(dateNow)
+    let result = await _time.getLocalString(dateNow)
 
     this.setData({
       'display.minTime': result.time,
@@ -62,9 +75,10 @@ Page({
 
   navigateToCreateAgent: function (e) {
     let self = this
+
     let position = 'index'
     let role = e.currentTarget.dataset.role
-    let agent = this.data[role]
+    let agent = this.data.order[role]
 
     let id = agent ? agent.id : undefined
 
@@ -78,7 +92,7 @@ Page({
             self.getAgentInformation(id, role)
           }
         },
-        success: function (res) {
+        success: res => {
           res.eventChannel.emit('sendAgentInformation', { role, id, position })
         }
       })
@@ -131,31 +145,23 @@ Page({
   /* ----- Fetch Data Functions ----- */
 
   getAgentInformation: async function (id, role) {
-    let agent = await _agent.fetch(id)
-    let agentId = agent.id
     let orderKey = `order.${role}`
-    
-    this.setData({ 
-      [role]: agent,
-      [orderKey]: agentId
+    await _agent.fetch(id).then(agent => {
+      this.setData({
+        [orderKey]: agent
+      })
+      this.setPrice()
     })
-
-    let sender = this.data.sender
-    let receiver = this.data.receiver
-
-    this.setPrice()
   },
 
   getParcelInformation: async function (id) {
-    let parcel = await _parcel.fetch(id)
-    let parcelId = parcel.id
-    
-    this.setData({ 
-      parcel,
-      'order.parcel': parcelId
+    await _parcel.fetch(id).then(parcel => {
+      this.setData({
+        'order.parcel': parcel
+      })
+      this.setPrice()
     })
-
-    this.setPrice()
+    
   },
 
   getWeather: async function () {
@@ -173,6 +179,7 @@ Page({
   getCurrentUser: async function () {
     let user = await _auth.getCurrentUser()
     this.setData({ hasUser: !!user })
+    this.getWeather()
   },
 
   logout: function () {
@@ -181,8 +188,10 @@ Page({
   },
 
   userInfoHandler: async function (data) {
+    this.setData({btnLoading: true})
     let user = await _auth.login(data)
-    this.setData({ hasUser: !!user })
+    this.setData({ hasUser: !!user, btnLoading: false })
+    this.getWeather()
   },
 
   loginNotice: function () {
@@ -203,33 +212,29 @@ Page({
 
   /* ----- Order Functions ----- */
 
-  validateOrder: function() {
-    new Promise(async resolve => {
-      resolve(await _order.validate(this.data.sender, this.data.receiver, this.data.parcel))
-    })
-  },
-
   createOrder: async function () {
     let order = this.data.order
-    let valid = await this.validateOrder()
+    let valid = await _order.validate(order)
 
     if (valid) {
-      let result = await _order.create(order)
-      wx.navigateTo({
-        url: '/pages/orderReceipt/orderReceipt',
-        success: function(res) {
-          res.eventChannel.emit('passOrderInfo', { result })
-        }
-      })
+      await _order.create(order).then(order => {
+        wx.redirectTo({
+          url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
+        })
+      }) 
     }
   },
 
   setPrice: async function () {
     let order = this.data.order
-    
+
     if (order && order.sender && order.receiver && order.parcel) {
-      let price = await _order.setPrice(order)
-      this.setData({ 'order.price': price })
+      await _order.setPrice(order).then(data => {
+        this.setData({ 
+          'order.price': data.price,
+          'order.distance': data.distance
+         })
+      })
     }
   },
 
@@ -240,8 +245,7 @@ Page({
   },
 
   onShow: async function (options) {
-    let user = this.getCurrentUser()
-    this.getWeather()
+    this.getCurrentUser()
   },
 
   onReady: function () {}

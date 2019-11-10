@@ -1,13 +1,16 @@
 <view class="page__container">
   <!-- Logo Container -->
-  <view class="logo__container" bindtap="logout">LOGO</view>
+  <view class="logo_container" bindtap="logout">
+    <image class="logo" src="../../assets/logos/logo.png" mode="aspectFit"></image>
+  </view>
+  
   <!-- Sender Information -->
   <view class="flex_container">
     <view class="info_container">
       <image class="icon" src="/assets/icons/shipping.png"></image>
       <!-- if no existing agent -->
       <view
-      wx:if="{{ !sender }}" 
+      wx:if="{{ !order.sender }}" 
       class="left_box" 
       bindtap="navigateToCreateAgent"
       data-role="sender">
@@ -17,12 +20,12 @@
 
       <!-- if existing agent -->
       <view 
-      wx:if="{{ sender }}"
+      wx:if="{{ order.sender }}"
       class="left_box" 
       bindtap="navigateToCreateAgent" 
       data-role="sender">
-        <view class="top_value">{{sender.name}}</view>
-        <view class="bottom_value">{{sender.address}}</view>
+        <view class="top_value">{{order.sender.name}}</view>
+        <view class="bottom_value">{{order.sender.address}}</view>
       </view>
 
       <view 
@@ -37,7 +40,7 @@
       
       <!-- if no existing agent -->
       <view 
-      wx:if="{{!receiver }}" 
+      wx:if="{{!order.receiver }}" 
       class="left_box" 
       bindtap="navigateToCreateAgent"
       data-role="receiver">
@@ -47,12 +50,12 @@
 
       <!-- if existing agent -->
       <view 
-      wx:if="{{ receiver && hasUser }}"
+      wx:if="{{ order.receiver && hasUser }}"
       class="left_box" 
       bindtap="navigateToCreateAgent" 
       data-role="receiver">
-        <view class="top_value">{{receiver.name}}</view>
-        <view class="bottom_value">{{receiver.address}}</view>
+        <view class="top_value">{{order.receiver.name}}</view>
+        <view class="bottom_value">{{order.receiver.address}}</view>
       </view>
 
       <view class="right_box" 
@@ -108,13 +111,13 @@
       <view class="left_box">
         物品信息
       </view>
-      <view wx:if="{{!parcel}}" class="right_box" id="light-content">
+      <view wx:if="{{!order.parcel}}" class="right_box" id="light-content">
         <view>请填写</view>
         <image src="/assets/icons/arrow.png" class="arrow"></image>
       </view>
 
       <view wx:else class="right_box">
-        <view>{{parcel.category}} {{parcel.weight}} 公斤</view>
+        <view>{{order.parcel.category}} {{order.parcel.weight}} 公斤</view>
         <image src="/assets/icons/arrow.png" class="arrow"></image>
       </view>
     </view>
@@ -156,6 +159,7 @@
     wx:else
     open-type="getUserInfo" 
     bindgetuserinfo="userInfoHandler"
-    class="login-btn {{ loginAnimation ? 'bounce dim' : '' }}">登陆</button>
+    class="login-btn {{ loginAnimation || btnLoading ? 'bounce dim' : '' }}"
+    >登陆</button>
   </view>
 </view>
