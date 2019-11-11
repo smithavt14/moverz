@@ -4,7 +4,6 @@ const _agent = require('../../utils/agent.js')
 Page({
   data: {
     user: undefined,
-    agents: undefined,
     role: undefined
   },
 
@@ -27,8 +26,10 @@ Page({
   /* ----- Agent Functions ----- */
 
   fetchUserAgents: async function (id) {
-    let agents = await _agent.fetchUserAgents(id)
-    this.setData({ agents })
+    await _agent.fetchUserAgents(id).then(agents => {
+      if (agents.length !== 0) this.setData({ agents })
+      else this.setData({agents: undefined})
+    })
   },
 
   destroyAgent: function (e) {
@@ -66,6 +67,12 @@ Page({
       success: function (res) {
         res.eventChannel.emit('sendAgentInformation', { id, position })
       }
+    })
+  },
+
+  navigateBack: function () {
+    wx.navigateBack({
+      url: '/pages/index/index'
     })
   },
 

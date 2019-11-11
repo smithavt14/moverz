@@ -180,20 +180,21 @@ Page({
 
   getCurrentUser: async function () {
     let user = await _auth.getCurrentUser()
-    this.setData({ hasUser: !!user })
+    this.setData({ hasUser: !!user, user })
     this.getWeather()
   },
 
   logout: function () {
     _auth.logout()
-    this.setData({hasUser: false})
+    this.setData({hasUser: false, user: undefined})
   },
 
   userInfoHandler: async function (data) {
     this.setData({btnLoading: true})
-    let user = await _auth.login(data)
-    this.setData({ hasUser: !!user, btnLoading: false })
-    this.getWeather()
+    await _auth.login(data).then(async user => {
+        await this.getCurrentUser()
+        this.setData({btnLoading: false})
+    })
   },
 
   loginNotice: function () {

@@ -1,3 +1,5 @@
+@import "../../styles/keyframes.wxss";
+
 .agent_container {
   min-height: 250rpx;
   width: 95%;
@@ -43,4 +45,55 @@
   height: 30rpx;
   width: 30rpx;
   margin: 0 10rpx;
+}
+
+.icon_container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #20324E;
+  margin-bottom: 100rpx;
+  font-size: 50rpx;
+}
+
+.icon_container .icon {
+  margin-top: 200rpx;
+  height: 250rpx;
+  width: 300rpx;
+}
+
+.btn_area {
+  width: 100vw;
+  height: 200rpx;
+  position: fixed;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  font-size: 35rpx;
+}
+
+.btn_area .container {
+  width: 95%;
+  height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 25rpx;
+  background: #20324E;
+  color: white;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+.bounce {
+  animation: bounce .75s ease-in-out infinite;
+}
+
+.dim {
+  animation: dim .75s ease-in-out infinite;
 }

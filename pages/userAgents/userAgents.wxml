@@ -1,9 +1,7 @@
 <view class="page__container">
 
-  <button wx:if="{{!user}}" open-type="getUserInfo" bindgetuserinfo="login" type="primary">登陆</button>
-
   <!-- User Container -->
-  <block wx:else>
+  <block wx:if="{{ agents }}">
     <view 
     wx:for="{{agents}}" 
     class="agent_container" 
@@ -37,4 +35,14 @@
       </view>
     </view>
   </block>
+  <view wx:else class="icon_container">
+    <image 
+    src="../../assets/logos/logo-blue.png"
+    class="icon"
+    mode="aspectFit"></image>
+    <view>您目前没有人</view>
+    <view class="btn_area">
+      <view class="container dim" bindtap="navigateBack">回首页</view>
+    </view>
+  </view>
 </view>

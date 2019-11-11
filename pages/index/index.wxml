@@ -137,7 +137,13 @@
     </view>
   </view>
 
-  <view style="height: 300rpx; width: 100vw; background: white; margin-top: 30rpx;"></view>
+  <view class="emissions__container">
+    <circle 
+    draw="circle"
+    percentage="{{ air.location }}"
+    emissions="{{ user.emissions_saved }}"
+    radius="250"/>
+  </view>
 
   <!-- Button Area -->
   <view class="btn_area">
