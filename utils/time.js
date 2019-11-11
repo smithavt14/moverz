@@ -7,9 +7,9 @@ const getLocalString = (date) => {
     let localString = new Date(date).toLocaleString('zh-Hans-CN', options)
 
     date = localString.split(' ')[0]
-    let time = localString.split(' ')[1]
+    let hour = localString.split(' ')[1]
 
-    resolve({ localString, date, time })
+    resolve({ localString, date, hour })
   })
 }
 

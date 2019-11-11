@@ -11,13 +11,11 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUser: undefined,
     loginAnimation: false,
-    order: {
-      status: 'awaiting_payment'
-    },
+    order: undefined,
     parcel: undefined,
     display: {
       minTime: undefined,
-      time: undefined,
+      hour: undefined,
       date: undefined
     },
     receiver: undefined,
@@ -38,22 +36,27 @@ Page({
       y = value[0]
       m = value[1]
       d = value[2]
-      let pickupTime = new Date(`${y}/${m}/${d} ${display.time}`)
-      let result = await _time.getLocalString(pickupTime)
-      this.setData({
-        'display.time': result.time,
-        'display.date': result.date,
-        'order.pickup_time': result.localString
+      let pickupTime = new Date(`${y}/${m}/${d} ${display.hour}`)
+      await _time.getLocalString(pickupTime).then(res => {
+        console.log(res)
+        this.setData({
+          'display.hour': res.hour,
+          'display.date': res.date,
+          'order.pickup_time': res.localString
+        })
       })
+      
     } else {
       display[type] = value
-      let pickupTime = new Date(`${display.date} ${display.time}`)
-      let result = await _time.getLocalString(pickupTime)
-      this.setData({
-        'display.time': result.time,
-        'display.date': result.date,
-        'order.pickup_time': result.localString
+      let pickupTime = new Date(`${display.date} ${display.hour}`)
+      await _time.getLocalString(pickupTime).then(res => {
+        this.setData({
+          'display.hour': res.hour,
+          'display.date': res.date,
+          'order.pickup_time': res.localString
+        })
       })
+      
     }
   },
 
@@ -61,13 +64,12 @@ Page({
     let dateNow = new Date()
     dateNow = new Date(dateNow.setHours(dateNow.getHours() + 1))
     
-    let result = await _time.getLocalString(dateNow)
-
-    this.setData({
-      'display.minTime': result.time,
-      'display.time': result.time,
-      'display.date': result.date,
-      'order.pickup_time': result.localString
+    await _time.getLocalString(dateNow).then(res => {
+      this.setData({
+        'display.hour': res.hour,
+        'display.date': res.date,
+        'order.pickup_time': res.localString
+      })
     })
   },
 
@@ -150,7 +152,7 @@ Page({
       this.setData({
         [orderKey]: agent
       })
-      this.setPrice()
+      this.setOrderData()
     })
   },
 
@@ -159,7 +161,7 @@ Page({
       this.setData({
         'order.parcel': parcel
       })
-      this.setPrice()
+      this.setOrderData()
     })
     
   },
@@ -225,15 +227,20 @@ Page({
     }
   },
 
-  setPrice: async function () {
+  setOrderData: async function () {
     let order = this.data.order
 
     if (order && order.sender && order.receiver && order.parcel) {
-      await _order.setPrice(order).then(data => {
-        this.setData({ 
-          'order.price': data.price,
-          'order.distance': data.distance
-         })
+      await _order.setDistance(order).then(async distance => {
+        order.distance = distance
+        let price = _order.setPrice(order)
+        let emissions = _order.setEmissions(order)
+
+        Promise.all([price, emissions]).then(values => {
+          order.price = values[0]
+          order.emissions_saved = values[1]
+          this.setData({ order })
+        })
       })
     }
   },

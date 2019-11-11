@@ -72,13 +72,13 @@
         上门时间
       </view>
       <view class="right_box">
-        <picker mode="time" value="{{display.time}}" bindchange="bindDateChange" data-type="time">
+        <picker mode="time" value="{{display.hour}}" bindchange="bindDateChange" data-type="hour">
           <view wx:if="{{ !order.pickup_time }}" style="display: flex; align-items: center;" id="light-content">
             <view>一小时内</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center;">
-            <view>{{display.time}}</view>
+            <view>{{display.hour}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>

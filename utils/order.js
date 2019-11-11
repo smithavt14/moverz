@@ -89,13 +89,26 @@ const fetchData = async (order) => {
   })
 }
 
+const setDistance = async order => {
+  return await _map.calculateDistance(order.sender, order.receiver) // unit = meters
+}
+
+const setEmissions = order => {
+  let distance = order.distance / 1000
+  let emissions = Math.floor(175 * distance)
+
+  return emissions // unit = grams
+  
+  // Resources: 
+  // https://www.iea.org/topics/transport/gfei/report/
+  // 2017 China average CO2 emissions(grams)/km = 175
+}
+
 const setPrice = order => {
   return new Promise(async resolve => {
-
-    await fetchData(order).then(async order => {
-
+    await fetchData(order).then(order => {
       let weight = order.parcel.weight
-      let distance = await _map.calculateDistance(order.sender, order.receiver)
+      let distance = order.distance
       let hour = new Date(order.pickup_time).getHours()
 
       let price = 0
@@ -111,7 +124,7 @@ const setPrice = order => {
         price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
         price = price > 200 ? 200 : price
       }
-      resolve({ price, distance })
+      resolve(price)
     })
   }) 
 }
@@ -143,4 +156,4 @@ const validate = (order) => {
   })
 }
 
-module.exports = { fetch, fetchData, fetchUserOrders, create, update, destroy, setPrice, validate }
+module.exports = { fetch, fetchData, fetchUserOrders, create, update, destroy, setPrice, validate, setDistance, setEmissions }

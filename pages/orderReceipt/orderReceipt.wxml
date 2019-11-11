@@ -3,11 +3,11 @@
 
     <!-- Top of the Ticket -->
     <view class="top">
-      <view class="check {{ order.status }}">
+      <view class="check" style="background: {{order.display.status.color}};" >
         <image class="icon" mode="aspectFit" src="../../assets/logos/logo-white.png"></image>
       </view>
-      <view class="header">谢谢您!</view>
-      <view class="subheader">您的订单已提交</view>
+      <view class="header">{{order.display.status.title}}</view>
+      <view class="subheader">{{order.display.status.subtitle}}</view>
     </view>
 
     <!-- Bottom of the Ticket -->
@@ -33,7 +33,7 @@
       <view class="info_container">
         <view class="left">
           <view class="title">上门时间</view>
-          <view class="info">{{order.display.time}}</view>
+          <view class="info">{{order.display.time.hour}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/clock.png"></image>
@@ -42,7 +42,7 @@
       <view class="info_container">
         <view class="left">
           <view class="title">上门日期</view>
-          <view class="info">{{order.display.date}}</view>
+          <view class="info">{{order.display.time.date}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/calendar.png"></image>
@@ -56,9 +56,6 @@
         <view class="right">
           <image class="icon" src="../../assets/icons/wechatpay.svg"></image>
         </view>
-      </view>
-      <view class="info_container">
-        <view class="status_box {{ order.status }}">{{order.status}}</view>
       </view>
     </view>
   </view>
