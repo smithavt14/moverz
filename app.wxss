@@ -9,3 +9,15 @@
   background-color: #F3F3F3;
   background-size: cover;
 }
+
+.btn_area {
+  width: 100vw;
+  height: 200rpx;
+  position: fixed;
+  bottom: 0;
+  background: white;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  z-index: 100;
+}

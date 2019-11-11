@@ -166,20 +166,6 @@
   background: #E15E5E;
 }
 
-/* Order Statuses: Awaiting Payment, Awaiting Pickup, Partially Shipped, Completed, Cancelled, Declined, Refunded, Disputed */
-
-
-.btn_area {
-  width: 100vw;
-  height: 200rpx;
-  position: fixed;
-  bottom: 0;
-  background: white;
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid rgba(0,0,0,0.1);
-}
-
 .btn {
   width: 95%;
   height: 125rpx;

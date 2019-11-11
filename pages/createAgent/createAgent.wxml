@@ -49,7 +49,7 @@
     </view>
     
     <!-- Button Area -->
-    <view class="btn-area">
+    <view class="btn_area">
       <view 
       wx:if="{{hasUser}}" 
       class="btn" 

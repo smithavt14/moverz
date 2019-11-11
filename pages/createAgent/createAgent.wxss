@@ -52,17 +52,6 @@
   width: 50rpx;
 }
 
-.btn-area {
-  width: 100vw;
-  height: 200rpx;
-  position: fixed;
-  bottom: 0;
-  background: white;
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid rgba(0,0,0,0.1);
-}
-
 #search-btn {
   width: 100%;
   background: #178E46 !important;

@@ -43,7 +43,7 @@
   </view>
 
   <!-- Button Area -->
-  <view class="btn-area">
+  <view class="btn_area">
     <button bindtap="createParcel" class="btn">确定</button>
   </view>
 </view>
