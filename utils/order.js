@@ -21,10 +21,11 @@ const pay = order => {
   }
   return new Promise(resolve => {
     wx.BaaS.pay(params).then(res => {
-      console.log('微信支付流水号', res.transaction_no)
+      console.log('Transaction Number: ', res.transaction_no)
       resolve(res.transaction_no)
     }, err => {
       if (err.code === 607) {
+        wx.hideLoading()
         console.log('用户取消支付')
         resolve
       } else if (err.code === 608) {
@@ -196,4 +197,4 @@ const validate = (order) => {
   })
 }
 
-module.exports = { fetch, fetchData, fetchUserOrders, create, update, destroy, setPrice, validate, setDistance, setEmissions, setOrderStatusOptions }
+module.exports = { fetch, fetchData, fetchUserOrders, create, update, destroy, setPrice, validate, setDistance, setEmissions, setOrderStatusOptions, pay }
