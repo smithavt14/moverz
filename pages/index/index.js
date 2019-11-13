@@ -144,6 +144,12 @@ Page({
     }
   },
 
+  navigateToOrderHistory: function() {
+    wx.navigateTo({
+      url: '/pages/orderHistory/orderHistory'
+    })
+  },
+
   /* ----- Fetch Data Functions ----- */
 
   getAgentInformation: async function (id, role) {
@@ -179,9 +185,14 @@ Page({
   /* ----- Auth Functions ----- */
 
   getCurrentUser: async function () {
-    let user = await _auth.getCurrentUser()
-    this.setData({ hasUser: !!user, user })
-    this.getWeather()
+    await _auth.getCurrentUser().then(user => {
+      if (user) {
+        this.setData({ hasUser: !!user, user })
+        this.getWeather()
+      } else {
+        this.setData({ hasUser: !!user })
+      }
+    })
   },
 
   logout: function () {
@@ -192,8 +203,8 @@ Page({
   userInfoHandler: async function (data) {
     this.setData({btnLoading: true})
     await _auth.login(data).then(async user => {
-        await this.getCurrentUser()
-        this.setData({btnLoading: false})
+      this.setData({ hasUser: true, user, btnLoading: false })
+      this.getWeather()
     })
   },
 

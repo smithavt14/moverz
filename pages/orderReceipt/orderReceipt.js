@@ -53,7 +53,8 @@ Page({
   },
 
   onLoad: function (options) {
-    this.setOrderInfo(options.id)
+    console.log(options.id)
+    this.setOrderInfo(options.id)  
     this.getUserData()
   }
 })

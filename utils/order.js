@@ -70,6 +70,7 @@ const destroy = id => {
 }
 
 const fetchData = async (order) => {
+  console.log(order)
   let sender = order.sender.id
   let receiver = order.receiver.id
   let parcel = order.parcel.id

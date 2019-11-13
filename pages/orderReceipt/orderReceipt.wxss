@@ -1,5 +1,7 @@
+@import "../../styles/keyframes.wxss";
+
 .receipt_container {
-  width: 95vw;
+  width: 90vw;
   margin-top: 100rpx;
   position: relative;
   border-radius: 10rpx;
@@ -138,32 +140,23 @@
   color: white;
 }
 
-.awaiting_payment {
-  background: #FFBC79;
-}
-
-.awaiting_pickup {
-  background: #74B3D6;
-}
-
-.partially_shipped {
+.receipt_container .info_container .emissions_container {
+  font-size: 35rpx;
+  width: 100%;
+  height: 75%;
   background: #178E46;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #F9F9FA;
+  border-radius: 10rpx;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 }
 
-.completed {
-  background: #178E46;
-}
-
-.cancelled {
-  background: #E15E5E;
-}
-
-.declined {
-  background: #E15E5E;
-}
-
-.refuneded {
-  background: #E15E5E;
+.receipt_container .info_container .emissions_container .icon {
+  height: 50rpx;
+  width: 50rpx;
+  margin: 0 20rpx;
 }
 
 .btn {
@@ -178,4 +171,8 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+}
+
+.pale-dim {
+  animation: pale-dim 2s ease-in-out infinite;
 }

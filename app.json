@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/createAgent/createAgent",
     "pages/createParcel/createParcel",
-    "pages/orderReceipt/orderReceipt"
+    "pages/orderReceipt/orderReceipt",
+    "pages/orderHistory/orderHistory"
   ],
   "window": {
     "backgroundTextStyle": "light",

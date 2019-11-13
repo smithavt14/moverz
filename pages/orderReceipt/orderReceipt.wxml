@@ -57,6 +57,17 @@
           <image class="icon" src="../../assets/icons/wechatpay.svg"></image>
         </view>
       </view>
+      <view class="info_container">
+        <view class="emissions_container pale-dim">
+          <view>Saved</view>
+          <image 
+          class="icon" 
+          src="../../assets/icons/cloud-white.png"
+          mode="aspectFit"></image>
+          <view>{{order.emissions_saved / 1000}}</view>
+          <view style="font-size: 20rpx; margin-left: 5rpx;">KG</view>
+        </view>
+      </view>
     </view>
   </view>
 

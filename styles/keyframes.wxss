@@ -9,3 +9,15 @@
   50% { opacity: .5 }
   100% { opacity: 1 }
 }
+
+@keyframes pale-dim {
+  0% { background: #178E46; }
+  50% { background: #1FC05F; }
+  100% { background: #178E46; }
+}
+
+@keyframes progress {
+  0% { background: linear-gradient(90deg, #208D49 0%, #F3F3F3 1%) }
+  50% { background: linear-gradient(90deg, #208D49 0%, #F3F3F3 50%) }
+  100% { background: linear-gradient(90deg, #208D49 0%, #F3F3F3 100%) }
+}
