@@ -1,0 +1,103 @@
+.txt_container {
+  background: white;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.txt_container .paragraph {
+  width: 90%;
+  margin: 20rpx 0;
+  color: #20324E;
+  font-size: 30rpx;
+}
+
+/* ---- Weather Component ----- */
+
+.weather__container {
+  width: 90%;
+  margin: 30rpx 0;
+  background: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 10rpx;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.weather__container .bottom_box {
+  height: 250rpx;
+  box-sizing: border-box;
+  padding: 20rpx;
+  color: #20324E;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather__container .bottom_box .title {
+  width: 95%;
+  margin: 15rpx 0;
+}
+
+.weather__container .bottom_box .progress_bar {
+  height: 50rpx;
+  width: 95%;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 50rpx
+}
+
+.weather__container .bottom_box .progress_bar .progress {
+  height: 50rpx;
+  width: 50%;
+  background: #208D49;
+  border-radius: 50rpx;
+  position: absolute;
+  z-index: 10;
+}
+
+.weather__container .bottom_box .progress_bar .base {
+  background: #F3F3F3;
+  border-radius: 50rpx;
+  height: 50rpx;
+  width: 100%;
+}
+
+.weather__container .bottom_box .progress_info {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin: 15rpx 0;
+}
+
+.weather__container .bottom_box .progress_info .box {
+  display: flex;
+}
+
+.weather__container .bottom_box .progress_info .box .icon {
+  height: 40rpx;
+  width: 40rpx;
+  margin: 0 10rpx;
+}
+
+/* ----- BTN AREA ----- */
+
+.btn_area .btn {
+  width: 95%;
+  height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 25rpx;
+  background: #21334D;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 35rpx;
+}

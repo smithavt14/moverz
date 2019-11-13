@@ -21,39 +21,33 @@ Page({
   },
 
   setOrderInfo: async function (id) {
+    wx.showLoading()
     await _order.fetch(id).then(async order => {
       await _order.fetchData(order).then(async order => {
-        let status = this.setStatusOptions(order)
-        await _time.getLocalString(order.pickup_time).then(time => {
-          order['display'] = { status, time }
+        
+        let status = await _order.setOrderStatusOptions(order)
+        let time = await _time.getLocalString(order.pickup_time)
+
+        Promise.all([status, time]).then(values => {
+          status = values[0]
+          time = values[1]
+          order.display = {status, time}
+
           this.setData({ order })
+          wx.hideLoading()
         })
       })
     })
   },
 
-  setStatusOptions: function (order) {
-    switch (order.status) {
-      case 0:
-        return { title: '等待支付', subtitle: '您的订单等待支付', color: '#FFBC79'}
-        break
-      case 1: 
-        return { title: '订单确认了', subtitle: '您的订单已支付了', color: '#178E46'}
-        break
-      case 2:
-        return { title: '订单在寄送中', subtitle: '您的订单寄送了', color: '#74B3D6'}
-        break
-      case 3: 
-        return { title: '订单已收到了', subtitle: '对方已经收到货了', color: '178E46'}
-        break
-      case 4: 
-        return { title: '订单取消了', subtitle: '您的订单取消了', color: '#E15E5E'}
-        break
-    }
+  submitPayment: async function () {
+    let order = this.data.order
+    await _order.pay(order).then(res => {
+      console.log(res)
+    })
   },
 
   onLoad: function (options) {
-    console.log(options.id)
     this.setOrderInfo(options.id)  
     this.getUserData()
   }

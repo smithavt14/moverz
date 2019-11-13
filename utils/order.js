@@ -13,6 +13,29 @@ const fetch = id => {
   })
 }
 
+const pay = order => {
+  let price = order.price
+  let params = {
+    totalCost: 0.01,
+    merchandiseDescription: '一条支付描述'
+  }
+  return new Promise(resolve => {
+    wx.BaaS.pay(params).then(res => {
+      console.log('微信支付流水号', res.transaction_no)
+      resolve(res.transaction_no)
+    }, err => {
+      if (err.code === 607) {
+        console.log('用户取消支付')
+        resolve
+      } else if (err.code === 608) {
+        console.log('支付失败', err.message)
+        wx.showToast({ title: '支付失败', icon: 'none' })
+        resolve
+      }
+    })
+  })
+}
+
 const fetchUserOrders = id => {
   return new Promise(resolve => {
     let query = new wx.BaaS.Query()
@@ -59,6 +82,23 @@ const update = order => {
   })
 }
 
+const setOrderStatusOptions = order => {
+  return new Promise(resolve => {
+    switch (order.status) {
+      case 0:
+        resolve({ title: '等待支付', subtitle: '您的订单等待支付', color: '#FFBC79' })
+      case 1:
+        resolve({ title: '订单确认了', subtitle: '您的订单已支付了', color: '#178E46' })
+      case 2:
+        resolve({ title: '订单在寄送中', subtitle: '您的订单寄送了', color: '#74B3D6' })
+      case 3:
+        resolve({ title: '订单已收到了', subtitle: '对方已经收到货了', color: '178E46' })
+      case 4:
+        resolve({ title: '订单取消了', subtitle: '您的订单取消了', color: '#E15E5E' })
+    }
+  })
+}
+
 const destroy = id => {
   return new Promise(resolve => {
     OrderTable.delete(id).then(res => {
@@ -70,7 +110,6 @@ const destroy = id => {
 }
 
 const fetchData = async (order) => {
-  console.log(order)
   let sender = order.sender.id
   let receiver = order.receiver.id
   let parcel = order.parcel.id
@@ -157,4 +196,4 @@ const validate = (order) => {
   })
 }
 
-module.exports = { fetch, fetchData, fetchUserOrders, create, update, destroy, setPrice, validate, setDistance, setEmissions }
+module.exports = { fetch, fetchData, fetchUserOrders, create, update, destroy, setPrice, validate, setDistance, setEmissions, setOrderStatusOptions }

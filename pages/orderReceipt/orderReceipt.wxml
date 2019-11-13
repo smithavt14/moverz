@@ -1,5 +1,5 @@
-<view class="page__container" style="margin-bottom: 200rpx">
-  <view class="receipt_container">
+<view class="page__container">
+  <view wx:if="{{ order.display }}" class="receipt_container">
 
     <!-- Top of the Ticket -->
     <view class="top">
@@ -62,7 +62,7 @@
           <view>Saved</view>
           <image 
           class="icon" 
-          src="../../assets/icons/cloud-white.png"
+          src="../../assets/icons/emissions-green.png"
           mode="aspectFit"></image>
           <view>{{order.emissions_saved / 1000}}</view>
           <view style="font-size: 20rpx; margin-left: 5rpx;">KG</view>
@@ -74,5 +74,6 @@
   <!-- Button Area -->
   <view class="btn_area">
     <view class="btn" bindtap="navigateHome">回首页</view>
+    <view wx:if="{{order.status === 0}}" class="pay-btn">微信支付</view>
   </view>
 </view>

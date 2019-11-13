@@ -10,11 +10,15 @@
   <view class="navigation_container">
     <view 
     class="btn" 
-    style="color: #21334D">公司介绍</view>
+    style="color: #21334D"
+    bindtap="navigateToIntro"
+    hover-class="hover-blue">公司介绍</view>
+    
     <view 
     class="btn" 
     style="color: #178E46"
-    bindtap="navigateToOrderHistory">我的订单</view>
+    bindtap="navigateToOrderHistory"
+    hover-class="hover-green">我的订单</view>
   </view>
   
   <!-- Sender Information -->
@@ -138,20 +142,6 @@
 
   <!-- Weather Container -->
   <view class="weather__container">
-    <view wx:if="{{ air }}" class="top_box" style="background: {{air.quality.hex}}">
-      <view class="box">
-        <image wx:if="{{ air }}" class="image" src="../../assets/icons/masks/{{ air.quality.qlty }}.png"></image>
-      </view>
-      <view class="box">
-        <view class="top">{{air.quality.aqi}}</view>
-        <view class="bottom">中国 AQI</view>
-      </view>
-      <view 
-      class="box" 
-      style="font-size: 50rpx">{{air.location}}</view>
-    </view>
-    
-    <!-- Emissions Component -->
     <view class="bottom_box">
       <view class="title">Emissions Goal</view>
       <view class="progress_bar">

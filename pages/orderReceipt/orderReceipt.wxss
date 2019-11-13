@@ -144,13 +144,12 @@
   font-size: 35rpx;
   width: 100%;
   height: 75%;
-  background: #178E46;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #F9F9FA;
+  color: #178E46;
   border-radius: 10rpx;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  animation: dim-white 2s ease-in-out infinite;
 }
 
 .receipt_container .info_container .emissions_container .icon {
@@ -175,4 +174,19 @@
 
 .pale-dim {
   animation: pale-dim 2s ease-in-out infinite;
+}
+
+.btn_area .pay-btn {
+  width: 95%;
+  height: 125rpx;
+  position: absolute;
+  bottom: 50rpx;
+  border-radius: 25rpx;
+  background: #178E46;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 35rpx;
 }

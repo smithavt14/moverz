@@ -75,6 +75,12 @@ Page({
 
   /* ----- Navigation Functions ----- */
 
+  navigateToIntro: function () {
+    wx.navigateTo({
+      url: '/pages/intro/intro'
+    })
+  },
+
   navigateToCreateAgent: function (e) {
     let self = this
 

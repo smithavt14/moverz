@@ -1,2 +1,40 @@
-<!--pages/orderHistory/orderHistory.wxml-->
-<text>pages/orderHistory/orderHistory.wxml</text>
+<view class="page__container">
+  
+  <block wx:if="{{ orders }}">
+    <view 
+    wx:for="{{ orders }}" 
+    class="order_container" 
+    data-id="{{ order.id }}" 
+    wx:for-item="order"
+    bindtap="navigateToOrder">
+
+      <view class="status_container">
+        <view class="id">{{ order.id }}</view>
+        <view class="status" style="background: {{ order.display.status.color}}">{{order.display.status.title}}</view>
+      </view>
+      <view class="info_container">
+        <view class="title">寄送人</view>
+        <view class="subtitle">{{order.sender.name}} {{order.sender.address}}</view>
+      </view>
+      <view class="info_container">
+        <view class="title">收件人</view>
+        <view class="subtitle">{{order.receiver.name}} {{order.receiver.address}}</view>
+      </view>
+      <view class="info_container">
+        <view class="title">上门时间</view>
+        <view class="subtitle">{{ order.display.time.localString }}</view>
+      </view>
+      <view class="info_container">
+        <view class="emissions_container pale-dim">
+          <view>Saved</view>
+          <image 
+          class="icon" 
+          src="../../assets/icons/emissions-green.png"
+          mode="aspectFit"></image>
+          <view>{{order.emissions_saved / 1000}}</view>
+          <view style="font-size: 20rpx; margin-left: 5rpx;">KG</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

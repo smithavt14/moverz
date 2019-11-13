@@ -21,3 +21,9 @@
   50% { background: linear-gradient(90deg, #208D49 0%, #F3F3F3 50%) }
   100% { background: linear-gradient(90deg, #208D49 0%, #F3F3F3 100%) }
 }
+
+@keyframes dim-white {
+  0% { background: white; }
+  50% { background: #F9F9FA;}
+  0% { background: white; }
+}

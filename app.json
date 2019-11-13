@@ -4,7 +4,8 @@
     "pages/createAgent/createAgent",
     "pages/createParcel/createParcel",
     "pages/orderReceipt/orderReceipt",
-    "pages/orderHistory/orderHistory"
+    "pages/orderHistory/orderHistory",
+    "pages/intro/intro"
   ],
   "window": {
     "backgroundTextStyle": "light",
