@@ -20,11 +20,6 @@ Page({
       }
     },
     parcel: undefined,
-    display: {
-      minTime: undefined,
-      hour: undefined,
-      date: undefined
-    },
     receiver: undefined,
     sender: undefined,
     air: undefined
@@ -45,7 +40,6 @@ Page({
       d = value[2]
       let pickupTime = new Date(`${y}/${m}/${d} ${time.hour}`)
       await _time.getLocalString(pickupTime).then(res => {
-        console.log(res)
         this.setData({
           'order.display.time.hour': res.hour,
           'order.display.time.date': res.date,
@@ -57,7 +51,6 @@ Page({
       time[type] = value
       let pickupTime = new Date(`${time.date} ${time.hour}`)
       await _time.getLocalString(pickupTime).then(res => {
-        console.log(res)
         this.setData({
           'order.display.time.hour': res.hour,
           'order.display.time.date': res.date,
@@ -245,14 +238,12 @@ Page({
     
     if (valid && order.id) {
       await _order.update(order).then(order => {
-        console.log('update order: ', order)
         wx.redirectTo({
           url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
         })
       })
     } else if (valid) {
       await _order.create(order).then(order => {
-        console.log('created order: ', order)
         wx.redirectTo({
           url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
         })
