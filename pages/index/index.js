@@ -238,13 +238,13 @@ Page({
     
     if (valid && order.id) {
       await _order.update(order).then(order => {
-        wx.redirectTo({
+        wx.reLaunch({
           url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
         })
       })
     } else if (valid) {
       await _order.create(order).then(order => {
-        wx.redirectTo({
+        wx.reLaunch({
           url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
         })
       }) 

@@ -26,7 +26,7 @@
       </view>
       <view class="info_container">
         <view class="emissions_container pale-dim">
-          <view>Saved</view>
+          <view>节省</view>
           <image 
           class="icon" 
           src="../../assets/icons/emissions-green.png"

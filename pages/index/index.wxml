@@ -40,7 +40,7 @@
         </view>
         <view class="progress_info">
           <view class="box" style="color: #208D49">
-            <view>Saved</view>
+            <view>节省</view>
             <image 
             src="../../assets/icons/emissions-green.png"
             class="icon"
@@ -49,7 +49,7 @@
             <view style="font-size: 15rpx;">KG</view>
           </view>
           <view class="box" style="color: #20324E">
-            <view>Goal</view>
+            <view>目标</view>
               <image 
               src="../../assets/icons/emissions-blue.png"
               class="icon"
