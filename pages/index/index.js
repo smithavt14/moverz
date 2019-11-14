@@ -42,7 +42,7 @@ Page({
         this.setData({
           'display.hour': res.hour,
           'display.date': res.date,
-          'order.pickup_time': res.localString
+          'order.pickup_time': res.stringISOS
         })
       })
       
@@ -50,25 +50,27 @@ Page({
       display[type] = value
       let pickupTime = new Date(`${display.date} ${display.hour}`)
       await _time.getLocalString(pickupTime).then(res => {
+        console.log(res)
         this.setData({
           'display.hour': res.hour,
           'display.date': res.date,
-          'order.pickup_time': res.localString
+          'order.pickup_time': res.stringISOS
         })
       })
       
     }
   },
 
-  setPickupTime: async function (e) {
-    let dateNow = new Date()
-    dateNow = new Date(dateNow.setHours(dateNow.getHours() + 1))
+  setPickupTime: async function () {
+    let order = this.data.order
+
+    let date = order.pickup_time ? order.pickup_time : new Date(new Date().setHours(dateNow.getHours() + 1))
     
-    await _time.getLocalString(dateNow).then(res => {
+    await _time.getLocalString(date).then(res => {
       this.setData({
         'display.hour': res.hour,
         'display.date': res.date,
-        'order.pickup_time': res.localString
+        'order.pickup_time': res.stringISOS
       })
     })
   },
@@ -120,7 +122,7 @@ Page({
           }
         },
         success: function (res) {
-          let parcel = self.data.parcel
+          let parcel = self.data.order.parcel
           res.eventChannel.emit('sendParcelInformation', { parcel })
         }
       })
@@ -232,12 +234,20 @@ Page({
 
   /* ----- Order Functions ----- */
 
-  createOrder: async function () {
+  processOrder: async function () {
     let order = this.data.order
     let valid = await _order.validate(order)
-
-    if (valid) {
+    
+    if (valid && order.id) {
+      await _order.update(order).then(order => {
+        console.log('update order: ', order)
+        wx.redirectTo({
+          url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
+        })
+      })
+    } else if (valid) {
       await _order.create(order).then(order => {
+        console.log('created order: ', order)
         wx.redirectTo({
           url: `/pages/orderReceipt/orderReceipt?id=${order.id}`,
         })
@@ -263,13 +273,27 @@ Page({
     }
   },
 
-  // ----- Lifecycle Functions -----
-  
-  onLoad: function (options) {
-    this.setPickupTime()
+  checkOrderInfo: function() {
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.on('sendOrderInformation', (data) => {
+      let order = data.order
+      this.setData({ order })
+    })
   },
 
-  onShow: async function (options) {
+  // ----- Lifecycle Functions -----
+  
+  onLoad: function () {
+    this.checkOrderInfo()
+    this.setPickupTime()
+    let order = this.data.order
+
+    if (order.pickup_time) {
+
+    }
+  },
+
+  onShow: async function () {
     this.getCurrentUser()
   },
 

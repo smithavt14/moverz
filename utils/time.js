@@ -8,8 +8,9 @@ const getLocalString = (date) => {
 
     date = localString.split(' ')[0]
     let hour = localString.split(' ')[1]
+    let stringISOS = new Date(localString).toISOString()
 
-    resolve({ localString, date, hour })
+    resolve({ stringISOS, date, hour })
   })
 }
 

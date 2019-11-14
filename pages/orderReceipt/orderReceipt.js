@@ -47,6 +47,16 @@ Page({
     })
   },
 
+  editOrder: function () {
+    wx.navigateTo({
+      url: '/pages/index/index',
+      success: res => {
+        let order = this.data.order
+        res.eventChannel.emit('sendOrderInformation', { order })
+      }
+    })
+  },
+
   onLoad: function (options) {
     this.setOrderInfo(options.id)  
     this.getUserData()

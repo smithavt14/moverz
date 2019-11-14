@@ -54,6 +54,7 @@ const create = order => {
   order.sender = order.sender.id
   order.receiver = order.receiver.id
   order.parcel = order.parcel.id
+  
 
   return new Promise(resolve => {
     let row = OrderTable.create()
@@ -70,9 +71,17 @@ const update = order => {
     let id = order.id
     let orderToUpdate = OrderTable.getWithoutData(id)
 
-    orderToUpdate.set({
-      // to change 
-    })
+    let sender = order.sender.id
+    let receiver = order.receiver.id
+    let parcel = order.parcel.id
+    let pickup_time = order.pickup_time
+    let price = order.price
+    let emissions_saved = order.emissions_saved
+    let distance = order.distance
+
+    console.log(order)
+
+    orderToUpdate.set({ sender, receiver, parcel, pickup_time, price, emissions_saved, distance })
 
     orderToUpdate.update().then(res => {
       resolve(res.data)

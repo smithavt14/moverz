@@ -27,7 +27,6 @@
 }
 
 .receipt_container .top {
-  height: 250rpx;
   width: 100%;
   background: white;
   border-bottom: 2px dashed rgba(0,0,0,0.1);
@@ -36,8 +35,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-top: 30rpx;
+  align-items: center;
+  padding-top: 75rpx;
+  padding-bottom: 40rpx;
   border-radius: 10rpx;
 }
 
@@ -176,17 +176,22 @@
   animation: pale-dim 2s ease-in-out infinite;
 }
 
-.btn_area .pay-btn {
-  width: 95%;
+.btn_area .short-btn {
   height: 125rpx;
-  position: absolute;
-  bottom: 50rpx;
+  width: 45%;
   border-radius: 25rpx;
-  background: #178E46;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   font-size: 35rpx;
+}
+
+.blue {
+  background:#20324E;
+}
+
+.green {
+  background: #178E46;
 }

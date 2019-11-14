@@ -10,6 +10,8 @@
       <view class="subheader">{{order.display.status.subtitle}}</view>
     </view>
 
+    
+
     <!-- Bottom of the Ticket -->
     <view class="bottom">
       <view class="info_container">
@@ -73,7 +75,8 @@
 
   <!-- Button Area -->
   <view class="btn_area">
-    <view class="btn" bindtap="navigateHome">回首页</view>
-    <view wx:if="{{order.status === 0}}" class="pay-btn" bindtap="submitPayment">微信支付</view>
+    <view wx:if="{{order.status === 0}}" class="short-btn blue" bindtap="editOrder">修改订单</view>
+    <view wx:if="{{order.status === 0}}" class="short-btn green" bindtap="submitPayment">微信支付</view>
+    <view wx:else class="btn" bindtap="navigateHome">回首页</view>
   </view>
 </view>
