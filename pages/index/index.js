@@ -11,7 +11,14 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUser: undefined,
     loginAnimation: false,
-    order: undefined,
+    order: {
+      display: {
+        time: {
+          hour: undefined,
+          date: undefined
+        }
+      }
+    },
     parcel: undefined,
     display: {
       minTime: undefined,
@@ -27,7 +34,7 @@ Page({
 
   bindDateChange: async function (event) {
     let type = event.currentTarget.dataset.type
-    let display = this.data.display
+    let time = this.data.order.display.time
     let value = event.detail.value
     let y, m, d
     
@@ -36,24 +43,24 @@ Page({
       y = value[0]
       m = value[1]
       d = value[2]
-      let pickupTime = new Date(`${y}/${m}/${d} ${display.hour}`)
+      let pickupTime = new Date(`${y}/${m}/${d} ${time.hour}`)
       await _time.getLocalString(pickupTime).then(res => {
         console.log(res)
         this.setData({
-          'display.hour': res.hour,
-          'display.date': res.date,
+          'order.display.time.hour': res.hour,
+          'order.display.time.date': res.date,
           'order.pickup_time': res.stringISOS
         })
       })
       
     } else {
-      display[type] = value
-      let pickupTime = new Date(`${display.date} ${display.hour}`)
+      time[type] = value
+      let pickupTime = new Date(`${time.date} ${time.hour}`)
       await _time.getLocalString(pickupTime).then(res => {
         console.log(res)
         this.setData({
-          'display.hour': res.hour,
-          'display.date': res.date,
+          'order.display.time.hour': res.hour,
+          'order.display.time.date': res.date,
           'order.pickup_time': res.stringISOS
         })
       })
@@ -66,8 +73,8 @@ Page({
     date = new Date(date.setHours(date.getHours() + 1))
     await _time.getLocalString(date).then(res => {
       this.setData({
-        'display.hour': res.hour,
-        'display.date': res.date,
+        'order.display.time.hour': res.hour,
+        'order.display.time.date': res.date,
         'order.pickup_time': res.stringISOS
       })
     })

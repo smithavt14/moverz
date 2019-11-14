@@ -130,13 +130,13 @@
         上门时间
       </view>
       <view class="right_box">
-        <picker mode="time" value="{{display.hour}}" bindchange="bindDateChange" data-type="hour">
+        <picker mode="time" value="{{order.display.time.hour}}" bindchange="bindDateChange" data-type="hour">
           <view wx:if="{{ !order.pickup_time }}" style="display: flex; align-items: center;" id="light-content">
             <view>一小时内</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center;">
-            <view>{{display.hour}}</view>
+            <view>{{order.display.time.hour}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>
@@ -150,13 +150,13 @@
         上门日期
       </view>
       <view class="right_box">
-        <picker mode="date" value="{{display.date}}" start="{{display.date}}" bindchange="bindDateChange" data-type="date">
+        <picker mode="date" value="{{order.display.time.date}}" start="{{display.date}}" bindchange="bindDateChange" data-type="date">
           <view wx:if="{{ !order.pickup_time }}" style="display: flex; align-items: center;" id="light-content">
             <view>今天</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
           <view wx:else style="display: flex; align-items: center">
-            <view>{{display.date}}</view>
+            <view>{{order.display.time.date}}</view>
             <image src="/assets/icons/arrow.png" class="arrow"></image>
           </view>
         </picker>

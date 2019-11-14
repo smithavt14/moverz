@@ -22,7 +22,6 @@ const fetchAQI = async () => {
         'content-type': 'application/json' // 默认值
       },
       success(res) {
-        console.log(res)
         let air = res.data.HeWeather6[0].air_now_city
         let hex = setColor(air.qlty)
         // let darkHex = darkenColor(hex)
