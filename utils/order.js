@@ -27,11 +27,11 @@ const pay = order => {
       if (err.code === 607) {
         wx.hideLoading()
         console.log('用户取消支付')
-        resolve
+        resolve(err)
       } else if (err.code === 608) {
         console.log('支付失败', err.message)
         wx.showToast({ title: '支付失败', icon: 'none' })
-        resolve
+        resolve(err)
       }
     })
   })
@@ -78,10 +78,12 @@ const update = order => {
     let price = order.price
     let emissions_saved = order.emissions_saved
     let distance = order.distance
+    let transaction_no = order.transaction_no
+    let status = order.status
 
     console.log(order)
 
-    orderToUpdate.set({ sender, receiver, parcel, pickup_time, price, emissions_saved, distance })
+    orderToUpdate.set({ sender, receiver, parcel, pickup_time, price, emissions_saved, distance, transaction_no, status })
 
     orderToUpdate.update().then(res => {
       resolve(res.data)

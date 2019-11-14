@@ -34,15 +34,22 @@
 }
 
 .navigation_container {
-  height: 150rpx;
+  padding: 30rpx;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   position: relative;
 }
 
-.navigation_container .btn {
+.navigation_container .flexbox {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation_container .flexbox .btn {
   height: 90rpx;
   width: 47.5%;
   background: white;
@@ -221,8 +228,8 @@
 }
 
 .weather__container {
-  width: 90%;
-  margin: 30rpx 0;
+  width: 95%;
+  margin-top: 30rpx;
   background: white;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   border-radius: 10rpx;
@@ -231,19 +238,22 @@
 }
 
 .weather__container .top_box {
-  height: 175rpx;
+  height: 150rpx;
   display: flex;
   border-radius: 10rpx 10rpx 0 0;
+  position: relative;
+  justify-content: center;
 }
 
 .weather__container .top_box .box {
-  width: 33.3%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: .75;
-  border-radius: 10rpx;
+  color: white;
+  font-size: 80rpx;
+  font-weight: 800;
 }
 
 .weather__container .top_box .box image {
@@ -262,7 +272,7 @@
 }
 
 .weather__container .bottom_box {
-  height: 250rpx;
+  height: 175rpx;
   box-sizing: border-box;
   padding: 20rpx;
   color: #20324E;
@@ -307,7 +317,7 @@
   display: flex;
   justify-content: space-between;
   width: 95%;
-  margin: 15rpx 0;
+  margin-top: 15rpx;
 }
 
 .weather__container .bottom_box .progress_info .box {

@@ -22,7 +22,7 @@
       </view>
       <view class="info_container">
         <view class="title">上门时间</view>
-        <view class="subtitle">{{ order.display.time.localString }}</view>
+        <view class="subtitle">{{order.display.time.date}} {{order.display.time.hour}}</view>
       </view>
       <view class="info_container">
         <view class="emissions_container pale-dim">

@@ -10,7 +10,9 @@ const fetchAQI = async () => {
   if (!user) user = {city: 'Hangzhou'}
   return new Promise (resolve => {
     
-    let url = `https://free-api.heweather.net/s6/air/now?location=${user.city}&key=${key}`
+    let url = `https://api.heweather.net/s6/air/now?location=${user.city}&key=${key}`
+    
+    
     let self = this
 
     wx.request({
@@ -20,6 +22,7 @@ const fetchAQI = async () => {
         'content-type': 'application/json' // 默认值
       },
       success(res) {
+        console.log(res)
         let air = res.data.HeWeather6[0].air_now_city
         let hex = setColor(air.qlty)
         // let darkHex = darkenColor(hex)
@@ -30,6 +33,7 @@ const fetchAQI = async () => {
         resolve({ air, location })
       },
       fail(err) {
+        console.log(err)
         resolve(err)
       }
     })
@@ -73,7 +77,7 @@ const fetchWeather = async () => {
 
   return new Promise(resolve => {
     
-    let url = `https://free-api.heweather.net/s6/weather/now?location=${user.city}&key=${key}`
+    let url = `https://api.heweather.net/s6/weather/now?location=${user.city}&key=${key}`
 
     wx.request({
       url,

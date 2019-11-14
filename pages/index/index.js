@@ -62,10 +62,8 @@ Page({
   },
 
   setPickupTime: async function () {
-    let order = this.data.order
-
-    let date = order.pickup_time ? order.pickup_time : new Date(new Date().setHours(dateNow.getHours() + 1))
-    
+    let date = new Date()
+    date = new Date(date.setHours(date.getHours() + 1))
     await _time.getLocalString(date).then(res => {
       this.setData({
         'display.hour': res.hour,
@@ -273,8 +271,7 @@ Page({
     }
   },
 
-  checkOrderInfo: function() {
-    const eventChannel = this.getOpenerEventChannel()
+  checkOrderInfo: function(eventChannel) {
     eventChannel.on('sendOrderInformation', (data) => {
       let order = data.order
       this.setData({ order })
@@ -284,13 +281,11 @@ Page({
   // ----- Lifecycle Functions -----
   
   onLoad: function () {
-    this.checkOrderInfo()
-    this.setPickupTime()
+    const eventChannel = this.getOpenerEventChannel()
+
+    eventChannel.listener ? this.checkOrderInfo(eventChannel) : this.setPickupTime()
+    
     let order = this.data.order
-
-    if (order.pickup_time) {
-
-    }
   },
 
   onShow: async function () {

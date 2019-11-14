@@ -17,7 +17,9 @@ Page({
   },
 
   navigateToHome: function () {
-    wx.navigateTo({ url: '/pages/index/index' })
+    wx.reLaunch({
+      url: '/pages/index/index',
+    })
   },
 
   setOrderInfo: async function (id) {
@@ -42,8 +44,12 @@ Page({
 
   submitPayment: async function () {
     let order = this.data.order
-    await _order.pay(order).then(res => {
-      console.log(res)
+    await _order.pay(order).then(transaction_no => {
+      if (transaction_no) {
+        order['transaction_no'] = transaction_no
+        order.status = 1
+        this.updateOrder(order)
+      }
     })
   },
 
@@ -54,6 +60,12 @@ Page({
         let order = this.data.order
         res.eventChannel.emit('sendOrderInformation', { order })
       }
+    })
+  },
+
+  updateOrder: async function (order) {
+    await _order.update(order).then(order => {
+      this.setOrderInfo(order.id)
     })
   },
 

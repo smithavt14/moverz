@@ -49,7 +49,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -90,7 +90,7 @@
 					"id": 5,
 					"name": "pages/orderReceipt/orderReceipt",
 					"pathName": "pages/orderReceipt/orderReceipt",
-					"query": "id=5dc910c0deb614039ee6f901",
+					"query": "id=5dcbf0e79d29e212ecfd570b",
 					"scene": null
 				},
 				{
