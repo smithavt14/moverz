@@ -27,7 +27,7 @@
 }
 
 .weather__container .bottom_box {
-  height: 250rpx;
+  height: 200rpx;
   box-sizing: border-box;
   padding: 20rpx;
   color: #20324E;

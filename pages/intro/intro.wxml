@@ -35,7 +35,6 @@
     
     <!-- Emissions Component -->
     <view class="bottom_box">
-      <view class="title">Emissions Goal</view>
       <view class="progress_bar">
         <view wx:if="{{ user }}"class="progress" style="width: {{user.emissions_saved / 1000 }}%"></view>
         <view wx:else class="progress" style="width:60%"></view>
