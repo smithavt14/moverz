@@ -25,7 +25,10 @@
     <!-- Weather Container -->
     <view class="weather__container">
       <view wx:if="{{ air }}" class="top_box" style="background: {{ air.quality.hex }}">
-        <view class="box">{{ air.quality.aqi }}</view>
+        <view class="box">
+          <view class="top">{{ air.quality.aqi }}</view>
+          <view class="bottom">中国 AQI</view>
+        </view>
         <view class="box">
           <view class="top">{{ air.location }}</view>
           <view class="bottom">当前位置</view>

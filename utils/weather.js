@@ -6,15 +6,12 @@ const key = '227fdcb7a5f24d2d87e3fa9fa0e0f320'
 /* If user is not logged in, first display information for Hangzhou. If user is logged in, then display information for their local area. */
 
 const fetchAQI = async () => {
-  let user = await _auth.getCurrentUser()
-  if (!user) user = {city: 'Hangzhou'}
-  return new Promise (resolve => {
-    
-    let url = `https://api.heweather.net/s6/air/now?location=${user.city}&key=${key}`
-    
-    
+  let location = await _auth.getCurrentLocation()
+  
+  return new Promise (resolve => {  
     let self = this
-
+    let url = `https://api.heweather.net/s6/air/now?location=${location.lat},${location.lon}&key=${key}`
+    
     wx.request({
       url,
       data: {},
@@ -22,13 +19,13 @@ const fetchAQI = async () => {
         'content-type': 'application/json' // 默认值
       },
       success(res) {
+        console.log(res)
         let air = res.data.HeWeather6[0].air_now_city
         let hex = setColor(air.qlty)
-        // let darkHex = darkenColor(hex)
-        let location = res.data.HeWeather6[0].basic.location
+        location = res.data.HeWeather6[0].basic.location
         
         air['hex'] = hex
-        // air['darkHex'] = darkHex
+
         resolve({ air, location })
       },
       fail(err) {
@@ -71,12 +68,11 @@ const darkenColor = (hex) => {
 }
 
 const fetchWeather = async () => {
-  let user = await _auth.getCurrentUser()
-  if (!user) user = { city: 'Hangzhou' }
-
+  let location = await _auth.getCurrentLocation
+  
   return new Promise(resolve => {
     
-    let url = `https://api.heweather.net/s6/weather/now?location=${user.city}&key=${key}`
+    let url = `https://api.heweather.net/s6/weather/now?location=${location.lat},${location.lon}&key=${key}`
 
     wx.request({
       url,

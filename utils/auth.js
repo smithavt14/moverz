@@ -12,6 +12,25 @@ const login = data => {
   })
 }
 
+const getCurrentLocation = () => {
+  return new Promise (resolve => {
+    wx.getLocation({
+      type: 'wgs84',
+      success: res => {
+        console.log(res)
+        const lat = res.latitude.toString()
+        const lon = res.longitude.toString()
+        resolve({ lat, lon }) 
+      },
+      fail: err => {
+        console.log(err)
+        resolve({ lat: 30.252625, lon: 120.16508 })
+        // Latitude and Longitude of Hangzhou --
+      }
+    })
+  })
+}
+
 const logout = e => {
   return new Promise(resolve => {
     wx.BaaS.auth.logout().then(res => {
@@ -50,4 +69,4 @@ const getCurrentUser = e => {
   })
 }
 
-module.exports = { login, logout, getCurrentUser }
+module.exports = { login, logout, getCurrentUser, getCurrentLocation }

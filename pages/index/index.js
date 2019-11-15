@@ -178,13 +178,11 @@ Page({
     
   },
 
-  getWeather: async function () {
+  getAQI: async function () {
     let aqi = await _weather.fetchAQI()
-    let weather = await _weather.fetchWeather()
     this.setData({
       ['air.location']: aqi.location,
       ['air.quality']: aqi.air,
-      ['air.weather']: weather
     })
   },
 
@@ -194,7 +192,7 @@ Page({
     await _auth.getCurrentUser().then(user => {
       if (user) {
         this.setData({ hasUser: !!user, user })
-        this.getWeather()
+        this.getAQI()
       } else {
         this.setData({ hasUser: !!user })
       }
@@ -210,7 +208,7 @@ Page({
     this.setData({btnLoading: true})
     await _auth.login(data).then(async user => {
       this.setData({ hasUser: true, user, btnLoading: false })
-      this.getWeather()
+      this.getAQI()
     })
   },
 
