@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "电达"
+  "navigationBarTitleText": "电达",
+  "usingComponents": {
+    "emissions": "../components/emissions/emissions"
+  }
 }

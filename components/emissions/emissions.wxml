@@ -1,0 +1,40 @@
+<view class="emissions__container">
+  <view wx:if="{{ air }}" class="top_box" style="background: {{ air.quality.hex }}">
+    <view class="box">
+      <view class="top">{{ air.quality.aqi }}</view>
+      <view class="bottom">中国 AQI</view>
+    </view>
+    <view class="box">
+      <view class="top">{{ air.location }}</view>
+      <view class="bottom">当前位置</view>
+    </view>
+  </view>
+  <view class="bottom_box">
+    <view class="progress_bar">
+      <view 
+      class="progress" 
+      style="width: {{user.emissions_saved / 1000 }}%"></view>
+      <view class="base"></view>
+    </view>
+    <view class="progress_info">
+      <view class="box" style="color: #208D49">
+        <view>节省</view>
+        <image 
+        src="../../assets/icons/emissions-green.png"
+        class="icon"
+        mode="aspectFit"></image>
+        <view>{{user.emissions_saved / 1000}}</view>
+        <view style="font-size: 15rpx;">KG</view>
+      </view>
+      <view class="box" style="color: #20324E">
+        <view>目标</view>
+          <image 
+          src="../../assets/icons/emissions-blue.png"
+          class="icon"
+          mode="aspectFit"></image>
+          <view>{{user.emissions_goal / 1000 }}</view>
+          <view style="font-size: 15rpx;">KG</view>
+        </view>
+    </view>
+  </view>
+</view>

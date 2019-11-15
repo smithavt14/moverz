@@ -18,53 +18,10 @@
     <view class="paragraph">So our team has enabled you to visualize how many pollutants you are saving by displaying the weight of the most highly emitted pollutant - CO2.</view> 
 
     <view class="paragraph">Every user has a goal of eliminating 100 KG of CO2 by shipping using Huxi. If 10 users fulfill this goal, that is equal to ...</view>
-
-  <view class="weather__container">
-    <view wx:if="{{ air }}" class="top_box" style="background: {{air.quality.hex}}">
-      <view class="box">
-        <image wx:if="{{ air }}" class="image" src="../../assets/icons/masks/{{ air.quality.qlty }}.png"></image>
-      </view>
-      <view class="box">
-        <view class="top">{{air.quality.aqi}}</view>
-        <view class="bottom">中国 AQI</view>
-      </view>
-      <view 
-      class="box" 
-      style="font-size: 50rpx">{{air.location}}</view>
-    </view>
-    
-    <!-- Emissions Component -->
-    <view class="bottom_box">
-      <view class="progress_bar">
-        <view wx:if="{{ user }}"class="progress" style="width: {{user.emissions_saved / 1000 }}%"></view>
-        <view wx:else class="progress" style="width:60%"></view>
-        <view class="base"></view>
-      </view>
-      <view class="progress_info">
-        <view class="box" style="color: #208D49">
-          <view>节省</view>
-          <image 
-          src="../../assets/icons/emissions-green.png"
-          class="icon"
-          mode="aspectFit"></image>
-          <view wx:if="{{ user }}">{{user.emissions_saved / 1000}}</view>
-          <view wx:else>60</view>
-          <view style="font-size: 15rpx;">KG</view>
-        </view>
-        <view class="box" style="color: #20324E">
-          <view>目标</view>
-            <image 
-            src="../../assets/icons/emissions-blue.png"
-            class="icon"
-            mode="aspectFit"></image>
-            <view>100</view>
-            <view style="font-size: 15rpx;">KG</view>
-          </view>
-      </view>
-    </view>
   </view>
-</view>
 
+  <emissions class="emissions__component"></emissions>
+  
   <view class="btn_area">
     <view class="btn" bindtap="navigateToIndex">开始</view>
   </view>

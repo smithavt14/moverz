@@ -17,7 +17,6 @@ const getCurrentLocation = () => {
     wx.getLocation({
       type: 'wgs84',
       success: res => {
-        console.log(res)
         const lat = res.latitude.toString()
         const lon = res.longitude.toString()
         resolve({ lat, lon }) 

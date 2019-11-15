@@ -1,0 +1,102 @@
+.emissions__container {
+  width: 100%;
+  margin-top: 30rpx;
+  background: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 10rpx;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.emissions__container .top_box {
+  height: 150rpx;
+  display: flex;
+  border-radius: 10rpx 10rpx 0 0;
+  position: relative;
+  justify-content: center;
+}
+
+.emissions__container .top_box .box {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 80rpx;
+  font-weight: 800;
+}
+
+.emissions__container .top_box .box image {
+  height: 125rpx;
+  width: 125rpx;
+}
+
+.emissions__container .top_box .box .top {
+  font-size: 50rpx;
+  font-weight: 500;
+  text-align: center;
+}
+
+.emissions__container .top_box .box .bottom {
+  font-size: 25rpx;
+}
+
+.emissions__container .bottom_box {
+  height: 175rpx;
+  box-sizing: border-box;
+  padding: 20rpx;
+  color: #20324E;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.emissions__container .bottom_box .title {
+  width: 95%;
+  margin: 15rpx 0;
+}
+
+.emissions__container .bottom_box .progress_bar {
+  height: 50rpx;
+  width: 95%;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 50rpx
+}
+
+.emissions__container .bottom_box .progress_bar .progress {
+  height: 50rpx;
+  width: 50%;
+  background: #208D49;
+  border-radius: 50rpx;
+  position: absolute;
+  z-index: 10;
+}
+
+.emissions__container .bottom_box .progress_bar .base {
+  background: #F3F3F3;
+  border-radius: 50rpx;
+  height: 50rpx;
+  width: 100%;
+}
+
+.emissions__container .bottom_box .progress_info {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin-top: 15rpx;
+}
+
+.emissions__container .bottom_box .progress_info .box {
+  display: flex;
+}
+
+.emissions__container .bottom_box .progress_info .box .icon {
+  height: 40rpx;
+  width: 40rpx;
+  margin: 0 10rpx;
+}

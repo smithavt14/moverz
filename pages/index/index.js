@@ -192,7 +192,6 @@ Page({
     await _auth.getCurrentUser().then(user => {
       if (user) {
         this.setData({ hasUser: !!user, user })
-        this.getAQI()
       } else {
         this.setData({ hasUser: !!user })
       }
@@ -208,7 +207,6 @@ Page({
     this.setData({btnLoading: true})
     await _auth.login(data).then(async user => {
       this.setData({ hasUser: true, user, btnLoading: false })
-      this.getAQI()
     })
   },
 
