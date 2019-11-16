@@ -21,7 +21,7 @@
       bindtap="navigateToOrderHistory"
       hover-class="hover-green">我的订单</view>
     </view>
-    <emissions class="emissions_component"></emissions>
+    <emissions class="emissions_component" user="{{user}}"></emissions>
   </view>
   
   <!-- Sender Information -->

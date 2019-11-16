@@ -23,7 +23,8 @@
         src="../../assets/icons/emissions-green.png"
         class="icon"
         mode="aspectFit"></image>
-        <view>{{user.emissions_saved / 1000}}</view>
+        <view wx:if="{{ user }}">{{user.emissions_saved / 1000}}</view>
+        <view wx:else>0</view>
         <view style="font-size: 15rpx;">KG</view>
       </view>
       <view class="box" style="color: #20324E">
@@ -32,7 +33,8 @@
           src="../../assets/icons/emissions-blue.png"
           class="icon"
           mode="aspectFit"></image>
-          <view>{{user.emissions_goal / 1000 }}</view>
+          <view wx:if="{{ user }}">{{user.emissions_goal / 1000 }}</view>
+          <view wx:else>100</view>
           <view style="font-size: 15rpx;">KG</view>
         </view>
     </view>

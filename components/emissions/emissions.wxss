@@ -70,7 +70,6 @@
 
 .emissions__container .bottom_box .progress_bar .progress {
   height: 50rpx;
-  width: 50%;
   background: #208D49;
   border-radius: 50rpx;
   position: absolute;

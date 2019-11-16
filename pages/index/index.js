@@ -200,7 +200,7 @@ Page({
 
   logout: function () {
     _auth.logout()
-    this.setData({hasUser: false, user: undefined})
+    this.setData({hasUser: false, user: false})
   },
 
   userInfoHandler: async function (data) {

@@ -6,10 +6,10 @@ Component({
   behaviors: [],
 
   properties: {
-    myProperty: { // Property name
-      type: String,
-      value: ''
-    },
+    user: { // Property name
+      type: Object,
+      value: undefined
+    }
   },
 
   data: {
@@ -42,6 +42,7 @@ Component({
   lifetimes: {
     attached: function () { 
       this.getCurrentUser()
+      this.getAQI()
     },
   },
 

@@ -104,7 +104,7 @@ const setOrderStatusOptions = order => {
       case 2:
         resolve({ title: '订单在寄送中', subtitle: '您的订单寄送了', color: '#74B3D6' })
       case 3:
-        resolve({ title: '订单已收到了', subtitle: '对方已经收到货了', color: '178E46' })
+        resolve({ title: '订单已收到了', subtitle: '对方已经收到货了', color: '#178E46' })
       case 4:
         resolve({ title: '订单取消了', subtitle: '您的订单取消了', color: '#E15E5E' })
     }

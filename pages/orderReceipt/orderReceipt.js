@@ -44,11 +44,17 @@ Page({
 
   submitPayment: async function () {
     let order = this.data.order
+    let user = await _auth.getCurrentUser()
+    let emissions_saved = user.emissions_saved
+    let id = user.id
+
     await _order.pay(order).then(transaction_no => {
       if (transaction_no) {
+        emissions_saved += order.emissions_saved
         order['transaction_no'] = transaction_no
         order.status = 1
         this.updateOrder(order)
+        this.updateUser({ emissions_saved, id })
       }
     })
   },
@@ -60,6 +66,13 @@ Page({
         let order = this.data.order
         res.eventChannel.emit('sendOrderInformation', { order })
       }
+    })
+  },
+
+  updateUser: async function (attrs) {
+    await _auth.updateUser(attrs).then(user => {
+      console.log(user)
+      _auth.getCurrentUser()
     })
   },
 

@@ -30,6 +30,24 @@ const getCurrentLocation = () => {
   })
 }
 
+const updateUser = (attrs = {}) => {
+  return new Promise(resolve => {
+    let id = attrs.id
+    let emissions_saved = attrs.emissions_saved
+
+    let user = new wx.BaaS.User().getWithoutData(id)
+
+    user.set({ emissions_saved })
+
+    user.update().then(res => {
+      resolve(res.data)
+    }, err => {
+      console.log(err)
+      resolve(err)
+    })
+  })
+}
+
 const logout = e => {
   return new Promise(resolve => {
     wx.BaaS.auth.logout().then(res => {
@@ -46,26 +64,22 @@ const logout = e => {
 
 const getCurrentUser = e => {
   return new Promise(resolve => {
-    let user = wx.getStorageSync('user')
-
-    if (!user) {
-      wx.BaaS.auth.getCurrentUser().then(user => {
+    wx.BaaS.auth.getCurrentUser().then(user => {
+      wx.setStorage({
+        key: 'user',
+        data: user,
+        success: () => resolve(user)
+      })
+    }).catch(err => {
+      if (err.code === 604) {
         wx.setStorage({
           key: 'user',
-          data: user,
-          success: () => resolve(user)
+          data: undefined,
+          success: () => resolve(undefined)
         })
-      }).catch(err => {
-        if (err.code === 604) {
-          wx.setStorage({
-            key: 'user',
-            data: undefined,
-            success: () => resolve(undefined)
-          })
-        }
-      })
-    } else resolve(user)
+      }
+    })
   })
 }
 
-module.exports = { login, logout, getCurrentUser, getCurrentLocation }
+module.exports = { login, logout, updateUser, getCurrentUser, getCurrentLocation }
