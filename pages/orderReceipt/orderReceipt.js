@@ -85,5 +85,12 @@ Page({
   onLoad: function (options) {
     this.setOrderInfo(options.id)  
     this.getUserData()
+  },
+
+  onShareAppMessage: function (res) {
+    return {
+      title: '电达速运',
+      path: `/pages/orderReceipt/orderReceipt?id=${order.id}`
+    }
   }
 })

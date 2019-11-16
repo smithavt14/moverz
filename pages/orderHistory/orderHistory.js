@@ -9,7 +9,6 @@ Page({
   },
 
   getCurrentUser: async function() {
-    console.log('Get Current User!')
     await _auth.getCurrentUser().then( user => {
       let id = user.id
       this.fetchUserOrders(id)

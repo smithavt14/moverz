@@ -25,4 +25,11 @@ Page({
   onLoad: function (options) {
     this.getCurrentUser()
   },
+
+  onShareAppMessage: function (res) {
+    return {
+      title: '电达速运',
+      path: '/pages/intro/intro'
+    }
+  }
 })

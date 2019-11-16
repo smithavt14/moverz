@@ -286,5 +286,10 @@ Page({
     this.getCurrentUser()
   },
 
-  onReady: function () {}
+  onShareAppMessage: function (res) {
+    return {
+      title: '电达速运',
+      path: '/pages/index/index'
+    }
+  }
 })

@@ -31,9 +31,6 @@ Component({
       await _auth.getCurrentUser().then(user => {
         if (user) {
           this.setData({ user })
-          this.getAQI()
-        } else {
-          this.setData({ hasUser: !!user })
         }
       })
     },
