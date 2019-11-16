@@ -10,17 +10,38 @@ Page({
     user: undefined
   },
 
-  getUserData: async function () {
-    await _auth.getCurrentUser().then(user => {
-      this.setData({ user })
+  /* ----- Auth Functions ----- */
+  
+  getCurrentUser: async function () {
+    try {
+      let user = wx.getStorageSync('user')
+      if (user) {
+        this.setData({ user })
+      }
+    }
+    catch (err) {
+      await _auth.getCurrentUser().then(user => {
+        this.setData({ user })
+      })
+    }
+  },
+
+  updateUser: async function (attrs) {
+    await _auth.updateUser(attrs).then(user => {
+      console.log(user)
+      _auth.getCurrentUser()
     })
   },
+
+  /* ----- Navigation Functions ----- */
 
   navigateToHome: function () {
     wx.reLaunch({
       url: '/pages/index/index',
     })
   },
+
+  /* ----- Order Functions ----- */
 
   setOrderInfo: async function (id) {
     wx.showLoading()
@@ -44,13 +65,16 @@ Page({
 
   submitPayment: async function () {
     let order = this.data.order
-    let user = await _auth.getCurrentUser()
+    let user = wx.getStorageSync('user')
     let emissions_saved = user.emissions_saved
     let id = user.id
+
+    console.log(user, order, '<--- user, order')
 
     await _order.pay(order).then(transaction_no => {
       if (transaction_no) {
         emissions_saved += order.emissions_saved
+        console.log(emissions_saved)
         order['transaction_no'] = transaction_no
         order.status = 1
         this.updateOrder(order)
@@ -69,22 +93,17 @@ Page({
     })
   },
 
-  updateUser: async function (attrs) {
-    await _auth.updateUser(attrs).then(user => {
-      console.log(user)
-      _auth.getCurrentUser()
-    })
-  },
-
   updateOrder: async function (order) {
     await _order.update(order).then(order => {
       this.setOrderInfo(order.id)
     })
   },
 
+  /* ----- Lifecycle Functions ----- */
+
   onLoad: function (options) {
     this.setOrderInfo(options.id)  
-    this.getUserData()
+    this.getCurrentUser()
   },
 
   onShareAppMessage: function (res) {

@@ -2,18 +2,19 @@ const _auth = require('../../utils/auth.js')
 
 Page({
 
-  data: {
-
-  },
+  data: {},
 
   getCurrentUser: async function () {
-    await _auth.getCurrentUser().then(user => {
+    try {
+      let user = wx.getStorageSync('user')
       if (user) {
-        this.setData({ hasUser: !!user, user })
-      } else {
-        this.setData({ hasUser: !!user })
+        this.setData({ user })
       }
-    })
+    }
+    catch (err) {
+      let user = await _auth.getCurrentUser()
+      this.setData({ hasUser: !!user })
+    }
   },
 
   navigateToIndex: function () {

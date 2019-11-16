@@ -68,8 +68,17 @@ Page({
   },
 
   getCurrentUser: async function () {
-    let user = await _auth.getCurrentUser()
-    this.setData({ hasUser: !!user })
+    try {
+      let user = wx.getStorageSync('user')
+      if (user) {
+        this.setData({ user })
+      } 
+    }
+    catch (err) {
+      await _auth.getCurrentUser().then(user => {
+        this.setData({ user })
+      })
+    }
   },
 
   /* ----- Custom Functions ----- */

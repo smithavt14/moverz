@@ -63,9 +63,7 @@ Page({
   /* ----- Parcel Functions ----- */
 
   createParcel: async function () {
-    if (!this.data.hasUser) {
-      wx.showModal({ title: '用户未登录', showCancel: false })
-    } else if (!this.data.parcel.category) {
+    if (!this.data.parcel.category) {
       wx.showModal({ title: '请选择类型', showCancel: false })
     } else {
       let parcel = this.data.parcel
@@ -89,8 +87,17 @@ Page({
   /* ----- Auth Functions ----- */
 
   getCurrentUser: async function () {
-    let user = await _auth.getCurrentUser()
-    this.setData({ hasUser: !!user })
+    try {
+      let user = wx.getStorageSync('user')
+      if (user) {
+        this.setData({ user })
+      }
+    }
+    catch (err) {
+      await _auth.getCurrentUser().then(user => {
+        this.setData({ user })
+      })
+    }
   },
 
   login: async function () {

@@ -8,13 +8,26 @@ Page({
 
   },
 
-  getCurrentUser: async function() {
-    await _auth.getCurrentUser().then( user => {
-      let id = user.id
-      this.fetchUserOrders(id)
-      this.setData({ user })
-    })
+
+  /* ----- Auth Functions ----- */
+
+  getCurrentUser: async function () {
+    try {
+      let user = wx.getStorageSync('user')
+      if (user) {
+        this.setData({ user })
+        this.fetchUserOrders(user.id)
+      }
+    }
+    catch (err) {
+      await _auth.getCurrentUser().then(user => {
+        this.setData({ user })
+        this.fetchUserOrders(user.id)
+      })
+    }
   },
+
+  /* ----- Order Functions ----- */
 
   fetchUserOrders: async function(id) {
     await _order.fetchUserOrders(id).then(orders => {
@@ -39,12 +52,16 @@ Page({
     })
   },
 
+  /* ----- Navigation Functions ----- */
+
   navigateToOrder: function (event) {
     let id = event.currentTarget.dataset.id
     wx.navigateTo({
       url: `/pages/orderReceipt/orderReceipt?id=${id}`
     })
   },
+
+  /* ----- Lifecycle Functions ----- */
 
   onShow: function (options) {
     this.getCurrentUser()

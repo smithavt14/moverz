@@ -51,7 +51,6 @@
     <!-- Button Area -->
     <view class="btn_area">
       <view 
-      wx:if="{{hasUser}}" 
       class="btn" 
       type="primary" 
       bindtap="confirmAgent">确认</view>

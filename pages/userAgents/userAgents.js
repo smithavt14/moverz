@@ -9,11 +9,18 @@ Page({
 
   /* ---- Auth Functions ---- */
 
-  getCurrentUser: async function() {
-    let user = await _auth.getCurrentUser()
-    if (user) {
-      this.setData({ user: user.id })
-      this.fetchUserAgents(user.id)
+  getCurrentUser: async function () {
+    try {
+      let user = wx.getStorageSync('user')
+      if (user) {
+        this.setData({ user })
+        this.fetchUserAgents(user.id)
+      }
+    }
+    catch (err) {
+      await _auth.getCurrentUser().then(user => {
+        this.fetchUserAgents(user.id)
+      })
     }
   },
 
@@ -44,7 +51,7 @@ Page({
           wx.showToast({
             title: '删除成功'
           })
-          self.fetchUserAgents(user)
+          self.fetchUserAgents(user.id)
         }
       }
     })
