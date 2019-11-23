@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/createAgent/createAgent",
+    "pages/userAgents/userAgents",
     "pages/createParcel/createParcel",
     "pages/orderReceipt/orderReceipt",
     "pages/orderHistory/orderHistory",

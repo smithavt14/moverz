@@ -1,4 +1,4 @@
-.emissions__container {
+:host {
   width: 100%;
   margin-top: 30rpx;
   background: white;

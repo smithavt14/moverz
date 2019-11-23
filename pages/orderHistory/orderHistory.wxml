@@ -9,7 +9,7 @@
     bindtap="navigateToOrder">
 
       <view class="status_container">
-        <view class="id">{{ order.id }}</view>
+        <view class="id">{{ order.display.id }}</view>
         <view class="status" style="background: {{ order.display.status.color}}">{{order.display.status.title}}</view>
       </view>
       <view class="info_container">

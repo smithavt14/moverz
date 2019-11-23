@@ -44,7 +44,8 @@ Page({
         Promise.all([status, time]).then(values => {
           status = values[0]
           time = values[1]
-          order.display = { status, time }
+          let id = order.id.toString().substr(20, 4)
+          order.display = { status, time, id }
           let key = `orders[${index}]`
           this.setData({ [key]: order })
         })

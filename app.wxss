@@ -8,6 +8,7 @@
   background-color: #F3F3F3;
   background-size: cover;
   padding-bottom: 200rpx;
+  overflow-x: hidden;
 }
 
 .btn_area {
