@@ -104,7 +104,7 @@ Page({
           res.eventChannel.emit('sendAgentInformation', { role, id, position })
         }
       })
-    } else { this.loginNotice() }
+    } else this.loginNotice()
   },
 
   createParcel: function () {
@@ -138,7 +138,9 @@ Page({
           receiveAgentInformation: function (data) {
             let id = data.id
             let role = data.role
-            self.getAgentInformation(id, role)
+            if (!self.checkDuplicateAgent(id, role)) {
+              self.getAgentInformation(id, role)
+            }
           }
         },
         success: function (res) {
@@ -151,9 +153,13 @@ Page({
   },
 
   navigateToOrderHistory: function() {
-    wx.navigateTo({
-      url: '/pages/orderHistory/orderHistory'
-    })
+    if (this.data.user) {
+      wx.navigateTo({
+        url: '/pages/orderHistory/orderHistory'
+      })
+    } else {
+      this.loginNotice()
+    }
   },
 
   /* ----- Fetch Data Functions ----- */
@@ -184,6 +190,16 @@ Page({
       ['air.location']: aqi.location,
       ['air.quality']: aqi.air,
     })
+  },
+
+  checkDuplicateAgent: function (id, role) {
+    let otherRole = role === 'sender' ? 'receiver' : 'sender'
+    otherRole = this.data.order[otherRole]
+
+    if (otherRole && otherRole.id) {
+      return (id === otherRole.id || id === otherRole.id)
+    }
+    return false
   },
 
   /* ----- Auth Functions ----- */

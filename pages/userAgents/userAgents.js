@@ -102,10 +102,8 @@ Page({
 
   onLoad: function () {
     const eventChannel = this.getOpenerEventChannel()
-    console.log(eventChannel)
 
     eventChannel.on('sendAgentInformation', (data) => {
-      console.log(data)
       let role = data.role
       this.setData({ role })
     })

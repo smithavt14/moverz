@@ -22,10 +22,9 @@ const pay = order => {
   return new Promise(resolve => {
     wx.BaaS.pay(params).then(res => {
       console.log('Transaction Number: ', res.transaction_no)
-      resolve(res.transaction_no)
+      resolve(res)
     }, err => {
       if (err.code === 607) {
-        wx.hideLoading()
         console.log('用户取消支付')
         resolve(err)
       } else if (err.code === 608) {

@@ -69,13 +69,10 @@ Page({
     let emissions_saved = user.emissions_saved
     let id = user.id
 
-    console.log(user, order, '<--- user, order')
-
-    await _order.pay(order).then(transaction_no => {
-      if (transaction_no) {
+    await _order.pay(order).then(res => {
+      if (res.transaction_no) {
         emissions_saved += order.emissions_saved
-        console.log(emissions_saved)
-        order['transaction_no'] = transaction_no
+        order['transaction_no'] = res.transaction_no
         order.status = 1
         this.updateOrder(order)
         this.updateUser({ emissions_saved, id })
