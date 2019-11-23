@@ -1,7 +1,7 @@
 <view class="page__container">
 
   <!-- User Container -->
-  <block wx:if="{{ agents }}">
+  <block wx:if="{{ agents.length !== 0 }}">
     <view 
     wx:for="{{agents}}" 
     class="agent_container" 
@@ -40,9 +40,9 @@
     src="../../assets/logos/logo-blue.png"
     class="icon"
     mode="aspectFit"></image>
-    <view>您目前没有人</view>
+    <view>目前没有人的信息</view>
     <view class="btn_area">
-      <view class="container dim" bindtap="navigateBack">回首页</view>
+      <view class="container" bindtap="navigateBack">回首页</view>
     </view>
   </view>
 </view>

@@ -35,7 +35,7 @@ Page({
   fetchUserAgents: async function (id) {
     await _agent.fetchUserAgents(id).then(agents => {
       if (agents.length !== 0) this.setData({ agents })
-      else this.setData({agents: undefined})
+      else this.setData({agents: []})
     })
   },
 
@@ -53,6 +53,9 @@ Page({
           })
           self.fetchUserAgents(user.id)
         }
+      },
+      fail: function (err) {
+        console.log(err)
       }
     })
   },
@@ -99,6 +102,7 @@ Page({
 
   onLoad: function () {
     const eventChannel = this.getOpenerEventChannel()
+    console.log(eventChannel)
 
     eventChannel.on('sendAgentInformation', (data) => {
       console.log(data)
