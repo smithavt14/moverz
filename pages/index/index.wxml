@@ -46,6 +46,7 @@
       data-role="sender">
         <view class="top_value">{{order.sender.name}}</view>
         <view class="bottom_value">{{order.sender.address}}</view>
+        <view wx:if="{{ order.sender.address_2 }}" class="bottom_value">{{order.sender.address_2}}</view>
       </view>
 
       <view 
@@ -76,6 +77,7 @@
       data-role="receiver">
         <view class="top_value">{{order.receiver.name}}</view>
         <view class="bottom_value">{{order.receiver.address}}</view>
+        <view wx:if="{{ order.receiver.address_2}}" class="bottom_value">{{order.receiver.address_2}}</view>
       </view>
 
       <view class="right_box" 

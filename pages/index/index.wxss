@@ -93,11 +93,13 @@
   background: white;
   font-size: 35rpx;
   color: #20324E;
+  text-overflow: ellipsis;
 }
 
 .left_box .bottom_value {
   font-size: 28rpx;
   color: rgba(0,0,0,0.5);
+
 }
 
 .info_container .left_button {

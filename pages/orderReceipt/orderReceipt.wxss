@@ -86,13 +86,15 @@
   border-radius: 10rpx;
 }
 .receipt_container .bottom .info_container {
-  height: 150rpx;
+  min-height: 120rpx;
   width: 95%;
   border-bottom: 1px solid rgba(0,0,0,0.1);
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
+  text-overflow: ellipsis;
+  padding: 10rpx 0;
 }
 
 .receipt_container .bottom .info_container:nth-last-child(1) {
@@ -140,10 +142,10 @@
   color: white;
 }
 
-.receipt_container .info_container .emissions_container {
+.emissions_container {
   font-size: 35rpx;
   width: 100%;
-  height: 75%;
+  height: 100rpx;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,7 +154,7 @@
   animation: dim-white 2s ease-in-out infinite;
 }
 
-.receipt_container .info_container .emissions_container .icon {
+.emissions_container .icon {
   height: 50rpx;
   width: 50rpx;
   margin: 0 20rpx;

@@ -18,6 +18,8 @@
         <view class="left">
           <view class="title">{{order.sender.name}}</view>
           <view class="info">{{order.sender.address}}</view>
+          <view wx:if="{{order.sender.address_2}}" class="info">{{order.sender.address_2}}</view>
+          <view wx:if="{{order.sender.phone}}"class="info">{{order.sender.phone}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/shipping.png"></image>
@@ -27,6 +29,8 @@
         <view class="left">
           <view class="title">{{order.receiver.name}}</view>
           <view class="info">{{order.receiver.address}}</view>
+          <view wx:if="{{order.receiver.address_2}}" class="info">{{order.receiver.address_2}}</view>
+          <view wx:if="{{order.receiver.phone}}"class="info">{{order.receiver.phone}}</view>
         </view>
         <view class="right">
           <image class="icon" src="../../assets/icons/bullseye.png"></image> 
@@ -60,7 +64,7 @@
         </view>
       </view>
       <view class="info_container">
-        <view class="emissions_container pale-dim">
+        <view class="emissions_container dim-white">
           <view>Saved</view>
           <image 
           class="icon" 
