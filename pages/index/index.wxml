@@ -1,6 +1,6 @@
 <view class="page__container">
   <!-- Logo Container -->
-  <view class="logo_container" bindtap="logout">
+  <view class="logo_container">
     <image 
     class="logo" 
     src="../../assets/logos/logo.png" 
