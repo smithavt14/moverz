@@ -67,4 +67,8 @@ const destroy = id => {
   })
 }
 
-module.exports = { fetch, fetchUserAgents, create, update, destroy }
+const validate = agent => {
+  return 
+}
+
+module.exports = { fetch, fetchUserAgents, create, update, destroy, validate }

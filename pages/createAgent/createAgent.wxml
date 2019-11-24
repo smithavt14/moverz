@@ -5,14 +5,14 @@
     <view class="section__container">
       <input 
       data-value="name" 
-      placeholder="姓名" 
+      placeholder="姓名*" 
       id="nameInput" 
       value="{{agent.name}}" 
       bindinput="editValue"/>
       <input 
       data-value="phone" 
       type="number" 
-      placeholder="电话" 
+      placeholder="电话*" 
       value="{{agent.phone}}"
       style="margin-left: 15px;"
       bindinput="editValue"/>
@@ -23,7 +23,7 @@
       <button 
       wx:if="{{!agent.address}}" 
       id="search-btn" 
-      bindtap="searchAddress">搜索地址</button>
+      bindtap="searchAddress">搜索地址*</button>
       <view wx:else>{{agent.address}}</view>
       <image 
       wx:if="{{agent.address}}" 

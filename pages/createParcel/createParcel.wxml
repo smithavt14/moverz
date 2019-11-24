@@ -36,7 +36,7 @@
     <view wx:if="{{!parcel.image}}" class="upload_box" bindtap="uploadImage">
       <image class="upload_icon" src="/assets/icons/upload.svg"></image>
     </view>
-    <image wx:else style="height: 100px; width: 100px; margin: 20rpx 0" src="{{parcel.image}}"></image>
+    <image wx:else style="height: 100px; width: 100px; margin: 20rpx 0" src="{{parcel.image}}" bindtap="uploadImage"></image>
     
     <!-- Comments -->
     <input class="comment_box" value="{{parcel.comment}}" placeholder="给小哥捎句话吧 ..." bindinput="changeComment"></input>
