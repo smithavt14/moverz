@@ -4,7 +4,8 @@ const _agent = require('../../utils/agent.js')
 Page({
   data: {
     user: undefined,
-    role: undefined
+    role: undefined,
+    agents: []
   },
 
   /* ---- Auth Functions ---- */
@@ -34,6 +35,8 @@ Page({
 
   fetchUserAgents: async function (id) {
     await _agent.fetchUserAgents(id).then(agents => {
+      agents = agents.filter(agent => agent.display)
+      console.log(agents)
       if (agents.length !== 0) this.setData({ agents })
       else this.setData({agents: []})
     })

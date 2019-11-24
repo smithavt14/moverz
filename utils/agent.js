@@ -59,9 +59,12 @@ const update = agent => {
 
 const destroy = id => {
   return new Promise(resolve => {
-    AgentTable.delete(id).then(res => {
+    let agentToUpdate = AgentTable.getWithoutData(id)
+    agentToUpdate.set({display: false})
+    agentToUpdate.update().then(res => {
       resolve(res)
     }, err => {
+      console.log(err)
       resolve(err)
     })
   })

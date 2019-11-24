@@ -19,17 +19,17 @@
     </view>
 
     <!-- Address Information -->
-    <view class="section__container">
+    <view class="section__container" bindtap="searchAddress">
       <button 
       wx:if="{{!agent.address}}" 
       id="search-btn" 
-      bindtap="searchAddress">搜索地址*</button>
+      >搜索地址*</button>
       <view wx:else>{{agent.address}}</view>
       <image 
       wx:if="{{agent.address}}" 
       class="icon" 
       src="/assets/icons/location.svg" 
-      bindtap="searchAddress"></image>
+      ></image>
     </view>
     <view class="section__container">
       <input 
