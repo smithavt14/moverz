@@ -40,7 +40,7 @@
     src="../../assets/logos/logo-blue.png"
     class="icon"
     mode="aspectFit"></image>
-    <view>目前没有人的信息</view>
+    <view>目前没有任何保存的地址</view>
     <view class="btn_area">
       <view class="container" bindtap="navigateBack">回首页</view>
     </view>
