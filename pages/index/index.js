@@ -19,6 +19,7 @@ Page({
         }
       }
     },
+    picker: undefined,
     parcel: undefined,
     receiver: undefined,
     sender: undefined,
@@ -29,8 +30,9 @@ Page({
 
   bindDateChange: async function (event) {
     let type = event.currentTarget.dataset.type
-    let time = this.data.order.display.time
     let value = event.detail.value
+    let picker = this.data.picker
+    let timeNow = `${new Date().getHours() + 1}:${new Date().getMinutes()}`
     let y, m, d
     
     if (type === 'date') {
@@ -38,22 +40,26 @@ Page({
       y = value[0]
       m = value[1]
       d = value[2]
-      let pickupTime = new Date(`${y}/${m}/${d} ${time.hour}`)
+      
+      let pickupTime = new Date(`${y}/${m}/${d} ${picker.hour}`)
+
       await _time.getLocalString(pickupTime).then(res => {
+        picker.hour = res.hour
+        picker.date = res.date
+        picker.minTime = res.date === picker.minDate ? timeNow : "00:00"
         this.setData({
-          'order.display.time.hour': res.hour,
-          'order.display.time.date': res.date,
+          picker, 
           'order.pickup_time': res.stringISOS
         })
       })
       
     } else {
-      time[type] = value
-      let pickupTime = new Date(`${time.date} ${time.hour}`)
+      picker[type] = value
+      let pickupTime = new Date(`${picker.date} ${picker.hour}`)
       await _time.getLocalString(pickupTime).then(res => {
         this.setData({
-          'order.display.time.hour': res.hour,
-          'order.display.time.date': res.date,
+          'picker.hour': res.hour,
+          'picker.date': res.date,
           'order.pickup_time': res.stringISOS
         })
       })
@@ -62,14 +68,12 @@ Page({
   },
 
   setPickupTime: async function () {
-    let date = new Date()
-    date = new Date(date.setHours(date.getHours() + 1))
-    await _time.getLocalString(date).then(res => {
-      this.setData({
-        'order.display.time.hour': res.hour,
-        'order.display.time.date': res.date,
-        'order.pickup_time': res.stringISOS
-      })
+    let picker = await _time.setPickerDateTime()
+    picker['minTime'] = picker.hour
+    picker['minDate']= picker.date
+    this.setData({
+      picker,
+      'order.pickup_time': picker.stringISOS
     })
   },
 
