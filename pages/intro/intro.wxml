@@ -18,6 +18,7 @@
     <view class="paragraph">So our team has enabled you to visualize how many pollutants you are saving by displaying the weight of the most highly emitted pollutant - CO2.</view> 
 
     <view class="paragraph">Every user has a goal of eliminating 100 KG of CO2 by shipping using Huxi. If 10 users fulfill this goal, that is equal to ...</view>
+    <view class="paragraph phoneNumber" bindtap="launchPhoneCall">18516116224</view>
   </view>
 
   <emissions class="emissions__component"></emissions>

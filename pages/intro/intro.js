@@ -32,5 +32,12 @@ Page({
       title: '电达速运',
       path: '/pages/intro/intro'
     }
+  },
+
+  launchPhoneCall: function () {
+    wx.makePhoneCall({
+      phoneNumber: '18516116224',
+    })
   }
+  
 })
