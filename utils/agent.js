@@ -34,6 +34,21 @@ const create = data => {
   })
 }
 
+const validate = agent => {
+  let validPhone = agent.phone.match(/\d{11}/)
+  let validFields = !!(agent && agent.name && agent.phone && agent.address)
+
+  if (validFields && validPhone) return true
+  if (validFields && !validPhone) {
+    wx.showToast({ title: '手机号输发不对', icon: 'none' })
+    return false
+  }
+  if (!validFields) {
+    wx.showToast({ title: '必须填写：姓名，手机号，地址', icon: 'none' })
+    return false
+  }
+}
+
 const update = agent => {
   return new Promise(resolve => {
     let id = agent.id
@@ -68,10 +83,6 @@ const destroy = id => {
       resolve(err)
     })
   })
-}
-
-const validate = agent => {
-  return 
 }
 
 module.exports = { fetch, fetchUserAgents, create, update, destroy, validate }

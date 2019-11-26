@@ -12,9 +12,8 @@ Page({
 
   confirmAgent: function () {
     let agent = this.data.agent
-    let valid = agent && agent.name && agent.phone && agent.address
+    let valid = _agent.validate(agent)
     if (valid) agent.id ? this.updateAgent(agent) : this.createAgent(agent)
-    else wx.showToast({title: '必须填写：姓名，手机号，地址', icon: 'none'})
   },
 
   editValue: function (e) {
