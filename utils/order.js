@@ -53,7 +53,7 @@ const create = order => {
   order.sender = order.sender.id
   order.receiver = order.receiver.id
   order.parcel = order.parcel.id
-  
+
 
   return new Promise(resolve => {
     let row = OrderTable.create()
@@ -130,11 +130,11 @@ const fetchData = async (order) => {
     receiver = _agent.fetch(receiver)
     parcel = _parcel.fetch(parcel)
 
-    Promise.all([sender, receiver, parcel]).then(values => {  
+    Promise.all([sender, receiver, parcel]).then(values => {
       order.sender = values[0]
       order.receiver = values[1]
       order.parcel = values[2]
-      
+
       resolve(order)
     })
   })
@@ -149,8 +149,8 @@ const setEmissions = order => {
   let emissions = Math.floor(175 * distance)
 
   return emissions // unit = grams
-  
-  // Resources: 
+
+  // Resources:
   // https://www.iea.org/topics/transport/gfei/report/
   // 2017 China average CO2 emissions(grams)/km = 175
 }
@@ -161,23 +161,42 @@ const setPrice = order => {
       let weight = order.parcel.weight
       let distance = order.distance
       let hour = new Date(order.pickup_time).getHours()
+      console.log("distance", distance)
+      console.log("hour", hour)
 
-      let price = 0
-      
-      price += weight > 6 ? Math.ceil((weight - 6) * 2) : 0
 
-      if (hour < 6 || hour >= 23) {
-        price += 18
-        price += distance > 5000 ? Math.ceil((distance - 5000) * .002) : 0
-        price = price > 250 ? 250 : price
-      } else {
-        price += 16
-        price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
-        price = price > 200 ? 200 : price
+      let price = 8
+
+      // price += weight > 6 ? Math.ceil((weight - 6) * 2) : 0 // Add price of weight
+
+      if (weight > 5 && weight <= 10) price += Math.ceil(weight - 5) * 2
+      if (weight > 10) price += Math.ceil(weight/5) * 6
+
+
+      if (hour >= 0 && hour < 7) { // Add price of distance if during non-normal hours
+        price += 8
+        if (distance > 2000 && distance <= 10000) price += Math.ceil((distance - 2000)/1000) * 2
+        if (distance > 10000) price += ((Math.ceil(distance / 1000) / 5) - 2) * 6
+
+        // price = price > 250 ? 250 : price
+      } else if (hour >= 22 && hour < 24) { // Add price of distance if during normal hours
+          price += 4
+          if (distance > 2000 && distance <= 10000) price += Math.ceil((distance - 2000)/1000) * 2
+          if (distance > 10000) price += ((Math.ceil(distance / 1000) / 5) - 2) * 6
+        // price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
+        // price = price > 200 ? 200 : price
+      } else { // Add price of distance if during normal hours
+          if (distance < 2000) price += 0
+          if (distance > 2000 && distance <= 10000) price += Math.ceil((distance - 2000)/1000) * 2
+          if (distance > 10000) price += (Math.ceil((distance / 1000) / 5)) * 6
+          console.log("Price", price)
+        // price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
+        // price = price > 200 ? 200 : price
       }
       resolve(price)
+    
     })
-  }) 
+  })
 }
 
 const validate = (order) => {
@@ -190,10 +209,10 @@ const validate = (order) => {
       await _map.calculateDistance(sender, receiver).then(res => {
         let distance = res.distance
         if (distance > 60000) {
-          wx.showModal({ 
-            title: '请注意', 
-            content: '距离太远，限制在60公里', 
-            showCancel: false 
+          wx.showModal({
+            title: '请注意',
+            content: '距离太远，限制在60公里',
+            showCancel: false
           })
           resolve(false)
         } else {
