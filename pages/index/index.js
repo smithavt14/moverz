@@ -63,8 +63,8 @@ Page({
           'order.pickup_time': res.stringISOS
         })
       })
-      
     }
+    this.setOrderData()
   },
 
   setPickupTime: async function () {
