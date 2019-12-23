@@ -161,40 +161,40 @@ const setPrice = order => {
       let weight = order.parcel.weight
       let distance = order.distance
       let hour = new Date(order.pickup_time).getHours()
-      console.log("distance", distance)
-      console.log("hour", hour)
-
-
       let price = 8
-
-      // price += weight > 6 ? Math.ceil((weight - 6) * 2) : 0 // Add price of weight
-
+      
       if (weight > 5 && weight <= 10) price += Math.ceil(weight - 5) * 2
       if (weight > 10) price += Math.ceil(weight/5) * 6
 
-
-      if (hour >= 0 && hour < 7) { // Add price of distance if during non-normal hours
+      // if between 12:00 AM - 7:00 AM 
+      if (hour >= 0 && hour < 7) {
         price += 8
-        if (distance > 2000 && distance <= 10000) price += Math.ceil((distance - 2000)/1000) * 2
-        if (distance > 10000) price += ((Math.ceil(distance / 1000) / 5) - 2) * 6
-
-        // price = price > 250 ? 250 : price
-      } else if (hour >= 22 && hour < 24) { // Add price of distance if during normal hours
-          price += 4
-          if (distance > 2000 && distance <= 10000) price += Math.ceil((distance - 2000)/1000) * 2
-          if (distance > 10000) price += ((Math.ceil(distance / 1000) / 5) - 2) * 6
-        // price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
-        // price = price > 200 ? 200 : price
-      } else { // Add price of distance if during normal hours
-          if (distance < 2000) price += 0
-          if (distance > 2000 && distance <= 10000) price += Math.ceil((distance - 2000)/1000) * 2
-          if (distance > 10000) price += (Math.ceil((distance / 1000) / 5)) * 6
-          console.log("Price", price)
-        // price += distance > 5000 ? Math.ceil((distance - 5000) * .0035) : 0
-        // price = price > 200 ? 200 : price
+        if (distance > 2000 && distance <= 10000) {
+          price += Math.ceil((distance - 2000) / 1000) * 2
+        } else if (distance > 10000) {
+          price += ((Math.ceil(distance / 1000) / 5) - 2) * 6
+        }
+      
+      // if between 10:00 PM - 12:00 AM
+      } else if (hour >= 22) {
+        price += 4
+        if (distance > 2000 && distance <= 10000) {
+          price += Math.ceil((distance - 2000) / 1000) * 2
+        } else if (distance > 10000) {
+          price += ((Math.ceil(distance / 1000) / 5) - 2) * 6
+        }
+      
+      // if during normal hours (7:00 AM - 10:00 PM)
+      } else {
+        if (distance < 2000) {
+          price += 0 
+        } else if (distance > 2000 && distance <= 10000) {
+          price += Math.ceil((distance - 2000) / 1000) * 2
+        } else if (distance > 10000) {
+          price += (Math.ceil((distance / 1000) / 5)) * 6
+        }
       }
       resolve(price)
-    
     })
   })
 }
